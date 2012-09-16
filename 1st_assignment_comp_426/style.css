@@ -1,0 +1,135 @@
+body {
+	position: absolute;
+	top: 0;
+	right: 10%;
+	bottom: 0;
+	left: 10%;
+	width: 80%;
+	height: auto;
+}
+
+header {
+	background: #FAFDFE;
+	background-image: url(images/header-gradient.png);
+	background-repeat: repeat-y;
+	height: 150px;
+	border-radius: 50px 50px 0 0;
+	position: relative;
+	padding: 5px 5px 0px 20px;
+	overflow: hidden;
+}
+
+header h1 {
+	text-align: center;
+	font-family: "comic sans ms", serial, monospace;
+	color: white;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 3.5em;
+	text-shadow: 0px 4px 4px #1c1a19;
+}
+
+#logo {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	margin: auto;
+	padding: 0;
+	max-height: 100px;
+	max-width: 100px;
+	border: none;
+}
+
+#unc_logo {
+	position: absolute;
+	opacity: 0.2;
+	right: 20px;
+	top: 20px;
+	margin: auto;
+	padding: 0;
+	max-height: 100px;
+	max-width: 100px;
+	border: none;
+}
+
+#header-subtitle {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 33px;
+	color: white;
+	margin-bottom: 0;
+	text-shadow: 0px 4px 4px #1c1a19;
+	text-transform: lowercase;
+	font-size: 1.3em; 
+	font-style: italic;
+	font-family: arial, serial, monospace;
+}
+
+nav {
+	background: #3ABFFC;
+	background-image: url(images/nav-gradient.png);
+	background-repeat: repeat-y;
+	border-radius: 0px 0px 10px 10px;
+	float: left;
+	position: relative;
+	text-align: center;
+	padding-top: 5px;
+	/*padding-bottom: TODO;*/
+}
+
+nav ul {
+	list-style-type: none;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 15px;
+	margin-top: 10px;
+}
+
+nav a {
+	background-color: white;
+	border-radius: 5px;
+	font-size: 1.3em;
+	color: #0072FC;
+	padding: 3px;
+	text-decoration: none;
+}
+
+#push-footer-down {
+	overflow: auto;
+}
+
+nav a:hover {
+	color: #8AE7FE;
+}
+
+#content {
+	background-color: white;
+	padding: 10px;
+	overflow: auto;
+}
+
+#main-left {
+	border: 1px solid #0072FC;
+	background-color: #ADE6FF;
+	width: 49%;
+	float: left;
+	height: 100%;
+}
+
+#main-signup {
+	border: 1px solid #0072FC;
+	background-color: #ADE6FF;
+	width: 49%;
+	float: right;
+	height: 100%;
+}
+
+footer
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
