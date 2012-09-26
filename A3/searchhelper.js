@@ -258,6 +258,12 @@ NNNNNNNNNN (resultId), NNNNNNNNNN (userId),
  * NNN (length of fromAddress), fromAddress, NNN (length of toAddress), toAddress,
  * NNN (length of date), date
 
+	this.resultId = resultId;
+	this.fromAddress = fromAddress;
+	this.toAddress = toAddress;
+	this.date = date;
+	this.userId = userId;
+
  */
 SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	// Clear the table
@@ -268,6 +274,12 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 
 	var resultSet = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012");
 	console.log(resultSet);
+
+	for(var i = 0; i < resultSet.results.length; i++) {
+		var user = User.getUserById(resultSet.results[i].userId);
+		tableElement.append($("<tr><td>"+resultSet.results[i].fromAddress+"</td><td>"+
+				resultSet.results[i].toAddress+"</td><td>"+resultSet.results[i].date+"</td><td id="+user.userId+">"+user.displayName+"</td></tr>"));
+	}
 }
 
 //Basic sanity testing
