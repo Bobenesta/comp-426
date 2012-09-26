@@ -253,17 +253,6 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
  *
  * gets a result set which matches this SearchQuery and places it in the given table
  * (TODO: Request results from server instead of doing anything static here)
-
-NNNNNNNNNN (resultId), NNNNNNNNNN (userId),
- * NNN (length of fromAddress), fromAddress, NNN (length of toAddress), toAddress,
- * NNN (length of date), date
-
-	this.resultId = resultId;
-	this.fromAddress = fromAddress;
-	this.toAddress = toAddress;
-	this.date = date;
-	this.userId = userId;
-
  */
 SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	// Clear the table
@@ -277,8 +266,30 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	for(var i = 0; i < resultSet.results.length; i++) {
 		// TODO: This is going to have to be async
 		var user = User.getUserById(resultSet.results[i].userId);
-		tableElement.append($("<tr><td>"+resultSet.results[i].fromAddress+"</td><td>"+
-				resultSet.results[i].toAddress+"</td><td>"+resultSet.results[i].date+"</td><td id="+user.userId+">"+user.displayName+"</td></tr>"));
+		tableElement.append($("<tr><td>" + resultSet.results[i].fromAddress + "</td><td>" +
+				resultSet.results[i].toAddress + "</td><td>" + resultSet.results[i].date + "</td><td id=" +
+				user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
+	}
+}
+
+/* userBoxHandler(int userId)
+ *
+ * shows/hides the user box and fills it with the given userId
+ */
+var userBoxHandler = function(userId) {
+	var userBox = $("#user-box");
+	var user = User.getUserById(userId);
+
+	$("#user-box-name").html(user.averageRaiting + "/5");
+	if (user.reviews.length > 0)
+		$("#user-box-rating-1").html(user.reviews[0].rating + ": " + user.reviews[0].shortComment);
+	if (user.reviews.length > 1)
+		$("#user-box-rating-2").html(user.reviews[1].rating + ": " + user.reviews[1].shortComment);
+
+	if (userBox.css("visibility") == 'hidden') {
+		userBox.css("visibility", "visible");
+	} else {
+		userBox.css("visibility", "hidden");
 	}
 }
 
