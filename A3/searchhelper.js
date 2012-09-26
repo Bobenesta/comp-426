@@ -98,22 +98,22 @@ var Result = function(resultId, fromAddress, toAddress, date, userId) {
  * NNN (length of date), date
  */
 Result.deserialize = function(serialized) {
-	var result = new Result();
+	var retVal = new Result();
 
-	result.resultId = parseInt(serialized.substring(0, 10), 10);
-	result.userId = parseInt(serialized.substring(10, 20), 10);
+	retVal.resultId = parseInt(serialized.substring(0, 10), 10);
+	retVal.userId = parseInt(serialized.substring(10, 20), 10);
 
 	var fromAddressLength = parseInt(serialized.substring(20, 23), 10);
-	result.fromAddress = serialized.substring(23, 23 + fromAddressLength);
+	retVal.fromAddress = serialized.substring(23, 23 + fromAddressLength);
 
-	var toAddressLength = serialized.substring(23 + fromAddressLength, 26 + fromAddressLength);
+	var toAddressLength = parseInt(serialized.substring(23 + fromAddressLength, 26 + fromAddressLength), 10);
 	var dateLengthStart = 26 + fromAddressLength + toAddressLength;
-	result.toAddress = serialized.substring(26 + fromAddressLength, dateLengthStart);
+	retVal.toAddress = serialized.substring(26 + fromAddressLength, dateLengthStart);
 
 	var dateLength = serialized.substring(dateLengthStart, dateLengthStart + 3);
-	result.dateLength = serialized.substring(dateLengthStart + 3, dateLengthStart + 3 + dateLength);
+	retVal.date = serialized.substring(dateLengthStart + 3, dateLengthStart + 3 + dateLength);
 
-	return result;
+	return retVal;
 }
 
 /* ResultSet(Result[] results)
@@ -273,16 +273,16 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	tableElement.append(headers);
 
 	var resultSet = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012");
-	console.log(resultSet);
 
 	for(var i = 0; i < resultSet.results.length; i++) {
+		// TODO: This is going to have to be async
 		var user = User.getUserById(resultSet.results[i].userId);
 		tableElement.append($("<tr><td>"+resultSet.results[i].fromAddress+"</td><td>"+
 				resultSet.results[i].toAddress+"</td><td>"+resultSet.results[i].date+"</td><td id="+user.userId+">"+user.displayName+"</td></tr>"));
 	}
 }
 
-//Basic sanity testing
+/*//Basic sanity testing
 var address = new Address(true, "", "", 0);
 console.log(address.serialize());
 address = Address.deserialize(address.serialize());
@@ -297,6 +297,4 @@ var address3 = new Address(false, "Sitterson", "NC", 20);
 var search1 = new SearchQuery(address, address3, "07/07/2012", false);
 console.log(search1.serialize());
 var search2 = SearchQuery.deserialize(search1.serialize());
-console.log(search2);
-
-var result1 = new Result(10, "UNC", "Charlotte", "07/07/2012", );
+console.log(search2);*/

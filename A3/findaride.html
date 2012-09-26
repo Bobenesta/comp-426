@@ -8,6 +8,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script type="text/javascript" src="userinfo.js"></script>
 	<script type="text/javascript" src="searchhelper.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var emptySearchQuery = new SearchQuery(new Address(), new Address(), "07/07/2012", false);
+			emptySearchQuery.placeResultSetInTable($('#findaride-table'));
+		});
+	</script>
 </head>
 
 <body>
