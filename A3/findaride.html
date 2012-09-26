@@ -96,6 +96,19 @@
 				<th>User</th>
 			</tr>
 		</table>
+		
+		<div id="advice-box" style="visibility: hidden;"> <!--Inline style required for JS to work the first time-->
+			<form name="User" method="POST" action="?">
+				<div class="form-text-entry"><div class="form-text-box-label">Rating:</div>
+				<input name="username" id="login-username" class="form-text-box" maxlength="50"></div>
+				<div class="form-text-entry"><div class="form-text-box-label">Few comments:</div>
+				<textarea name="few-comments" id="login-password" class="form-text-box" type="password" maxlength="512"></textarea></div>
+
+				<br>
+				<div class="center"><button type="submit">More information</button></div>
+			</form>
+		</div>
+		
 	</div>
 	</div>
 	</div>
