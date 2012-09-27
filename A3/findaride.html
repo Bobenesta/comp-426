@@ -12,6 +12,8 @@
 		$(document).ready(function() {
 			var emptySearchQuery = new SearchQuery(new Address(), new Address(), "07/07/2012", false);
 			emptySearchQuery.placeResultSetInTable($('#findaride-table'));
+
+			SearchQuery.fillSelectorWithMyRequests($('#myRequests'));
 		});
 	</script>
 </head>
@@ -79,8 +81,8 @@
 			</div>
 			<br>
 			<div id="findaride-search-bymyrequests">
-				<input type="checkbox" name="by-request">Or...search by my request:
-				<select name="time"><option value="-">Select One</option><option value="0">To Greensboro on 1/10</option></select>
+				Or...search by my request:
+				<select id="myRequests" onchange="SearchQuery.updateForms($('#myRequests'), $('#findaride-search'))"></select>
 			</div>
 			<br>
 			<div id="findaride-search-submit" class="center">

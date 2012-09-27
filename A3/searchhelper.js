@@ -249,6 +249,43 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	return result;
 }
 
+/* getSearchQueryFromSearchFields(DivElement containingDiv)
+ *
+
+ * gets a SearchQuery based on all the fields in the form in containingDiv
+ */
+SearchQuery.placeSearchQueryInSearchFields = function(containingDiv) {
+	if (this.startAddress.isUNC) {
+		containingDiv.find("#start-type").val("unc");
+		containingDiv.find("#start-address-textbox").val("");
+		containingDiv.find("#start-citystate-textbox").val("");
+	} else {
+		containingDiv.find("#start-type").val("other");
+		containingDiv.find("#start-address-textbox").val(this.startAddress.addressLine);
+		containingDiv.find("#start-citystate-textbox").val(this.startAddress.cityStateLine);
+	}
+	containingDiv.find("#start-within").val(this.startAddress.radius);
+
+	if (this.toAddress.isUNC) {
+		containingDiv.find("#dest-type").val("unc");
+		containingDiv.find("#dest-address-textbox").val("");
+		containingDiv.find("#dest-citystate-textbox").val("");
+	} else {
+		containingDiv.find("#dest-type").val("other");
+		containingDiv.find("#dest-address-textbox").val(this.toAddress.addressLine);
+		containingDiv.find("#dest-citystate-textbox").val(this.toAddress.cityStateLine);
+	}
+	containingDiv.find("#dest-within").val(this.toAddress.radius);
+
+	containingDiv.find("#datebox").val(this.date);
+
+	if (this.isMorning == true) {
+		containingDiv.find("#time-selector").val("morning");
+	} else {
+		containingDiv.find("#time-selector").val("afternoon");
+	}
+}
+
 /* placeResultSetInTable(TableElement tableElement)
  *
  * gets a result set which matches this SearchQuery and places it in the given table
@@ -261,7 +298,7 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	var headers = $("<tr><th>From</th><th>To</th><th>When</th><th>User</th></tr>");
 	tableElement.append(headers);
 
-	var resultSet = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012");
+	var resultSet = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012"+"04900000000010000001000003UNC004Duke01009/26/2012");
 
 	for(var i = 0; i < resultSet.results.length; i++) {
 		// TODO: This is going to have to be async
@@ -270,6 +307,17 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 				resultSet.results[i].toAddress + "</td><td>" + resultSet.results[i].date + "</td><td id=" +
 				user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
 	}
+}
+
+/* getShortName()
+ *
+ * Gets a short human-readable name for this query
+ */
+SearchQuery.prototype.getShortName = function() {
+	if (this.endAddress.isUNC == false)
+		return "To " + this.endAddress.cityStateLine + " on " + this.date;
+	else
+		return "From " + this.startAddress.cityStateLine + " on " + this.date;
 }
 
 /* userBoxHandler(int userId)
@@ -283,8 +331,12 @@ var userBoxHandler = function(userId) {
 	$("#user-box-name").html(user.averageRaiting + "/5");
 	if (user.reviews.length > 0)
 		$("#user-box-rating-1").html(user.reviews[0].rating + ": " + user.reviews[0].shortComment);
+	else
+		$("#user-box-rating-1").html("");
 	if (user.reviews.length > 1)
 		$("#user-box-rating-2").html(user.reviews[1].rating + ": " + user.reviews[1].shortComment);
+	else
+		$("#user-box-rating-2").html("");
 
 	if (userBox.css("visibility") == 'hidden') {
 		userBox.css("visibility", "visible");
@@ -292,6 +344,77 @@ var userBoxHandler = function(userId) {
 		userBox.css("visibility", "hidden");
 	}
 }
+
+/* fillSelectorWithMyRequests(selector element)
+ *
+ * Fills the given HTML selector with data from SearchQueries.myQueries
+ */
+SearchQuery.fillSelectorWithMyRequests = function(selectorElement) {
+	selectorElement.empty();
+	selectorElement.append($('<option value="-">Filled In Above</option>'));
+	for(var i = 0; i < SearchQuery.myQueries.length; i++) {
+		selectorElement.append($('<option value="' + i + '">' + SearchQuery.myQueries[i].getShortName() + '</option>'));
+	}
+}
+
+
+/* updateForms(Element selectorElement, Element form)
+ *
+ * Fills the given HTML selector with data from SearchQueries.myQueries
+ */
+SearchQuery.updateForms = function(selectorElement, formDiv) {
+	if (selectorElement.val() == "-") {
+		formDiv.find("#start-type").val("unc");
+		formDiv.find("#start-address-textbox").val("");
+		formDiv.find("#start-citystate-textbox").val("");
+		formDiv.find("#start-within").val(10);
+
+		formDiv.find("#dest-type").val("unc");
+		formDiv.find("#dest-address-textbox").val("");
+		formDiv.find("#dest-citystate-textbox").val("");
+		formDiv.find("#dest-within").val(10);
+
+		formDiv.find("#datebox").val("");
+		formDiv.find("#time-selector").val("morning");
+	} else {
+		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
+		if (query.startAddress.isUNC) {
+			formDiv.find("#start-type").val("unc");
+			formDiv.find("#start-address-textbox").val("");
+			formDiv.find("#start-citystate-textbox").val("");
+		} else {
+			formDiv.find("#start-type").val("other");
+			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
+			formDiv.find("#start-citystate-textbox").val(query.startAddress.cityStateLine);
+		}
+		formDiv.find("#start-within").val(query.startAddress.radius);
+
+		if (query.startAddress.isUNC) {
+			formDiv.find("#dest-type").val("unc");
+			formDiv.find("#dest-address-textbox").val("");
+			formDiv.find("#dest-citystate-textbox").val("");
+		} else {
+			formDiv.find("#dest-type").val("other");
+			formDiv.find("#dest-address-textbox").val(query.startAddress.addressLine);
+			formDiv.find("#dest-citystate-textbox").val(query.startAddress.cityStateLine);
+		}
+		formDiv.find("#dest-within").val(query.startAddress.radius);
+
+		formDiv.find("#datebox").val(query.date);
+
+		if (query.isMorning == true) {
+			formDiv.find("#time-selector").val("morning");
+		} else {
+			formDiv.find("#time-selector").val("afternoon");
+		}
+	}
+}
+
+SearchQuery.myQueries = new Array();
+SearchQuery.myQueries.push(new SearchQuery(new Address(true, "", "", 10), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Charlotte, NC", 10), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Hillsbourogh, NC", 10), new Address(false, "Duke", "Durham, NC", 20), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "NCSU", "Raleigh, NC", 20), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
 
 /*//Basic sanity testing
 var address = new Address(true, "", "", 0);
