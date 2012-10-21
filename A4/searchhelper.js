@@ -389,16 +389,16 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 		}
 		formDiv.find("#start-within").val(query.startAddress.radius);
 
-		if (query.startAddress.isUNC) {
+		if (query.endAddress.isUNC) {
 			formDiv.find("#dest-type").val("unc");
 			formDiv.find("#dest-address-textbox").val("");
 			formDiv.find("#dest-citystate-textbox").val("");
 		} else {
 			formDiv.find("#dest-type").val("other");
-			formDiv.find("#dest-address-textbox").val(query.startAddress.addressLine);
-			formDiv.find("#dest-citystate-textbox").val(query.startAddress.cityStateLine);
+			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
+			formDiv.find("#dest-citystate-textbox").val(query.endAddress.cityStateLine);
 		}
-		formDiv.find("#dest-within").val(query.startAddress.radius);
+		formDiv.find("#dest-within").val(query.endAddress.radius);
 
 		formDiv.find("#datebox").val(query.date);
 
