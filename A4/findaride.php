@@ -15,7 +15,9 @@
 
 			var requestsSelector = $('#myRequests');
 			SearchQuery.fillSelectorWithMyRequests(requestsSelector);
-			requestsSelector.change(SearchQuery.updateForms(requestsSelector, $('#findaride-search')));
+			requestsSelector.change(function() {
+				SearchQuery.updateForms(requestsSelector, $('#findaride-search'))
+			});
 
 			$('#dest-type').change(function() {
 				if ($('#dest-type').val() == "unc") {

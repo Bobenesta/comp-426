@@ -385,7 +385,9 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 		} else {
 			formDiv.find("#start-type").val("other");
 			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
+			formDiv.find("#start-address-textbox").removeAttr("disabled");
 			formDiv.find("#start-citystate-textbox").val(query.startAddress.cityStateLine);
+			formDiv.find("#start-citystate-textbox").removeAttr("disabled");
 		}
 		formDiv.find("#start-within").val(query.startAddress.radius);
 
@@ -396,7 +398,9 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 		} else {
 			formDiv.find("#dest-type").val("other");
 			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
+			formDiv.find("#dest-address-textbox").removeAttr("disabled");
 			formDiv.find("#dest-citystate-textbox").val(query.endAddress.cityStateLine);
+			formDiv.find("#dest-citystate-textbox").removeAttr("disabled");
 		}
 		formDiv.find("#dest-within").val(query.endAddress.radius);
 
