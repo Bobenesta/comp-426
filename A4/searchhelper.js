@@ -357,6 +357,21 @@ SearchQuery.fillSelectorWithMyRequests = function(selectorElement) {
 	}
 }
 
+/* autoDisableAddressCityStateText(Element selector, Element addressTextBox, Element cityStateTextBox)
+ *
+ * Disables/enables addressTextBox and cityStateTextBox based on the unc/other value of selector
+ */
+autoDisableAddressCityStateText = function(selector, addressTextBox, cityStateTextBox) {
+	if (selector.val() == "unc") {
+		addressTextBox.val("");
+		addressTextBox.attr("disabled", "disabled");
+		cityStateTextBox.val("");
+		cityStateTextBox.attr("disabled", "disabled");
+	} else {
+		addressTextBox.removeAttr("disabled");
+		cityStateTextBox.removeAttr("disabled");
+	}
+}
 
 /* updateForms(Element selectorElement, Element form)
  *
@@ -380,28 +395,22 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
 		if (query.startAddress.isUNC) {
 			formDiv.find("#start-type").val("unc");
-			formDiv.find("#start-address-textbox").attr("disabled", "disabled");
-			formDiv.find("#start-citystate-textbox").attr("disabled", "disabled");
 		} else {
 			formDiv.find("#start-type").val("other");
 			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
-			formDiv.find("#start-address-textbox").removeAttr("disabled");
 			formDiv.find("#start-citystate-textbox").val(query.startAddress.cityStateLine);
-			formDiv.find("#start-citystate-textbox").removeAttr("disabled");
 		}
+		autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
 		formDiv.find("#start-within").val(query.startAddress.radius);
 
 		if (query.endAddress.isUNC) {
 			formDiv.find("#dest-type").val("unc");
-			formDiv.find("#dest-address-textbox").attr("disabled", "disabled");
-			formDiv.find("#dest-citystate-textbox").attr("disabled", "disabled");
 		} else {
 			formDiv.find("#dest-type").val("other");
 			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
-			formDiv.find("#dest-address-textbox").removeAttr("disabled");
 			formDiv.find("#dest-citystate-textbox").val(query.endAddress.cityStateLine);
-			formDiv.find("#dest-citystate-textbox").removeAttr("disabled");
 		}
+		autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
 		formDiv.find("#dest-within").val(query.endAddress.radius);
 
 		formDiv.find("#datebox").val(query.date);

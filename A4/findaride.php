@@ -20,27 +20,11 @@
 			});
 
 			$('#dest-type').change(function() {
-				if ($('#dest-type').val() == "unc") {
-					$('#dest-address-textbox').val("");
-					$('#dest-address-textbox').attr("disabled", "disabled");
-					$('#dest-citystate-textbox').val("");
-					$('#dest-citystate-textbox').attr("disabled", "disabled");
-				} else {
-					$('#dest-address-textbox').removeAttr("disabled");
-					$('#dest-citystate-textbox').removeAttr("disabled");
-				}
+				autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-citystate-textbox'));
 			});
 
 			$('#start-type').change(function() {
-				if ($('#start-type').val() == "unc") {
-					$('#start-address-textbox').val("");
-					$('#start-address-textbox').attr("disabled", "disabled");
-					$('#start-citystate-textbox').val("");
-					$('#start-citystate-textbox').attr("disabled", "disabled");
-				} else {
-					$('#start-address-textbox').removeAttr("disabled");
-					$('#start-citystate-textbox').removeAttr("disabled");
-				}
+				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 			});
 		});
 	</script>
