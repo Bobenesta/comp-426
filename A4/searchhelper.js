@@ -296,7 +296,13 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	var headers = $("<tr><th>From</th><th>To</th><th>When</th><th>User</th></tr>");
 	tableElement.append(headers);
 
-	var resultSet = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012"+"04900000000010000001000003UNC004Duke01009/26/2012");
+	// TODO Request result set async from server
+	var resultSetFromUNC = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012" + "04900000000010000001000003UNC004Duke01009/26/2012");
+	var resultSetToUNC = ResultSet.deserialize("05100000000010000005915009Charlotte003UNC01007/12/2012" + "04900000000010000001000003Duke003UNC01009/30/2012");
+
+	var resultSet = resultSetToUNC;
+	if (this.startAddress.isUNC)
+		resultSet = resultSetFromUNC;
 
 	for(var i = 0; i < resultSet.results.length; i++) {
 		// TODO: This is going to have to be async
