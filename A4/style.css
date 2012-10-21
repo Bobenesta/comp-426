@@ -1,0 +1,217 @@
+body {
+	position: relative;
+	right: 5%;
+	left: 5%;
+	width: 90%;
+	height: auto;
+}
+
+header {
+	background: #FAFDFE;
+	background-image: url(images/header-gradient.png);
+	background-repeat: repeat-y;
+	border-radius: 50px 50px 0 0;
+	position: relative;
+	padding: 5px 5px 0px 20px;
+	overflow: hidden;
+}
+
+header h1 {
+	text-align: center;
+	font-family: "comic sans ms", serial, monospace;
+	color: white;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 3.5em;
+	text-shadow: 0px 4px 4px #1c1a19;
+}
+
+#logo {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	margin: auto;
+	padding: 0;
+	max-height: 100px;
+	max-width: 100px;
+	border: none;
+}
+
+#unc_logo {
+	position: absolute;
+	opacity: 0.2;
+	right: 20px;
+	top: 20px;
+	margin: auto;
+	padding: 0;
+	max-height: 100px;
+	max-width: 100px;
+	border: none;
+}
+
+#header-subtitle {
+	height: 10px;
+	margin-bottom: 0px;
+	color: white;
+	text-shadow: 0px 4px 4px #1c1a19;
+	text-transform: lowercase;
+	font-size: 1.3em; 
+	font-style: italic;
+	font-family: arial, serial, monospace;
+}
+
+#user-bar {
+	float: right;
+}
+
+#login-box {
+	position: relative;
+	padding: 10px 10px 10px 10px;
+	float: right;
+	z-index: 2;
+	border: 1px solid #0072FC;
+	background-color: #ADE6FF;
+	margin-left: -100%;
+}
+
+nav {
+	background: #3ABFFC;
+	background-image: url(images/nav-gradient.png);
+	background-repeat: repeat-y;
+	border-radius: 0px 0px 10px 10px;
+	float: left;
+	position: relative;
+	text-align: center;
+	padding-top: 5px;
+	/*padding-bottom: TODO;*/
+}
+
+nav div {
+	display: inline-block;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+nav div:last-child {
+	margin-bottom: 10px;
+}
+
+nav a {
+	background-color: white;
+	border-radius: 5px;
+	font-size: 1.3em;
+	color: #0072FC;
+	padding: 3px;
+	text-decoration: none;
+}
+
+#push-footer-down {
+	overflow: hidden;
+}
+
+nav a:hover {
+	color: #8AE7FE;
+}
+
+#content {
+	padding: 0px;
+	position: relative;
+	left: 10px;
+	top: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	overflow: auto;
+}
+
+.content-box {
+	border: 1px solid #0072FC;
+	background-color: #ADE6FF;
+	padding: 10px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+}
+
+#main-left {
+	width: 49%;
+	float: left;
+	height: 100%;
+	/* 0px padding doesn't look great, but for the two-column width% approach to work, its neccessary */
+	padding: 0px;
+}
+
+#main-signup {
+	width: 49%;
+	float: right;
+	height: 100%;
+	/* 0px padding doesn't look great, but for the two-column width% approach to work, its neccessary */
+	padding: 0px;
+}
+
+#findaride-search-standard {
+	overflow: auto;
+}
+
+#findaride-search-standard-start {
+	float: left;
+	margin-right: 10px;
+	width: 36%;
+}
+
+#findaride-search-standard-dest {
+	float: left;
+	margin-right: 10px;
+	width: 36%;
+}
+
+#findaride-datebox {
+	width: 10em;
+}
+
+#findaride-table {
+	border-collapse: collapse;
+	width: 100%;
+	position: relative;
+	top: 10px;
+	margin-bottom: 20px;
+}
+
+#findaride-table tr th {
+	border: 1px solid #000000;
+	width: 25%;
+}
+
+#findaride-table tr td {
+	border: 1px solid #000000;
+	max-width: 25%;
+}
+
+/* Utils classes */
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.form-text-box-label {
+	float: left;
+}
+
+.form-text-box {
+	float: right;
+}
+
+.form-text-entry {
+	overflow: hidden;
+}
+
+#user-box {
+	position: relative;
+	padding: 10px 10px 10px 10px;
+	float: right;
+	z-index: 2;
+	border: 1px solid #0072FC;
+	background-color: #ADE6FF;
+	margin-left: -100%;
+}
