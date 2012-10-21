@@ -19,22 +19,21 @@
 		<div class="content-box">
 			<div id="all-without-map">
 				<div id="my-request">
-					To:
+					To: <span id="rideinfo-to"></span>
 					<br/>
-					From:
+					From: <span id="rideinfo-from"></span>
 					<br/>
-					<div id="driver-rate">
+					<div id="rideinfo-driver-info">
 						Name of the driver:
 						<a href="#">See full profile</a>(rated ...)
 					</div>
-					Estimated travel time:
+					Estimated travel time: <span id="rideinfo-time"></span>
 					<br/>
-					Estimated travel cost:
+					Estimated travel cost: <span id="rideinfo-cost"></span>
 					<br/>
-					<div id="number-free-place">
-						Car capacity:
-						N spots left...
-					</div>
+					Car capacity/description: <span id="rideinfo-car-type"></span>
+					<br>
+					<span id="rideinfo-space-left"></span>
 				</div>
 				<div id="validate-my-spot">
 					<form name="my-information" method="POST" action="#">
