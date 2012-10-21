@@ -395,31 +395,6 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 	} else {
 		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
 		query.placeSearchQueryInSearchFields(formDiv);
-/*if (query.startAddress.isUNC) {
-			formDiv.find("#start-type").val("unc");
-		} else {
-			formDiv.find("#start-type").val("other");
-			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
-			formDiv.find("#start-citystate-textbox").val(query.startAddress.cityStateLine);
-		}
-		formDiv.find("#start-within").val(query.startAddress.radius);
-
-		if (query.endAddress.isUNC) {
-			formDiv.find("#dest-type").val("unc");
-		} else {
-			formDiv.find("#dest-type").val("other");
-			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
-			formDiv.find("#dest-citystate-textbox").val(query.endAddress.cityStateLine);
-		}
-		formDiv.find("#dest-within").val(query.endAddress.radius);
-
-		formDiv.find("#datebox").val(query.date);
-
-		if (query.isMorning == true) {
-			formDiv.find("#time-selector").val("morning");
-		} else {
-			formDiv.find("#time-selector").val("afternoon");
-		}*/
 	}
 }
 
