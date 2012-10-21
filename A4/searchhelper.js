@@ -217,7 +217,7 @@ SearchQuery.prototype.serialize = function() {
 
 /* getSearchQueryFromSearchFields(DivElement containingDiv)
  *
- * gets a SearchQuery based on all the fields in the form in containingDiv
+ * Gets a SearchQuery based on all the fields in the form in containingDiv
  */
 SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	var result = new SearchQuery();
@@ -249,16 +249,13 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	return result;
 }
 
-/* getSearchQueryFromSearchFields(DivElement containingDiv)
+/* placeSearchQueryInSearchFields(DivElement containingDiv)
  *
-
- * gets a SearchQuery based on all the fields in the form in containingDiv
+ * Fills in all the fields in the form in containingDiv based on a search query
  */
-SearchQuery.placeSearchQueryInSearchFields = function(containingDiv) {
+SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	if (this.startAddress.isUNC) {
 		containingDiv.find("#start-type").val("unc");
-		containingDiv.find("#start-address-textbox").val("");
-		containingDiv.find("#start-citystate-textbox").val("");
 	} else {
 		containingDiv.find("#start-type").val("other");
 		containingDiv.find("#start-address-textbox").val(this.startAddress.addressLine);
@@ -268,8 +265,6 @@ SearchQuery.placeSearchQueryInSearchFields = function(containingDiv) {
 
 	if (this.toAddress.isUNC) {
 		containingDiv.find("#dest-type").val("unc");
-		containingDiv.find("#dest-address-textbox").val("");
-		containingDiv.find("#dest-citystate-textbox").val("");
 	} else {
 		containingDiv.find("#dest-type").val("other");
 		containingDiv.find("#dest-address-textbox").val(this.toAddress.addressLine);
@@ -284,6 +279,9 @@ SearchQuery.placeSearchQueryInSearchFields = function(containingDiv) {
 	} else {
 		containingDiv.find("#time-selector").val("afternoon");
 	}
+
+	autoDisableAddressCityStateText(containingDiv.find("#start-type"), containingDiv.find("#start-address-textbox"), containingDiv.find("#start-citystate-textbox"));
+	autoDisableAddressCityStateText(containingDiv.find("#dest-type"), containingDiv.find("#dest-address-textbox"), containingDiv.find("#dest-citystate-textbox"));
 }
 
 /* placeResultSetInTable(TableElement tableElement)
@@ -375,7 +373,7 @@ autoDisableAddressCityStateText = function(selector, addressTextBox, cityStateTe
 
 /* updateForms(Element selectorElement, Element form)
  *
- * Fills the given HTML selector with data from SearchQueries.myQueries
+ * Fills the given HTML form with data from SearchQueries.myQueries (selected by selectorElement)
  */
 SearchQuery.updateForms = function(selectorElement, formDiv) {
 	if (selectorElement.val() == "-") {
@@ -391,9 +389,13 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 
 		formDiv.find("#datebox").val("");
 		formDiv.find("#time-selector").val("morning");
+
+		autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
+		autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
 	} else {
 		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
-		if (query.startAddress.isUNC) {
+		query.placeSearchQueryInSearchFields(formDiv);
+/*if (query.startAddress.isUNC) {
 			formDiv.find("#start-type").val("unc");
 		} else {
 			formDiv.find("#start-type").val("other");
@@ -417,10 +419,8 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 			formDiv.find("#time-selector").val("morning");
 		} else {
 			formDiv.find("#time-selector").val("afternoon");
-		}
+		}*/
 	}
-	autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
-	autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
 }
 
 SearchQuery.myQueries = new Array();

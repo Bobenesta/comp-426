@@ -28,6 +28,11 @@
 				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 			});
 			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
+
+			$('#findaride-form').submit(
+				
+				return false; // We handle everything in Javascript, don't actually submit
+			);
 		});
 	</script>
 </head>
@@ -38,7 +43,7 @@
 	<div id="content">
 	<div class="content-box">
 		<div id="findaride-search">
-			<form name="findaride" method="POST" action="#">
+			<form name="findaride" id="findaride-form" method="POST" action="#">
 			<div id="findaride-search-standard">
 				<!-- Steal styles from login to avoid useless duplication-->
 				<div id="findaride-search-standard-start">
