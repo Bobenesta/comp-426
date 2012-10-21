@@ -270,7 +270,7 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 		containingDiv.find("#dest-address-textbox").val(this.endAddress.addressLine);
 		containingDiv.find("#dest-citystate-textbox").val(this.endAddress.cityStateLine);
 	}
-	containingDiv.find("#dest-within").val(this.toAddress.radius);
+	containingDiv.find("#dest-within").val(this.endAddress.radius);
 
 	containingDiv.find("#datebox").val(this.date);
 
