@@ -297,8 +297,8 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	tableElement.append(headers);
 
 	// TODO Request result set async from server
-	var resultSetFromUNC = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012" + "04900000000010000001000003UNC004Duke01009/26/2012");
-	var resultSetToUNC = ResultSet.deserialize("05100000000010000005915009Charlotte003UNC01007/12/2012" + "04900000000010000001000004Duke003UNC01009/30/2012");
+	var resultSetFromUNC = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012" + "04900000000020000001000003UNC004Duke01009/26/2012");
+	var resultSetToUNC = ResultSet.deserialize("05100000000030000005915009Charlotte003UNC01007/12/2012" + "04900000000040000001000004Duke003UNC01009/30/2012");
 
 	var resultSet = resultSetToUNC;
 	if (this.startAddress.isUNC)
