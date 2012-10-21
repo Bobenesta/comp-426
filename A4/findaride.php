@@ -13,7 +13,33 @@
 			var emptySearchQuery = new SearchQuery(new Address(), new Address(), "07/07/2012", false);
 			emptySearchQuery.placeResultSetInTable($('#findaride-table'));
 
-			SearchQuery.fillSelectorWithMyRequests($('#myRequests'));
+			var requestsSelector = $('#myRequests');
+			SearchQuery.fillSelectorWithMyRequests(requestsSelector);
+			requestsSelector.change(SearchQuery.updateForms(requestsSelector, $('#findaride-search')));
+
+			$('#dest-type').update(function() {
+				if ($('#dest-type').val() == "unc") {
+					$('#dest-address-textbox').val("");
+					$('#dest-address-textbox').attr("disabled", "disabled");
+					$('#dest-citystate-textbox').val("");
+					$('#dest-citystate-textbox').attr("disabled", "disabled");
+				} else {
+					$('#dest-address-textbox').removeAttr("disabled");
+					$('#dest-citystate-textbox').removeAttr("disabled");
+				}
+			});
+
+			$('#start-type').update(function() {
+				if ($('#start-type').val() == "unc") {
+					$('#start-address-textbox').val("");
+					$('#start-address-textbox').attr("disabled", "disabled");
+					$('#start-citystate-textbox').val("");
+					$('#start-citystate-textbox').attr("disabled", "disabled");
+				} else {
+					$('#start-address-textbox').removeAttr("disabled");
+					$('#start-citystate-textbox').removeAttr("disabled");
+				}
+			});
 		});
 	</script>
 </head>
@@ -59,7 +85,7 @@
 			<br>
 			<div id="findaride-search-bymyrequests">
 				Or...search by my request:
-				<select id="myRequests" onchange="SearchQuery.updateForms($('#myRequests'), $('#findaride-search'))"></select>
+				<select id="myRequests"></select>
 			</div>
 			<br>
 			<div id="findaride-search-submit" class="center">

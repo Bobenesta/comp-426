@@ -380,8 +380,8 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
 		if (query.startAddress.isUNC) {
 			formDiv.find("#start-type").val("unc");
-			formDiv.find("#start-address-textbox").val("");
-			formDiv.find("#start-citystate-textbox").val("");
+			formDiv.find("#start-address-textbox").attr("disabled", "disabled");
+			formDiv.find("#start-citystate-textbox").attr("disabled", "disabled");
 		} else {
 			formDiv.find("#start-type").val("other");
 			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
@@ -391,8 +391,8 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 
 		if (query.endAddress.isUNC) {
 			formDiv.find("#dest-type").val("unc");
-			formDiv.find("#dest-address-textbox").val("");
-			formDiv.find("#dest-citystate-textbox").val("");
+			formDiv.find("#dest-address-textbox").attr("disabled", "disabled");
+			formDiv.find("#dest-citystate-textbox").attr("disabled", "disabled");
 		} else {
 			formDiv.find("#dest-type").val("other");
 			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
