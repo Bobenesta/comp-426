@@ -7,9 +7,11 @@
 	<link rel="stylesheet" href="style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script type="text/javascript" src="userinfo.js"></script>
+	<script type="text/javascript" src="request.js"></script>
 	<script type="text/javascript">
-
+    Request.display(1);
 	</script>
+</head>
 </head>
 
 <body>
@@ -24,7 +26,7 @@
 					From: <span id="rideinfo-from"></span>
 					<br>
 					<div id="rideinfo-driver-info">
-						Name of the driver:
+						Name of the driver: <span id="rideinfo-name"></span>
 						<a href="#">See full profile</a>(rated ...)
 					</div>
 					Estimated travel time: <span id="rideinfo-time"></span>
