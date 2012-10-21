@@ -9,7 +9,8 @@
 	<script type="text/javascript" src="userinfo.js"></script>
 	<script type="text/javascript" src="request.js"></script>
 	<script type="text/javascript">
-    Request.display(1);
+	$(document).ready(function(){
+    Request.display(1);});
 	</script>
 </head>
 </head>

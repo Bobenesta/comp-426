@@ -19,7 +19,7 @@ Request.all[3]= new Request(3000, "UNC", "NCSU", "2012/10/21", 3);
 Request.all[4]= new Request(4000, "UNC", "UVA", "2012/10/21", 4);
 
 Request.display= function(requestId){
-$("#rideinfo-to").val(Request.getRequestById(requestId).from);
-$("#rideinfo-from").val(Request.getRequestById(requestId).to);
-$("#rideinfo-name").val(Request.getRequestById(requestId).when);
+$("#rideinfo-to").html(Request.getRequestById(requestId).from);
+$("#rideinfo-from").html(Request.getRequestById(requestId).to);
+$("#rideinfo-name").html(Request.getRequestById(requestId).when);
 }
