@@ -29,10 +29,10 @@
 			});
 			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 
-			$('#findaride-form').submit(
-				
+			$('#findaride-form').submit(function() {
+				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).placeResultSetInTable($('#findaride-table'));
 				return false; // We handle everything in Javascript, don't actually submit
-			);
+			});
 		});
 	</script>
 </head>
