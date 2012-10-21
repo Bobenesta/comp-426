@@ -19,29 +19,7 @@
 </head>
 
 <body>
-<!--TODO: Pull all this out to a layout common file for php include();-->
-	<header>
-		<img id="logo" src="images/uncarpooling_logo.jpg" alt="uncarpooling_logo"/>
-		<h1>UNCarpooling</h1>
-		<img id="unc_logo" src="images/unc_logo.jpg" alt="unc_logo"/>
-		<p id="header-subtitle">New cars, new friends, new concept...</p><br>
-
-		<div id="user-bar">
-		<!-- TODO: dynamic based on whether user is logged in or not-->
-			Hello John!&nbsp;&nbsp;&nbsp;
-			<a href="">Preferences</a>&nbsp;&nbsp;&nbsp;
-			<a href="">Logout</a>
-		</div>
-	</header>
-
-	<div id="push-footer-down">
-	<!--TODO: This should get hidden if the user is not logged in-->
-	<nav>
-		<div><a href="#">Find a Ride</a></div><br>
-		<div><a href="#">Offer Your Car</a></div><br>
-		<div><a href="#">See Requests</a></div><br>
-		<div><a href="#">About Us</a></div>
-	</nav>
+	<?php require("header.php"); ?>
 
 	<div id="content">
 	<div class="content-box">
@@ -100,19 +78,7 @@
 		</table>		
 	</div>
 	</div>
-	</div>
 
-	<footer class="center">
-		<a href="?">Contact Us</a>&nbsp;&nbsp;&nbsp;
-		<a href="?">TOS</a>
-	</footer>
-
-	<div id="user-box" style="visibility: hidden;"> <!--Inline style required for JS to work the first time-->
-		<div class="form-text-box-label">Rating:</div><div id="user-box-name"></div>
-		Ratings:<br>
-		<div id="user-box-rating-1"></div>
-		<div id="user-box-rating-2"></div>
-		<a href="#">User profile</a>
-	</div>
+	<?php require("footer.php"); ?>
 </body>
 </html>
