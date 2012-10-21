@@ -307,8 +307,8 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
 	for(var i = 0; i < resultSet.results.length; i++) {
 		// TODO: This is going to have to be async
 		var user = User.getUserById(resultSet.results[i].userId);
-		tableElement.append($("<tr><td>" + resultSet.results[i].fromAddress + "</td><td>" +
-				resultSet.results[i].toAddress + "</td><td>" + resultSet.results[i].date + "</td><td id=" +
+		tableElement.append($("<tr><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].fromAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" +
+				resultSet.results[i].toAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].date + "</a></td><td id=" +
 				user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
 	}
 }
