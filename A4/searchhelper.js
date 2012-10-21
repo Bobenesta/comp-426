@@ -412,9 +412,9 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 
 SearchQuery.myQueries = new Array();
 SearchQuery.myQueries.push(new SearchQuery(new Address(true, "", "", 10), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Charlotte, NC", 10), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Hillsbourogh, NC", 10), new Address(false, "Duke", "Durham, NC", 20), "09/26/2012", "true"));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "NCSU", "Raleigh, NC", 20), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Charlotte, NC", 10), new Address(true, "", "", 10), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Hillsbourogh, NC", 10), new Address(true, "", "", 20), "09/26/2012", "true"));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "NCSU", "Raleigh, NC", 20), new Address(true, "", "", 10), "09/29/2012", "true"));
 
 /*//Basic sanity testing
 var address = new Address(true, "", "", 0);
