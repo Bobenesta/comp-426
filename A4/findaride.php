@@ -23,7 +23,6 @@
 
 	<div id="content">
 	<div class="content-box">
-	<!--TODO: Well, this part isnt common-->
 		<div id="findaride-search">
 			<form name="findaride" method="POST" action="#">
 			<div id="findaride-search-standard">
