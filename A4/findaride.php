@@ -22,10 +22,12 @@
 			$('#dest-type').change(function() {
 				autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-citystate-textbox'));
 			});
+			autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-citystate-textbox'));
 
 			$('#start-type').change(function() {
 				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 			});
+			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 		});
 	</script>
 </head>
