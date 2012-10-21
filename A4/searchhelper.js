@@ -263,12 +263,12 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	}
 	containingDiv.find("#start-within").val(this.startAddress.radius);
 
-	if (this.toAddress.isUNC) {
+	if (this.endAddress.isUNC) {
 		containingDiv.find("#dest-type").val("unc");
 	} else {
 		containingDiv.find("#dest-type").val("other");
-		containingDiv.find("#dest-address-textbox").val(this.toAddress.addressLine);
-		containingDiv.find("#dest-citystate-textbox").val(this.toAddress.cityStateLine);
+		containingDiv.find("#dest-address-textbox").val(this.endAddress.addressLine);
+		containingDiv.find("#dest-citystate-textbox").val(this.endAddress.cityStateLine);
 	}
 	containingDiv.find("#dest-within").val(this.toAddress.radius);
 
