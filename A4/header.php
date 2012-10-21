@@ -15,7 +15,7 @@
 	<div id="push-footer-down">
 	<!--TODO: This should get hidden if the user is not logged in-->
 	<nav>
-		<div><a href="#">Find a Ride</a></div><br>
+		<div><a href="findaride.php">Find a Ride</a></div><br>
 		<div><a href="#">Offer Your Car</a></div><br>
 		<div><a href="#">See Requests</a></div><br>
 		<div><a href="#">About Us</a></div>
