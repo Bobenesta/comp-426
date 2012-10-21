@@ -17,7 +17,7 @@
 			SearchQuery.fillSelectorWithMyRequests(requestsSelector);
 			requestsSelector.change(SearchQuery.updateForms(requestsSelector, $('#findaride-search')));
 
-			$('#dest-type').update(function() {
+			$('#dest-type').change(function() {
 				if ($('#dest-type').val() == "unc") {
 					$('#dest-address-textbox').val("");
 					$('#dest-address-textbox').attr("disabled", "disabled");
@@ -29,7 +29,7 @@
 				}
 			});
 
-			$('#start-type').update(function() {
+			$('#start-type').change(function() {
 				if ($('#start-type').val() == "unc") {
 					$('#start-address-textbox').val("");
 					$('#start-address-textbox').attr("disabled", "disabled");
