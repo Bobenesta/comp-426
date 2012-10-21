@@ -400,7 +400,6 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 			formDiv.find("#start-address-textbox").val(query.startAddress.addressLine);
 			formDiv.find("#start-citystate-textbox").val(query.startAddress.cityStateLine);
 		}
-		autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
 		formDiv.find("#start-within").val(query.startAddress.radius);
 
 		if (query.endAddress.isUNC) {
@@ -410,7 +409,6 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 			formDiv.find("#dest-address-textbox").val(query.endAddress.addressLine);
 			formDiv.find("#dest-citystate-textbox").val(query.endAddress.cityStateLine);
 		}
-		autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
 		formDiv.find("#dest-within").val(query.endAddress.radius);
 
 		formDiv.find("#datebox").val(query.date);
@@ -421,6 +419,8 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 			formDiv.find("#time-selector").val("afternoon");
 		}
 	}
+	autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
+	autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
 }
 
 SearchQuery.myQueries = new Array();
