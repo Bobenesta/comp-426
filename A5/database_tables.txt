@@ -1,0 +1,48 @@
+Address
+		id : INT, primary key
+		isUNC : BOOLEAN/BOOL
+		addressLine : CHAR(100)
+		cityStateLine : CHAR(50)
+		radius : ENUM('10 Miles', '20 Miles', '50 Miles')
+		
+User
+		id : INT, primary key
+		first : CHAR(25), first name of user
+		last : CHAR(25), last name of user
+		displayName : BOOLEAN/BOOL
+		dob : DATE, date of birth of the user
+		phone : INT
+		displayPhone : BOOLEAN/BOOL
+		sex : ENUM('M', 'F')
+		email : CHAR(50)
+		password : 	CHAR(25)
+		
+Request
+		id : INT, primary key
+		addressFrom : INT, foreign key to Address table
+		addressTo : INT, foreign key to Address table
+		user : INT, foreign key to User table
+		date : DATE
+		isMorning : BOOLEAN/BOOL
+		
+Message
+		id : INT, primary key
+		userFrom : INT, foreign key to User table
+		userTo : INT, foreign key to User table
+		message : TEXT
+
+Ride
+		id : INT, primary key
+		addressFrom : INT, foreign key to Address table
+		addressTo : INT, foreign key to Address table
+		user : INT, foreign key to User table
+		date : DATE
+		isMorning : BOOLEAN/BOOL
+		carDesc : VARCHAR, description of the car
+		carCapacity : INT
+		
+Stop
+		id : INT, primary key
+		address : INT, foreign key to Address table
+		ride : INT, foreign key to Ride table
+		user : INT, foreign key to User table
