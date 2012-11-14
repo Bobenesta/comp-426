@@ -16,12 +16,19 @@ User
 		sex : ENUM('M', 'F')
 		email : CHAR(50)
 		passwordHash : CHAR(25)
+
+Ratings
+		id : INT, primary key
+		userFrom : INT, foreign key to User table
+		userTo : INT, foreign key to User table
+		rating : INT
+		message : VARCHAR
 		
 Request
 		id : INT, primary key
 		addressFrom : INT, foreign key to Address table
 		addressTo : INT, foreign key to Address table
-		user : INT, foreign key to User table
+		userId : INT, foreign key to User table
 		date : DATE
 		isMorning : BOOLEAN/BOOL
 		
@@ -35,7 +42,7 @@ Ride
 		id : INT, primary key
 		addressFrom : INT, foreign key to Address table
 		addressTo : INT, foreign key to Address table
-		user : INT, foreign key to User table
+		userId : INT, foreign key to User table
 		date : DATE
 		isMorning : BOOLEAN/BOOL
 		carDesc : VARCHAR, description of the car
@@ -43,6 +50,6 @@ Ride
 		
 Stop
 		id : INT, primary key
-		address : INT, foreign key to Address table
-		ride : INT, foreign key to Ride table
-		user : INT, foreign key to User table
+		addressId : INT, foreign key to Address table
+		rideId : INT, foreign key to Ride table
+		userId : INT, foreign key to User table
