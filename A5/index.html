@@ -66,7 +66,7 @@
 			<td>userId</td>
 			<td>{phone: <em>Integer</em>, <br>
 				email: <em>String</em><br>
-			}</td>
+			}</td><!--TODO-->
 			<td>show User profile for this userId. Possibly empty.</td>
 		</tr>
 
@@ -126,7 +126,7 @@
 		<tr><td>GET</td>
 			<td>/request.php</td>
 			<td><dl>
-				<dt>requestInfo object (see below) <!--TODO--></dt> </dl>
+				<dt>requestInfo object (see below)</dt> </dl>
 			</td>
 			<td>Array of requestIds ({id: <em>Integer</em>})</td>
 			<td>Array of requests matching criteria specified by the requestInfo parameter.</td>
@@ -162,39 +162,75 @@
 		<tr><td>GET</td>
 			<td>/offer.php</td>
 			<td><dl>
-				<dt>offerInfo object (see below) <!--TODO--></dt> </dl>
+				<dt>offerInfo object (see below)</dt> </dl>
 			</td>
 			<td>Array of offerIds ({id: <em>Integer</em>})</td>
 			<td>Array of offers matching criteria specified by the offerInfo parameter.</td>
 		</tr>
 			
 		<tr><td>GET</td>
-			<td>/stopsByRideId.php<em>&lt;rideId&gt;</em></td>
+			<td>/stopsByRideId.php</td>
 			<td>rideId</td>
-	        	<td>Array of stops along the ride</td>
+	        	<td>Array of stop ids along a given rideId ({id: <em>Integer</em>})</td>
 			<td>Array of stops along the ride matching stopId
 			 </td>
 		</tr>
 			
 		<tr><td>GET</td>
-			<td>/stopsByUserId.php<em>&lt;stopId&gt;</em></td>
-			<td>stopId</td>
-	        	<td>userId</td>
-			<td>userId that matches stopId
-			 </td>
-		</tr>
-
-		<!--TODO: WTF?--><tr><td>GET</td>
-			<td>/rideronfo.php/<em>&lt;rideId&gt;</em></td>
-			<td>rideId</td>
-			<td>car capacity: String
-			 </td>
-			 <td>some info about the ride 
+			<td>/stop.php/<em>&lt;stopId&gt;</em></td>
+			<td></td>
+	        	<td>{address: <em>Address Object (see below)</em>, <br>
+				userId: <em>Integer</em><br>
+			}</td>
+			<td>gets some basic information on a stop given the stopId.
 			 </td>
 		</tr>
 	</tbody>
-</table>
+	</table>
 
+<h3>Address Object</h3>
+
+When using an address in a search fields can be the empty string (to match all).
+An Address object is JSON encoded as follows:
+<blockquote>
+	{isUNC: Boolean,<br>
+	 addressLine: String,<br>
+	 cityStateLine: String,<br>
+	 radius: Integer<br>
+	}
+</blockquote>
+
+<h3>requestInfo Object</h3>
+
+When searching a requestInfo's fields can be the empty string (to match all).
+A requestInfo object is JSON encoded as follows:
+<blockquote>
+	{addressTo: Address Object,<br>
+	 addressFrom: Address Object,<br>
+	 userId: Integer,<br>
+	 date: String (YYYYMMDD),<br>
+	 isMorning: Boolean<br>
+	}
+</blockquote>
+
+<h3>offerInfo Object</h3>
+
+When searching an offerInfo's fields can be the empty string (to match all).
+A offerInfo object is JSON encoded as follows:
+<blockquote>
+	{addressTo: Address Object,<br>
+	 addressFrom: Address Object,<br>
+	 userId: Integer,<br>
+	 date: String (YYYYMMDD),<br>
+	 isMorning: Boolean,<br>
+	 carDesc: String,<br>
+	 carCapacity: Integer<br>
+	}
+</blockquote>
+
+	<h2>Database Schema</h2>
+
+	<a href="database_tables.txt">Link to database schema design.</a>
 </body>
 </html>
 
