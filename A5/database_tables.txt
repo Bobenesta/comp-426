@@ -15,7 +15,7 @@ User
 		displayPhone : BOOLEAN/BOOL
 		sex : ENUM('M', 'F')
 		email : CHAR(50)
-		password : CHAR(25)
+		passwordHash : CHAR(25)
 		
 Request
 		id : INT, primary key

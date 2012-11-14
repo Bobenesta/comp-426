@@ -64,10 +64,12 @@
 		<tr><td>GET</td>
 			<td>/profile.php/<em>&lt;id&gt;</em></td>
 			<td>userId</td>
-			<td>{phone: <em>Integer</em>, <br>
+			<td>{displayName: <em>String</em>,<br>
+				phone: <em>String</em>,<br>
 				email: <em>String</em><br>
-			}</td><!--TODO-->
-			<td>show User profile for this userId. Possibly empty.</td>
+			}</td>
+			<td>show User profile for this userId. Some objects are likely empty if the currently logged in user does not have access to them.<br>
+			404 Not Found returned if id specified is not found.</td>
 		</tr>
 
 		<tr><td>POST</td>
