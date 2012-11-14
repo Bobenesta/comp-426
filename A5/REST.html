@@ -130,30 +130,42 @@
 			</td>
 			<td>Array of requestIds ({id: <em>Integer</em>})</td>
 			<td>Array of requests matching criteria specified by the requestInfo parameter.</td>
-		</tr>		
-		
-        	<tr><td>POST</td>
-			<td>/offer.php</td>
-			<td>offerInfo</td>
-	        	<td>true/false</td>
-			<td>offer a new ride, return true if post successfully, otherwise return false</td>
 		</tr>
-			
+
 		<tr><td>GET</td>
-			<td>/getOffer.php<em>&lt;userId&gt;</em></td>
-			<td>userId</td>
-	        <td>Array of offers</td>
-			<td>Array of offers matching userId
+			<td>/offer.php/<em>&lt;id&gt;</em></td>
+			<td></td>
+			<td>offerInfo object (see below)
+			 </td>
+			 <td>The offer object with the given id.
+			 </td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/offer.php/<em>&lt;id&gt;</em></td>
+			<td>delete (value ignored)</td>
+			<td>true or false
+			 </td>
+			 <td>delete the offer with offer id <em>&lt;id&gt;</em>.  Returns false if the offer is not associated with the logged in user.
+			 </td>
+		</tr>
+
+		<tr><td>POST</td>
+			<td>/offer.php/<em>&lt;id&gt;</em></td>
+			<td>offerInfo object (see below)</td>
+			<td>true or false
+			 </td>
+			 <td>Update the offer with offer id <em>&lt;id&gt;</em>.  Returns false if the offer is not associated with the logged in user.
 			 </td>
 		</tr>
 
 		<tr><td>GET</td>
-			<td>/searchoffer.php?(search parameters)</td>
+			<td>/offer.php</td>
 			<td><dl>
-				<dt>searchInfo (incl address, date/time, etc)</dt> </dl>
+				<dt>offerInfo object (see below) <!--TODO--></dt> </dl>
 			</td>
-			<td>Array of Offers</td>
-			<td>Array of offers matching criteria specified by parameters.</td>
+			<td>Array of offerIds ({id: <em>Integer</em>})</td>
+			<td>Array of offers matching criteria specified by the offerInfo parameter.</td>
 		</tr>
 			
 		<tr><td>GET</td>
