@@ -62,7 +62,7 @@ class Request {
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
-					"date, isMorning) VALUES (" $addressFrom . ", " .
+					"date, isMorning) VALUES (" . $addressFrom . ", " .
 					$addressTo . ", " . $userId . ", " . $mysqlDate . ", "
 					$isMorning . ")");
 		if ($result) {
