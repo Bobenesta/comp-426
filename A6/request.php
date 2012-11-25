@@ -29,24 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 	}
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (is_null($_SERVER['PATH_INFO'])) {
-		if (is_null($_POST['addressFrom']) || is_null($_POST['addressTo']) ||
-		    is_null($_POST['date']) || is_null($_POST['isMorning'])) {
-			header("HTTP/1.1 403 Forbidden");
-			print("This request does not belong to you!");
-			exit();
-		}
-		$request = Request::create($_POST['addressFrom'], $_POST['addressTo'],
-					$userIdLoggedIn, $_POST['date'], $_POST['isMorning']);
-		if (is_null($request)) {
-			header("HTTP/1.1 400 Bad Request");
-			print("Request parameter was invalid.");
-			exit();
-		}
-		header("Content-type: application/json");
-		print(json_encode($request->getJSON()));
-		exit();
-	} else {
+	$request = null;
+	if (!is_null($_SERVER['PATH_INFO'])) {
 		//TODO sanity check $id
 		$id = intval(substr($_SERVER['PATH_INFO']));//TODO substr?
 		$request = Request::getById($id);
@@ -55,31 +39,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			print("The request was not found");
 			exit();
 		}
-		if (is_null($_POST['delete'])) {
-			if (is_null($_POST['addressFrom']) || is_null($_POST['addressTo']) ||
-			    is_null($_POST['date']) || is_null($_POST['isMorning'])) {
-			$request = Request::create($_POST['addressFrom'], $_POST['addressTo'],
-						$userIdLoggedIn, $_POST['date'], $_POST['isMorning']);
-			if (is_null($request)) {
-				header("HTTP/1.1 400 Bad Request");
-				print("Request parameter was invalid.");
-				exit();
-			}
-			header("Content-type: application/json");
-			print(json_encode($request->getJSON()));
+
+		if ($userIdLoggedIn != $request->getUserId()) {
+			header("HTTP/1.1 403 Forbidden");
+			print("This request does not belong to you!");
+			exit();	
+		}
+	}
+
+	if (!is_null($_POST['delete'])) {
+		if (is_null($request)) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Request parameter was missing.");
 			exit();
 		}
-		} else {
-			if ($userIdLoggedIn != $request->getUserId()) {
-				header("HTTP/1.1 403 Forbidden");
-				print("This request does not belong to you!");
-				exit();	
-			}
-			$request->delete();
-			header("Content-type: application/json");
-			print(json_encode(true));
+
+		$request->delete();
+
+		header("Content-type: application/json");
+		print(json_encode(true));
+		exit();
+	}
+
+	if (is_null($_POST['addressFrom']) || is_null($_POST['addressTo']) ||
+	    is_null($_POST['date']) || is_null($_POST['isMorning'])) {
+		header("HTTP/1.1 400 Bad Request");
+		print("Request parameter was missing.");
+		exit();
+	}
+
+	$addressFrom = $_POST['addressFrom'];
+	$addressTo = $_POST['addressTo'];
+
+	if (is_null($_SERVER['PATH_INFO'])) {
+		$request = Request::create($addressFrom, $addressTo, $userIdLoggedIn,
+						$_POST['date'], $_POST['isMorning']);
+		if (is_null($request)) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Request parameter was invalid.");
 			exit();
 		}
+
+		header("Content-type: application/json");
+		print(json_encode($request->getJSON()));
+		exit();
+	} else {
+		$request->update($addressFrom, $addressTo, $_POST['date'], $_POST['isMorning']);
+
+		header("Content-type: application/json");
+		print(json_encode(true));
+		exit();
 	}
 }
 
