@@ -1,7 +1,6 @@
 <?php
 require_once("inc/Request.php");
 
-//TODO: If no user is logged in, fail here
 //TODO this whole block can probably move to a inc/require_auth.php page
 if (false) {
 	header("HTTP/1.1 401 Authentication Required");//TODO there is a better method for http code (lots of these...)
