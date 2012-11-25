@@ -33,6 +33,37 @@ class Address {
 		return null;
 	}
 
+	public static function getOrCreate($isUNC, $addressLine, $city, $state, $radius) {
+		$mysqli = getDBConnection();
+		//TODO check that $radius is sane
+		//TODO interpret $isUNC as bool
+		if ($isUNC) {
+			//TODO should be able to do this in one query (INSERT OR UPDATE?)
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = true AND " .
+						"radius = " . $radius);
+			$id = 0;
+			if ($result) {
+				if ($result->num_rows == 0) {
+					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
+								"city, state, radius) VALUES (true, '', '', '', " .
+								$radius . ")");
+
+					if (!$result)
+						return null;
+
+					$id = $mysqli->insert_id;
+				} else {
+					$row = $result->fetch_assoc();//TODO if only selecing one column...?
+					$id = $row['id'];
+				}
+				return new Address($id, true, "", "", "", $radius);
+			}
+		} else {
+			//TODO
+		}
+		return null;
+	}
+
 	public function getJSON() {
 		$representation = array();
 		$representation['id'] = $id;

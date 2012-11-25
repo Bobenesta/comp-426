@@ -61,15 +61,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 
-	if (is_null($_POST['addressFrom']) || is_null($_POST['addressTo']) ||
+	if (is_null($_POST['addressFrom-isUNC']) || is_null($_POST['addressFrom-addressLine']) ||
+	    is_null($_POST['addressFrom-city']) || is_null($_POST['addressFrom-state']) ||
+	    is_null($_POST['addressFrom-radius']) ||
+	    is_null($_POST['addressTo-isUNC']) || is_null($_POST['addressTo-addressLine']) ||
+	    is_null($_POST['addressTo-city']) || is_null($_POST['addressTo-state']) ||
+	    is_null($_POST['addressTo-radius']) ||
 	    is_null($_POST['date']) || is_null($_POST['isMorning'])) {
 		header("HTTP/1.1 400 Bad Request");
 		print("Request parameter was missing.");
 		exit();
 	}
 
-	$addressFrom = $_POST['addressFrom'];
-	$addressTo = $_POST['addressTo'];
+	$addressFrom = Address::getOrCreate($_POST['addressFrom-isUNC'],
+					$_POST['addressFrom-addressLine'], $_POST['addressFrom-city'],
+					$_POST['addressFrom-state'], $_POST['addressFrom-radius']);
+	if (is_null($addressFrom)) {
+		header("HTTP/1.1 400 Bad Request");
+		print("Request parameter was invalid.");
+		exit();
+	}
+
+	$addressTo = Address::getOrCreate($_POST['addressTo-isUNC'],
+					$_POST['addressTo-addressLine'], $_POST['addressTo-city'],
+					$_POST['addressTo-state'], $_POST['addressTo-radius']);
+
+	if (is_null($addressTo)) {
+		header("HTTP/1.1 400 Bad Request");
+		print("Request parameter was invalid.");
+		exit();
+	}
 
 	if (is_null($_SERVER['PATH_INFO'])) {
 		$request = Request::create($addressFrom, $addressTo, $userIdLoggedIn,
