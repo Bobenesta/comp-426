@@ -36,7 +36,7 @@ class Address {
 	public static function getOrCreate($isUNC, $addressLine, $city, $state, $radius) {
 		$mysqli = getDBConnection();
 
-		if (!is_numeric($radius) || $addressLine == "" || $city == "" || $state == "")
+		if (!is_numeric($radius) || ($isUNC == "false" && ($addressLine == "" || $city == "" || $state == "")))
 			return null;
 
 		if ($isUNC == "true") {
