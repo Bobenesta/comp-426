@@ -43,20 +43,10 @@ class Request {
 		return null;
 	}
 
-	// Assumes $userId is a valid User ID
+	// Assumes $userId is a valid User ID and $addressFrom/$addressTo are valid Address objects
 	public static function create($addressFrom, $addressTo, $userId, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
-		if(is_int($addressFrom)==false||is_int($addressTo)==false){return null;}
-		$addressFromAddress = Address::getById($addressFrom);
-		if (is_null($addressFromAddress))
-			return null;
-
-		$addressToAddress = Address::getById($addressTo);
-		if (is_null($addressToAddress))
-			return null;
-
-        
 		//TODO escape, convert, validate
 		if(strlen($date)==10){
 		if(is_numeric(substr($date, 0,2))&&$date.substr($date, 2,1)=="/"&&is_numeric(substr($date, 3,2))&&substr($date, 5,1)=="/"&&is_numeric(substr($date, 6,4))) {
@@ -70,8 +60,8 @@ class Request {
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
-					"date, isMorning) VALUES (" . $addressFrom . ", " .
-					$addressTo . ", " . $userId . ", " . $mysqlDate . ", ".
+					"date, isMorning) VALUES (" . $addressFrom->getId() . ", " .
+					$addressTo->getId() . ", " . $userId . ", " . $mysqlDate . ", ".
 					$isMorning . ")");
 		if ($result) {
 			$id = $mysqli->insert_id;
@@ -79,7 +69,7 @@ class Request {
 			$datearr= explode("-",$mysqlDate);
 			//Y-M-D change to M/D/Y
 			$date= $datearr[1]+"/"+$datearr[2]+"/20"+$datearr[0];
-			return new Request($id, $addressFromAddress, $addressToAddress,
+			return new Request($id, $addressFrom, $addressTo,
 					$userId, $date, $isMorning!=0);
 		}
 		return null;
