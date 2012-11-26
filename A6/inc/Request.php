@@ -140,17 +140,17 @@ class Request {
 
 	public function getJSON() {
 		$representation = array();
-		$representation['id'] = $id;
-		$representation['addressFrom'] = $addressFrom->getJSON();
-		$representation['addressTo'] = $addressTo->getJSON();
-		$representation['userId'] = $userId;
-		$representation['date'] = $date;
-		$representation['isMorning'] = $isMorning;
+		$representation['id'] = $this->id;
+		$representation['addressFrom'] = $this->addressFrom->getJSON();
+		$representation['addressTo'] = $this->addressTo->getJSON();
+		$representation['userId'] = $this->userId;
+		$representation['date'] = $this->date;
+		$representation['isMorning'] = $this->isMorning;
 		return $representation;
 	}
 
 	public function getUserId() {
-		return $userId;
+		return $this->userId;
 	}
 }
 

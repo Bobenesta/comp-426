@@ -91,17 +91,17 @@ class Address {
 
 	public function getJSON() {
 		$representation = array();
-		$representation['id'] = $id;
-		$representation['isUNC'] = $isUNC;
-		$representation['addressLine'] = $addressLine;
-		$representation['city'] = $city;
-		$representation['state'] = $state;
-		$representation['radius'] = $radius;
+		$representation['id'] = $this->id;
+		$representation['isUNC'] = $this->isUNC;
+		$representation['addressLine'] = $this->addressLine;
+		$representation['city'] = $this->city;
+		$representation['state'] = $this->state;
+		$representation['radius'] = $this->radius;
 		return $representation;
 	}
 
 	public function getId() {
-		return $id;
+		return $this->id;
 	}
 }
 
