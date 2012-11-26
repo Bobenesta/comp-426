@@ -1,5 +1,5 @@
 ﻿<?php
-require_once("authentication.php");
+require_once("inc/authentication.php");
 
 session_destroy();
 
