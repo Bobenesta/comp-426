@@ -35,9 +35,14 @@ class Address {
 
 	public static function getOrCreate($isUNC, $addressLine, $city, $state, $radius) {
 		$mysqli = getDBConnection();
+		$MAX_RADIUS= 10000; 
 		//TODO check that $radius is sane
+		$arr = explode(" ", $radius);
+		if(!is_numeric($arr[0])||($arr[0]!=10&&$arr[0]!=20&&$arr[0]!=50)||$arr[1]!="Miles"){
+			return null;
+		}
 		//TODO interpret $isUNC as bool
-		if ($isUNC) {
+		if ($isUNC == "true") {
 			//TODO should be able to do this in one query (INSERT OR UPDATE?)
 			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = true AND " .
 						"radius = " . $radius);
@@ -59,7 +64,27 @@ class Address {
 				return new Address($id, true, "", "", "", $radius);
 			}
 		} else {
-			//TODO
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = false AND " .
+						"radius = " . $radius. " AND addressLine = ".$addressLine." AND city= ".$city);
+			$id = 0;
+			if ($result) {
+				if ($result->num_rows == 0) {
+					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
+								"city, state, radius) VALUES (false, ". $addressLine.", ".$city.", '', " .
+								$radius . ")");
+
+					if (!$result)
+						return null;
+
+					$id = $mysqli->insert_id;
+				} else {
+					$row = $result->fetch_assoc();//TODO if only selecing one column...?
+					$id = $row['id'];
+					$addressLine= $row['addressLine'];
+					$city= $row['cityStateLine'];
+				}
+				return new Address($id, false, $addressLine, $city, "", $radius);
+			}
 		}
 		return null;
 	}
