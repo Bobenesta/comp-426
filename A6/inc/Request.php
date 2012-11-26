@@ -94,7 +94,7 @@ class Request {
 
 		$mysqlDate = null;
 		if (!is_null($date)) {
-			Request::validateConvertDateFromWireToMySQL($date);
+			$mysqlDate = Request::validateConvertDateFromWireToMySQL($date);
 			if (is_null($mysqlDate))
 				return null;
 		}
