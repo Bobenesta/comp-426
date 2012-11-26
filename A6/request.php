@@ -52,8 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 
 		header("Content-type: application/json");
-		print(json_encode(Request::getEncodedRequestsBySearch($addressFrom, $addressTo,
-								$_GET['date'], $_GET['isMorning'])));
+		$result = Request::getEncodedRequestsBySearch($addressFrom, $addressTo,
+							$_GET['date'], $_GET['isMorning']);
+
+		if (is_null($result))
+			print(json_encode(false));
+		else
+			print(json_encode($result));
+
 		exit();
 	} else {
 		if (!is_numeric(substr($_SERVER['PATH_INFO'], 1))) {

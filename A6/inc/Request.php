@@ -138,7 +138,7 @@ class Request {
 		$query = $query . "LIMIT 25";
 
 		if ($isFirst)
-			return null;//TODO handle return null upstream
+			return null;
 
 		$result = $mysqli->query($query);
 		$resultsRepresentation = array();
