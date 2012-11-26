@@ -38,7 +38,7 @@ class Request {
 
 			return new Request($id, $addressFrom, $addressTo,
 					intval($row['userId']), $row['date'],
-					$row['isMorning']!=0);
+					$row['isMorning']!=0);//TODO test this
 		}
 		return null;
 	}
@@ -91,11 +91,22 @@ class Request {
 
 	public static function getEncodedRequestsBySearch($addressFrom, $addressTo, $date, $isMorning) {
 		$mysqli = getDBConnection();
+
+		$mysqlDate = null;
+		if (!is_null($date)) {
+			validateConvertDateFromWireToMySQL($date);
+			if (is_null($mysqlDate))
+				return null;
+		}
+
+		if (!is_null($isMorning) && ($isMorning != "false" && $isMorning != "true"))
+			return null;
+
 		$result = $mysqli->query("SELECT * FROM requests WHERE " .
 				!is_null($addressFrom) ? ("addressFrom = '" . $addressFrom->getId() . "'") : ("") .
 				!is_null($addressTo) ? ("addressTo = '" . $addressTo->getId() . "'") : ("") .
-				!is_null($date) ? ("date = '" . $date . "'") : ("") .//TODO date
-				!is_null($addressTo) ? ("isMorning = '" . $isMorning . "'") : ("") .//TODO isMorning
+				!is_null($mysqlDate) ? ("date = '" . $mysqlDate . "'") : ("") .
+				!is_null($addressTo) ? ("isMorning = '" . $isMorning . "'") : ("") .
 				" LIMIT 25");
 		$resultsRepresentation = array();
 		if ($result) {
@@ -103,21 +114,24 @@ class Request {
 				return $resultsRepresentation;
 
 			while ($row = $result->fetch_assoc()) {
-				if (is_null($addressTo)) {
-					$addressTo = Address::getById($row['addressTo']);
-					if (is_null($addressTo))
-						continue;
-				}
+				// This db request should be cached in a lot of cases
+				$addressTo = Address::getById($row['addressTo']);
+				if (is_null($addressTo))
+					continue;
 
-				if (is_null($addressFrom)) {
-					$addressFrom = Address::getById($row['addressFrom']);
-					if (is_null($addressFrom))
-						continue;
-				}
+				// This db request should be cached in a lot of cases
+				$addressFrom = Address::getById($row['addressFrom']);
+				if (is_null($addressFrom))
+					continue;
+
+				// This can be cached when $date was originally not null
+				$date = validateConvertDateFromMySQLToWire($row['date']);
+				if (is_null($date))
+					continue;
 
 				$request = new Request($id, $addressFrom, $addressTo,
-							intval($row['userId']), $row['date'],
-							$row['isMorning']!=0);//TODO != 0???
+							intval($row['userId']), $date,
+							$row['isMorning'] == "true");
 				$resultsRepresentation[] = $request.getJSON();
 			}
 		}
