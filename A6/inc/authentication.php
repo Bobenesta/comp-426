@@ -11,8 +11,8 @@ if (!is_null($_SESSION['userIdAuthenticated']))
 
 function authenticate($userName, $passwordHash) {
 	$mysqli = getDBConnection();
-	$result = $mysqli->query("SELECT id, passwordHash FROM users WHERE userName = " .
-					$mysqli->real_escape_string($userName));
+	$result = $mysqli->query("SELECT id, passwordHash FROM users WHERE userName = '" .
+					$mysqli->real_escape_string($userName) . "'");
 	if ($result) {
 		if ($result->num_rows == 0)
 			return 0;
