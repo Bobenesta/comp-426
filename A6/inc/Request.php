@@ -7,7 +7,7 @@ class Request {
 	private $addressFrom;
 	private $addressTo;
 	private $userId;
-	private $date; //TODO MySQL format vs JSON/JS Format???
+	private $date;
 	private $isMorning;
 
 	private function __construct($id, $addressFrom, $addressTo, $userId, $date, $isMorning) {
@@ -38,7 +38,7 @@ class Request {
 
 			return new Request($id, $addressFrom, $addressTo,
 					intval($row['userId']), $row['date'],
-					$row['isMorning']);//TODO bool_value?
+					$row['isMorning']!=0);
 		}
 		return null;
 	}
@@ -47,7 +47,7 @@ class Request {
 	public static function create($addressFrom, $addressTo, $userId, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
-		//TODO check that $address{From, To} are ints
+		if(is_int($addressFrom)==false||is_int($addressTo)==false){return null;}
 		$addressFromAddress = Address::getById($addressFrom);
 		if (is_null($addressFromAddress))
 			return null;
@@ -63,11 +63,14 @@ class Request {
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
 					"date, isMorning) VALUES (" . $addressFrom . ", " .
-					$addressTo . ", " . $userId . ", " . $mysqlDate . ", "
+					$addressTo . ", " . $userId . ", " . $mysqlDate . ", ".
 					$isMorning . ")");
 		if ($result) {
 			$id = $mysqli->insert_id;
-			// TODO $date vs $mysqlDate
+			// $date vs $mysqlDate
+			$datearr= explode("-",$mysqlDate);
+			//Y-M-D change to M/D/Y
+			$date= $datearr[1]+"/"+$datearr[2]+"/20"+$datearr[0];
 			return new Request($id, $addressFromAddress, $addressToAddress,
 					$userId, $date, $isMorning);
 		}
