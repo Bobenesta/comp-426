@@ -44,16 +44,25 @@ class Request {
 	}
 
 	private static function validateConvertDateFromWireToMySQL($date) {
-		if(strlen($date) != 10)
+		$tmp = explode("/",$date);
+		if (count($tmp) != 3)
 			return null;
 
-		if(!is_numeric(substr($date, 0,2)) || $date.substr($date, 2,1) != "/" ||
-		   !is_numeric(substr($date, 3,2)) || substr($date, 5,1) != "/" ||
-		   !is_numeric(substr($date, 6,4)))
+		if(!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
 			return null;
 
-		$tmp= explode("/",$date);
-		return substr($tmp[2], 2) . "-" . $tmp[0] . "-" . $tmp[1];
+		return $tmp[2] . "-" . $tmp[0] . "-" . $tmp[1];
+	}
+
+	private static function validateConvertDateFromMySQLToWire($date) {
+		$tmp = explode("-",$date);
+		if (count($tmp) != 3)
+			return null;
+
+		if(!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
+			return null;
+
+		return $tmp[1] . "/" . $tmp[2] . "/" . $tmp[0];
 	}
 
 	// Assumes $userId is a valid User ID and $addressFrom/$addressTo are valid Address objects
@@ -64,19 +73,16 @@ class Request {
 		if (is_null($mysqlDate))
 			return null;
 
-		if (is_null($isMorning))//validate $isMorning
+		if (is_null($isMorning) || ($isMorning != "false" && $isMorning != "true"))//validate $isMorning
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
-					"date, isMorning) VALUES (" . $addressFrom->getId() . ", " .
-					$addressTo->getId() . ", " . $userId . ", " . $mysqlDate . ", ".
-					$isMorning . ")");
+					"date, isMorning) VALUES ('" . $addressFrom->getId() . "', '" .
+					$addressTo->getId() . "', '" . $userId . "', '" . $mysqlDate . "', '".
+					$isMorning . "')");
+
 		if ($result) {
 			$id = $mysqli->insert_id;
-			// $date vs $mysqlDate
-			$datearr= explode("-",$mysqlDate);
-			//Y-M-D change to M/D/Y
-			$date= $datearr[1]+"/"+$datearr[2]+"/20"+$datearr[0];
 			return new Request($id, $addressFrom, $addressTo,
 					$userId, $date, $isMorning!=0);
 		}
