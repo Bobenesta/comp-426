@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 
 	print("Successfully logged in as user " . $_POST['userName'] . " with ID " . $newUserId);
 	exit();
+} else {
+	header("Content-type: application/json");
+	print(json_encode(generateSalt()));
 }
-
-header("HTTP/1.1 400 Bad Request");
-print("URL did not match any known method.");
 
 ?>

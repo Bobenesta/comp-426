@@ -20,10 +20,10 @@ function authenticate($userName, $passwordHash) {
 		$row = $result->fetch_assoc();
 
 		// Though not explicity stated, $passwordHash should be
-		// hex(sha256(password + "gEp3XuY9r7ajWxSIG7mW04PHlL9JxqXhhVs"))
-		// eg password1 becomes b9e108874aa0b938cb42d07fca687cbad465175713d62447e1371f2854edf7f2
+		// hex(sha256(sha256(password + "gEp3XuY9r7ajWxSIG7mW04PHlL9JxqXhhVs") + $_SESSION['loginSalt'])
+		// eg password1 becomes sha256(0xb9e108874aa0b938cb42d07fca687cbad465175713d62447e1371f2854edf7f2 + $_SESSION['loginSalt'])
 
-		if (hash("sha256", $passwordHash . "35dlLfZQpUyLJf9KBARov85GvtlHkhwTin8", true) == $row['passwordHash']) {
+		if (hash("sha256", bin2hex($row['passwordHash']) . $_SESSION['loginSalt']) == $passwordHash) {
 			$userIdLoggedIn = intval($row['id']);
 			$_SESSION['userIdAuthenticated'] = $userIdLoggedIn;
 			return $userIdLoggedIn;
@@ -32,6 +32,12 @@ function authenticate($userName, $passwordHash) {
 		}
 	}
 	return 0;
+}
+
+function generateSalt() {
+	$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 15);
+	$_SESSION['loginSalt'] = $salt;
+	return $salt;
 }
 
 ?>
