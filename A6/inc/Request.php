@@ -73,7 +73,7 @@ class Request {
 		if (is_null($mysqlDate))
 			return null;
 
-		if (is_null($isMorning) || ($isMorning != "false" && $isMorning != "true"))//validate $isMorning
+		if (is_null($isMorning) || ($isMorning != "false" && $isMorning != "true"))
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
