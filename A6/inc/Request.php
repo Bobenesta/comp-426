@@ -188,7 +188,7 @@ class Request {
 
 	public function delete(){
 		$mysqli = getDBConnection();
-		$result = $mysqli->query("DELETE FROM requests WHERE id = '" . $id . "'");
+		$result = $mysqli->query("DELETE FROM requests WHERE id = '" . $this->id . "'");
 	}
 }
 
