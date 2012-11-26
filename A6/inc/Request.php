@@ -77,6 +77,41 @@ class Request {
 		return null;
 	}
 
+	public static function getEncodedRequestsBySearch($addressFrom, $addressTo, $date, $isMorning) {
+		$mysqli = getDBConnection();
+		$result = $mysqli->query("SELECT * FROM requests WHERE " .
+				!is_null($addressFrom) ? ("addressFrom = '" . $addressFrom->getId() . "'") : ("") .
+				!is_null($addressTo) ? ("addressTo = '" . $addressTo->getId() . "'") : ("") .
+				!is_null($date) ? ("date = '" . $date . "'") : ("") .//TODO date
+				!is_null($addressTo) ? ("isMorning = '" . $isMorning . "'") : ("") .//TODO isMorning
+				" LIMIT 25");
+		$resultsRepresentation = array();
+		if ($result) {
+			if ($result->num_rows == 0)
+				return $resultsRepresentation;
+
+			while ($row = $result->fetch_assoc()) {
+				if (is_null($addressTo)) {
+					$addressTo = Address::getById($row['addressTo']);
+					if (is_null($addressTo))
+						continue;
+				}
+
+				if (is_null($addressFrom)) {
+					$addressFrom = Address::getById($row['addressFrom']);
+					if (is_null($addressFrom))
+						continue;
+				}
+
+				$request = new Request($id, $addressFrom, $addressTo,
+							intval($row['userId']), $row['date'],
+							$row['isMorning']!=0);//TODO != 0???
+				$resultsRepresentation[] = $request.getJSON();
+			}
+		}
+		return $resultsRepresentation;
+	}
+
 	public function getJSON() {
 		$representation = array();
 		$representation['id'] = $id;

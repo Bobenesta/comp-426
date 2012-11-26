@@ -99,6 +99,10 @@ class Address {
 		$representation['radius'] = $radius;
 		return $representation;
 	}
+
+	public function getId() {
+		return $id;
+	}
 }
 
 ?>

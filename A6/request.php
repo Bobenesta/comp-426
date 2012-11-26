@@ -4,7 +4,57 @@ require_once("inc/require_authentication.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO']) {
-		//TODO: Search
+		$hasAddressFrom = false;
+		if (!is_null($_GET['addressFrom-isUNC']) || !is_null($_GET['addressFrom-addressLine']) ||
+		    !is_null($_GET['addressFrom-city']) || !is_null($_GET['addressFrom-state']) ||
+		    !is_null($_GET['addressFrom-radius']))
+			$hasAddressFrom = true;
+
+		$hasAddressTo = false;
+		if (!is_null($_GET['addressTo-isUNC']) || !is_null($_GET['addressTo-addressLine']) ||
+		    !is_null($_GET['addressTo-city']) || !is_null($_GET['addressTo-state']) ||
+		    !is_null($_GET['addressTo-radius']))
+			$hasAddressTo = true;
+
+		if (($hasAddressFrom && (is_null($_GET['addressFrom-isUNC']) || is_null($_GET['addressFrom-addressLine']) ||
+		    is_null($_GET['addressFrom-city']) || is_null($_GET['addressFrom-state']) ||
+		    is_null($_GET['addressFrom-radius']))) ||
+		    ($hasAddressTo && (is_null($_GET['addressTo-isUNC']) || is_null($_GET['addressTo-addressLine']) ||
+		    is_null($_GET['addressTo-city']) || is_null($_GET['addressTo-state']) ||
+		    is_null($_GET['addressTo-radius'])))) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Request parameter was missing.");
+			exit();
+		}
+
+		$addressFrom = null;
+		if ($hasAddressFrom) {
+			$addressFrom = Address::getOrCreate($_GET['addressFrom-isUNC'],
+							$_GET['addressFrom-addressLine'], $_GET['addressFrom-city'],
+							$_GET['addressFrom-state'], $_GET['addressFrom-radius']);
+			if (is_null($addressFrom)) {
+				header("HTTP/1.1 400 Bad Request");
+				print("Request parameter was invalid.");
+				exit();
+			}
+		}
+
+		$addressTo = null;
+		if ($hasAddressTo) {
+			$addressTo = Address::getOrCreate($_GET['addressTo-isUNC'],
+							$_GET['addressTo-addressLine'], $_GET['addressTo-city'],
+							$_GET['addressTo-state'], $_GET['addressTo-radius']);
+			if (is_null($addressTo)) {
+				header("HTTP/1.1 400 Bad Request");
+				print("Request parameter was invalid.");
+				exit();
+			}
+		}
+
+		header("Content-type: application/json");
+		print(json_encode(Request::getEncodedRequestsBySearch($addressFrom, $addressTo,
+								$_GET['date'], $_GET['isMorning'])));
+		exit();
 	} else {
 		if (!is_numeric($_SERVER['PATH_INFO'])) {
 			header("HTTP/1.1 400 Bad Request");
