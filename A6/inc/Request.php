@@ -75,11 +75,12 @@ class Request {
 
 		if (is_null($isMorning) || ($isMorning != "false" && $isMorning != "true"))
 			return null;
+		$mysqlIsMorning = $isMorning == "true" ? 1 : 0;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
 					"date, isMorning) VALUES ('" . $addressFrom->getId() . "', '" .
 					$addressTo->getId() . "', '" . $userId . "', '" . $mysqlDate . "', '".
-					$isMorning . "')");
+					$mysqlIsMorning . "')");
 
 		if ($result) {
 			$id = $mysqli->insert_id;
@@ -111,30 +112,33 @@ class Request {
 		if (!is_null($addressFrom)) {
 			if ($isFirst)
 				$isFirst = false;
-			$query .= "addressFrom = '" . $addressFrom->getId() . "' ";
+			$query = $query . "addressFrom = '" . $addressFrom->getId() . "' ";
 		}
 		if (!is_null($addressTo)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
-				$query .= "AND ";
-			$query .= "addressTo = '" . $addressTo->getId() . "' ";
+				$query = $query . "AND ";
+			$query = $query . "addressTo = '" . $addressTo->getId() . "' ";
 		}
 		if (!is_null($mysqlDate) {
 			if ($isFirst)
 				$isFirst = false;
 			else
-				$query .= "AND ";
-			$query .= "date = '" . $mysqlDate . "' ";
+				$query = $query . "AND ";
+			$query = $query . "date = '" . $mysqlDate . "' ";
 		}
 		if (!is_null($mysqlIsMorning) {
 			if ($isFirst)
 				$isFirst = false;
 			else
-				$query .= "AND ";
-			$query .= "isMorning = '" . $mysqlIsMorning . "' ";
+				$query = $query . "AND ";
+			$query = $query . "isMorning = '" . $mysqlIsMorning . "' ";
 		}
-		$query .= "LIMIT 25";
+		$query = $query . "LIMIT 25";
+
+		if ($isFirst)
+			return null;//TODO handle return null upstream
 
 		$result = $mysqli->query($query);
 		$resultsRepresentation = array();
