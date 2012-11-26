@@ -24,7 +24,7 @@ function authenticate($userName, $passwordHash) {
 		// eg password1 becomes b9e108874aa0b938cb42d07fca687cbad465175713d62447e1371f2854edf7f2
 
 		if (hash("sha256", $passwordHash . "35dlLfZQpUyLJf9KBARov85GvtlHkhwTin8", true) == $row['passwordHash']) {
-			$userIdLoggedIn = intval($row['userId']);
+			$userIdLoggedIn = intval($row['id']);
 			$_SESSION['userIdAuthenticated'] = $userIdLoggedIn;
 			return $userIdLoggedIn;
 		} else {
