@@ -160,10 +160,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		print(json_encode($request->getJSON()));
 		exit();
 	} else {
-		$request->update($addressFrom, $addressTo, $_POST['date'], $_POST['isMorning']);
-
 		header("Content-type: application/json");
-		print(json_encode(true));
+		if ($request->update($addressFrom, $addressTo, $_POST['date'], $_POST['isMorning']))
+			print(json_encode(true));
+		else
+			print(json_encode(false));
 		exit();
 	}
 }
