@@ -9,14 +9,22 @@ class Request {
 	private $userId;
 	private $date;
 	private $isMorning;
+	
+	
+	
 
-	private function __construct($id, $addressFrom, $addressTo, $userId, $date, $isMorning) {
+	public function __construct($id, $addressFrom, $addressTo, $userId, $date, $isMorning) {
 		$this->id = $id;
 		$this->addressFrom = $addressFrom;
 		$this->addressTo = $addressTo;
 		$this->userId = $userId;
 		$this->date = $date;
 		$this->isMorning = $isMorning;
+	}
+	
+	public function delete(){
+		$mysqli = getDBConnection();
+		$result = $mysqli->query("DELETE FROM requests WHERE id = '" . $id . "'");
 	}
 
 	public static function getById($id) {
