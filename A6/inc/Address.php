@@ -20,7 +20,7 @@ class Address {
 
 	public static function getById($id) {
 		$mysqli = getDBConnection();
-		$result = $mysqli->query("SELECT * FROM addresses WHERE id = " . $id);
+		$result = $mysqli->query("SELECT * FROM addresses WHERE id = '" . $id . "'");
 		if ($result) {
 			if ($result->num_rows == 0)
 				return null;
@@ -40,14 +40,14 @@ class Address {
 			return null;
 
 		if ($isUNC == "true") {
-			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = true AND " .
-						"radius = " . $radius);
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '1' AND " .
+						"radius = '" . $radius . "'");
 			if ($result) {
 				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
-								"city, state, radius) VALUES (true, '', '', '', " .
-								$radius . ")");
+								"city, state, radius) VALUES ('1', '', '', '', '" .
+								$radius . "')");
 
 					if (!$result)
 						return null;
@@ -60,7 +60,7 @@ class Address {
 				return new Address($id, true, "", "", "", $radius);
 			}
 		} else if ($isUNC == "false") {
-			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = false AND " .
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '0' AND " .
 						"radius = '" . $radius. "' AND addressLine = '" . 
 						$mysqli->real_escape_string($addressLine) . "' AND city = '" .
 						$mysqli->real_escape_string($city) . "' AND state = '" .
@@ -69,7 +69,7 @@ class Address {
 				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
-								"city, state, radius) VALUES (false, '" .
+								"city, state, radius) VALUES ('0', '" .
 								$mysqli->real_escape_string($addressLine) . "', '" .
 								$mysqli->real_escape_string($city) . "', '" .
 								$mysqli->real_escape_string($state) . "', '" .

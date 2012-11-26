@@ -21,7 +21,7 @@ class Request {
 
 	public static function getById($id) {
 		$mysqli = getDBConnection();
-		$result = $mysqli->query("SELECT * FROM requests WHERE id = " . $id);
+		$result = $mysqli->query("SELECT * FROM requests WHERE id = '" . $id . "'");
 		if ($result) {
 			if ($result->num_rows == 0)
 				return null;
