@@ -56,9 +56,12 @@ class Request {
 		if (is_null($addressToAddress))
 			return null;
 
-		$mysqlDate = $date; //TODO escape, convert, validate
+        
+		//TODO escape, convert, validate
+		$tmp= explode("/",$date);
+		$mysqlDate= substr($tmp[2], 2)+"-"+$tmp[0]+"-"+$tmp[1];
 
-		if (is_null($isMorning))//TODO validate $isMorning
+		if (is_null($isMorning)||is_bool($isMorning)==false)//validate $isMorning
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
@@ -72,7 +75,7 @@ class Request {
 			//Y-M-D change to M/D/Y
 			$date= $datearr[1]+"/"+$datearr[2]+"/20"+$datearr[0];
 			return new Request($id, $addressFromAddress, $addressToAddress,
-					$userId, $date, $isMorning);
+					$userId, $date, $isMorning!=0);
 		}
 		return null;
 	}
