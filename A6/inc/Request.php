@@ -121,14 +121,14 @@ class Request {
 				$query = $query . "AND ";
 			$query = $query . "addressTo = '" . $addressTo->getId() . "' ";
 		}
-		if (!is_null($mysqlDate) {
+		if (!is_null($mysqlDate)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
 				$query = $query . "AND ";
 			$query = $query . "date = '" . $mysqlDate . "' ";
 		}
-		if (!is_null($mysqlIsMorning) {
+		if (!is_null($mysqlIsMorning)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
