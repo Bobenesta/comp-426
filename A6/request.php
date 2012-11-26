@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$request = null;
-	if (!is_null(substr($_SERVER['PATH_INFO'], 1))) {
+	if (!is_null($_SERVER['PATH_INFO'])) {
 		if (!is_numeric(substr($_SERVER['PATH_INFO'], 1))) {
 			header("HTTP/1.1 400 Bad Request");
 			print("Invalid ID");
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 
-	if (is_null(substr($_SERVER['PATH_INFO'], 1))) {
+	if (is_null($_SERVER['PATH_INFO'])) {
 		$request = Request::create($addressFrom, $addressTo, $userIdLoggedIn,
 						$_POST['date'], $_POST['isMorning']);
 		if (is_null($request)) {
