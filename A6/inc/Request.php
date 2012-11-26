@@ -131,7 +131,7 @@ class Request {
 
 				$request = new Request($id, $addressFrom, $addressTo,
 							intval($row['userId']), $date,
-							$row['isMorning'] == "true");
+							$row['isMorning'] == "true");//TODO not right
 				$resultsRepresentation[] = $request.getJSON();
 			}
 		}
