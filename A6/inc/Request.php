@@ -106,12 +106,37 @@ class Request {
 			$mysqlIsMorning = $isMorning == "true" ? 1 : 0;
 		}
 
-		$result = $mysqli->query("SELECT * FROM requests WHERE " .
-				!is_null($addressFrom) ? ("addressFrom = '" . $addressFrom->getId() . "'") : ("") .
-				!is_null($addressTo) ? ("addressTo = '" . $addressTo->getId() . "'") : ("") .
-				!is_null($mysqlDate) ? ("date = '" . $mysqlDate . "'") : ("") .
-				!is_null($addressTo) ? ("isMorning = '" . $isMorning . "'") : ("") .
-				" LIMIT 25");
+		$isFirst = true;
+		$query = "SELECT * FROM requests WHERE ";
+		if (!is_null($addressFrom)) {
+			if ($isFirst)
+				$isFirst = false;
+			$query .= "addressFrom = '" . $addressFrom->getId() . "' ";
+		}
+		if (!is_null($addressTo)) {
+			if ($isFirst)
+				$isFirst = false;
+			else
+				$query .= "AND ";
+			$query .= "addressTo = '" . $addressTo->getId() . "' ";
+		}
+		if (!is_null($mysqlDate) {
+			if ($isFirst)
+				$isFirst = false;
+			else
+				$query .= "AND ";
+			$query .= "date = '" . $mysqlDate . "' ";
+		}
+		if (!is_null($mysqlIsMorning) {
+			if ($isFirst)
+				$isFirst = false;
+			else
+				$query .= "AND ";
+			$query .= "isMorning = '" . $mysqlIsMorning . "' ";
+		}
+		$query .= "LIMIT 25";
+
+		$result = $mysqli->query($query);
 		$resultsRepresentation = array();
 		if ($result) {
 			if ($result->num_rows == 0)
