@@ -56,7 +56,7 @@ class Request {
 		$tmp= explode("/",$date);
 		$mysqlDate= substr($tmp[2], 2)+"-"+$tmp[0]+"-"+$tmp[1];
 
-		if (is_null($isMorning)||is_bool($isMorning)==false)//validate $isMorning
+		if (is_null($isMorning))//validate $isMorning
 			return null;
 
 		$result = $mysqli->query("INSERT INTO requests (addressFrom, addressTo, userId, ".
