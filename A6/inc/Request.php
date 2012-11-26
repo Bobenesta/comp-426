@@ -69,7 +69,7 @@ class Request {
 	public static function create($addressFrom, $addressTo, $userId, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
-		$mysqlDate = validateConvertDateFromWireToMySQL($date);
+		$mysqlDate = Request::validateConvertDateFromWireToMySQL($date);
 		if (is_null($mysqlDate))
 			return null;
 
@@ -94,7 +94,7 @@ class Request {
 
 		$mysqlDate = null;
 		if (!is_null($date)) {
-			validateConvertDateFromWireToMySQL($date);
+			Request::validateConvertDateFromWireToMySQL($date);
 			if (is_null($mysqlDate))
 				return null;
 		}
@@ -125,7 +125,7 @@ class Request {
 					continue;
 
 				// This can be cached when $date was originally not null
-				$date = validateConvertDateFromMySQLToWire($row['date']);
+				$date = Request::validateConvertDateFromMySQLToWire($row['date']);
 				if (is_null($date))
 					continue;
 
