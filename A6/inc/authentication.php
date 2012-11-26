@@ -1,0 +1,5 @@
+<?php
+
+$userIdLoggedIn = 0;
+
+?>

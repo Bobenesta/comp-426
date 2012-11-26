@@ -1,14 +1,6 @@
 <?php
 require_once("inc/Request.php");
-
-//TODO this whole block can probably move to a inc/require_auth.php page
-if (false) {
-	header("HTTP/1.1 401 Authentication Required");
-	print("You must log in to use make requests");
-	exit();
-}
-//TODO: do auth and set this in inc/...php
-$userIdLoggedIn = 0;
+require_once("inc/require_authentication.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO']) {
