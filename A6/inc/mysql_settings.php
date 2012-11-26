@@ -5,7 +5,7 @@ function getDBConnection() {
 	if ($mysqli)
 		return $mysqli;
 
-	header("HTTP/1.1 500 Internal Server Error");//TODO there is a better function than header here
+	header("HTTP/1.1 500 Internal Server Error");
 	print("Could not connect to database");
 	exit();
 }
