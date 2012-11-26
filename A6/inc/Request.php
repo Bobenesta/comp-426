@@ -204,7 +204,7 @@ class Request {
 		$mysqlIsMorning = $isMorning == "true" ? 1 : 0;
 
 		$result = $mysqli->query("UPDATE requests SET addressFrom = '" . $addressFrom->getId() .
-					"', addressTo = '" . $addressFrom->getId() .
+					"', addressTo = '" . $addressTo->getId() .
 					"', date = '" . $mysqlDate . "', isMorning = '" . $mysqlIsMorning .
 					"' WHERE id = '" . $this->id . "'");
 		return $mysqli->affected_rows > 0;
