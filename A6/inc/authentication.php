@@ -24,7 +24,7 @@ function authenticate($userName, $passwordHash) {
 			$_SESSION['userIdAuthenticated'] = $userIdLoggedIn;
 			return $userIdLoggedIn;
 		} else {
-			return 0;
+			return -1;
 		}
 	}
 	return 0;
