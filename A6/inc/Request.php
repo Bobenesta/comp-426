@@ -99,8 +99,12 @@ class Request {
 				return null;
 		}
 
-		if (!is_null($isMorning) && ($isMorning != "false" && $isMorning != "true"))
-			return null;
+		$mysqlIsMorning = null;
+		if (!is_null($isMorning)) {
+			if ($isMorning != "false" && $isMorning != "true")
+				return null;
+			$mysqlIsMorning = $isMorning == "true" ? 1 : 0;
+		}
 
 		$result = $mysqli->query("SELECT * FROM requests WHERE " .
 				!is_null($addressFrom) ? ("addressFrom = '" . $addressFrom->getId() . "'") : ("") .
