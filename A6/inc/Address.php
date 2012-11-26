@@ -35,19 +35,15 @@ class Address {
 
 	public static function getOrCreate($isUNC, $addressLine, $city, $state, $radius) {
 		$mysqli = getDBConnection();
-		$MAX_RADIUS= 10000; 
-		//TODO check that $radius is sane
-		$arr = explode(" ", $radius);
-		if(!is_numeric($arr[0])||($arr[0]!=10&&$arr[0]!=20&&$arr[0]!=50)||$arr[1]!="Miles"){
+
+		if (!is_numeric($radius))
 			return null;
-		}
-		//TODO interpret $isUNC as bool
+
 		if ($isUNC == "true") {
-			//TODO should be able to do this in one query (INSERT OR UPDATE?)
 			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = true AND " .
 						"radius = " . $radius);
-			$id = 0;
 			if ($result) {
+				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
 								"city, state, radius) VALUES (true, '', '', '', " .
@@ -58,32 +54,36 @@ class Address {
 
 					$id = $mysqli->insert_id;
 				} else {
-					$row = $result->fetch_assoc();//TODO if only selecing one column...?
+					$row = $result->fetch_assoc();
 					$id = $row['id'];
 				}
 				return new Address($id, true, "", "", "", $radius);
 			}
-		} else {
+		} else if ($isUNC == "false") {
 			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = false AND " .
-						"radius = " . $radius. " AND addressLine = ".$addressLine." AND city= ".$city);
-			$id = 0;
+						"radius = '" . $radius. "' AND addressLine = '" . 
+						$mysqli->real_escape_string($addressLine) . "' AND city = '" .
+						$mysqli->real_escape_string($city) . "' AND state = '" .
+						$mysqli->real_escape_string($state) . "'");
 			if ($result) {
+				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
-								"city, state, radius) VALUES (false, ". $addressLine.", ".$city.", '', " .
-								$radius . ")");
+								"city, state, radius) VALUES (false, '" .
+								$mysqli->real_escape_string($addressLine) . "', '" .
+								$mysqli->real_escape_string($city) . "', '" .
+								$mysqli->real_escape_string($state) . "', '" .
+								$radius . "')");
 
 					if (!$result)
 						return null;
 
 					$id = $mysqli->insert_id;
 				} else {
-					$row = $result->fetch_assoc();//TODO if only selecing one column...?
+					$row = $result->fetch_assoc();
 					$id = $row['id'];
-					$addressLine= $row['addressLine'];
-					$city= $row['cityStateLine'];
 				}
-				return new Address($id, false, $addressLine, $city, "", $radius);
+				return new Address($id, false, $addressLine, $city, $state, $radius);
 			}
 		}
 		return null;
