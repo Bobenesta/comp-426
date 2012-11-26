@@ -145,7 +145,7 @@ class Request {
 		$representation['addressTo'] = $addressTo->getJSON();
 		$representation['userId'] = $userId;
 		$representation['date'] = $date;
-		$representation['isMorning'] = $isMorning; //TODO: bool
+		$representation['isMorning'] = $isMorning;
 		return $representation;
 	}
 
