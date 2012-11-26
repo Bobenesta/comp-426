@@ -38,7 +38,7 @@ class Request {
 
 			return new Request($id, $addressFrom, $addressTo,
 					intval($row['userId']), $row['date'],
-					$row['isMorning']!=0);//TODO test this
+					$row['isMorning'] == 1);
 		}
 		return null;
 	}
@@ -164,7 +164,7 @@ class Request {
 
 				$request = new Request($id, $addressFrom, $addressTo,
 							intval($row['userId']), $date,
-							$row['isMorning'] == "true");//TODO not right
+							$row['isMorning'] == 1);
 				$resultsRepresentation[] = $request->getJSON();
 			}
 		}
