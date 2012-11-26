@@ -6,9 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO']) {
 		//TODO: Search
 	} else {
-		//TODO sanity check $id
-		$id = intval(substr($_SERVER['PATH_INFO']));//TODO substr?
-		$request = Request::getById($id);
+		if (!is_numeric($_SERVER['PATH_INFO'])) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Invalid ID");
+			exit();
+		}
+
+		$request = Request::getById(intval($_SERVER['PATH_INFO']));
 		if (is_null($request)) {
 			header("HTTP/1.1 404 Not Found");
 			print("The request was not found");
@@ -22,9 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$request = null;
 	if (!is_null($_SERVER['PATH_INFO'])) {
-		//TODO sanity check $id
-		$id = intval(substr($_SERVER['PATH_INFO']));//TODO substr?
-		$request = Request::getById($id);
+		if (!is_numeric($_SERVER['PATH_INFO'])) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Invalid ID");
+			exit();
+		}
+
+		$request = Request::getById(intval($_SERVER['PATH_INFO']));
 		if (is_null($request)) {
 			header("HTTP/1.1 404 Not Found");
 			print("The request was not found");
