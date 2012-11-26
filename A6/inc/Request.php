@@ -58,6 +58,11 @@ class Request {
 
         
 		//TODO escape, convert, validate
+		if(strlen($date)==10){
+		if(is_numeric(substr($date, 0,2))&&$date.substr($date, 2,1)=="/"&&is_numeric(substr($date, 3,2))&&substr($date, 5,1)=="/"&&is_numeric(substr($date, 6,4))) {
+			return null;
+		}
+		}
 		$tmp= explode("/",$date);
 		$mysqlDate= substr($tmp[2], 2)+"-"+$tmp[0]+"-"+$tmp[1];
 
