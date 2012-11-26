@@ -84,7 +84,7 @@ class Request {
 		if ($result) {
 			$id = $mysqli->insert_id;
 			return new Request($id, $addressFrom, $addressTo,
-					$userId, $date, $isMorning!=0);
+					$userId, $date, $isMorning == "true");
 		}
 		return null;
 	}
