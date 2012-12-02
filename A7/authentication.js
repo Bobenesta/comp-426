@@ -15,7 +15,7 @@ function login(user, password) {
 			{
 				type: 'GET',
 				success: function(data, textStatus, jqXHR) {
-						var passwordHash = binb2hex(SHA256(SHA256(password + "gEp3XuY9r7ajWxSIG7mW04PHlL9JxqXhhVs") + jqXHR.responseText));
+						var passwordHash = SHA256(SHA256(password + "gEp3XuY9r7ajWxSIG7mW04PHlL9JxqXhhVs") + jqXHR.responseText);
 						$.ajax("api/login.php",
 							{
 								type: 'POST',

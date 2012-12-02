@@ -1,5 +1,4 @@
 // Shamelessly stolen from http://www.webtoolkit.info/javascript-sha256.html
-// (and modified slightly)
 /**
 *
 *  Secure Hash Algorithm (SHA256)
@@ -8,22 +7,11 @@
 *  Original code by Angel Marin, Paul Johnston.
 *
 **/
-
-var hexcase = 0;
-
-function binb2hex (binarray) {
-	var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-	var str = "";
-	for(var i = 0; i < binarray.length * 4; i++) {
-		str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
-		hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
-	}
-	return str;
-}
  
 function SHA256(s){
  
 	var chrsz   = 8;
+	var hexcase = 0;
  
 	function safe_add (x, y) {
 		var lsw = (x & 0xFFFF) + (y & 0xFFFF);
@@ -124,6 +112,17 @@ function SHA256(s){
 		return utftext;
 	}
  
+	function binb2hex (binarray) {
+		var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+		var str = "";
+		for(var i = 0; i < binarray.length * 4; i++) {
+			str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
+			hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
+		}
+		return str;
+	}
+ 
 	s = Utf8Encode(s);
-	return core_sha256(str2binb(s), s.length * chrsz);
+	return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
+ 
 }

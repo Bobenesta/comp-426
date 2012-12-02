@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 	print("Successfully logged in as user " . $_POST['userName'] . " with ID " . $newUserId);
 	exit();
 } else {
-	header("Content-type: application/json");
-	print(json_encode(generateSalt()));
+	header("Content-type: text/plain");
+	print(generateSalt());
 }
 
 ?>
