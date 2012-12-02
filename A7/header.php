@@ -49,6 +49,8 @@ if ($userIdLoggedIn != 0) {
 
 	<script type="text/javascript">
 		$("#login-form").submit(function(event) {
+			e.preventDefault();
+			e.stopPropagation();
 			login($("#login-username").val(), $("#login-password").val());
 		});
 	</script>
