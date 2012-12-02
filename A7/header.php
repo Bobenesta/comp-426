@@ -35,7 +35,7 @@ if ($userIdLoggedIn != 0) {
 	</header>
 
 	<div id="login-box" style="visibility: hidden;"> <!--Inline style required for JS to work the first time-->
-		<form name="login-form" method="POST" action="?">
+		<form id="login-form">
 			<div class="form-text-entry"><div class="form-text-box-label">Username:</div>
 			<input name="username" id="login-username" class="form-text-box" maxlength="50"></div>
 			<div class="form-text-entry"><div class="form-text-box-label">Password:</div>

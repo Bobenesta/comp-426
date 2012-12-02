@@ -9,6 +9,8 @@
 *
 **/
 
+var hexcase = 0;
+
 function binb2hex (binarray) {
 	var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
 	var str = "";
@@ -22,7 +24,6 @@ function binb2hex (binarray) {
 function SHA256(s){
  
 	var chrsz   = 8;
-	var hexcase = 0;
  
 	function safe_add (x, y) {
 		var lsw = (x & 0xFFFF) + (y & 0xFFFF);

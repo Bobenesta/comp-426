@@ -3,8 +3,12 @@
  * Login with the given user/password and refresh the page
  */
 function login(user, password) {
-	var failureHandler = function(jqXHR, textStatus, errorThrown) {
+	var getSeedFailureHandler = function(jqXHR, textStatus, errorThrown) {
 		alert("Error connecting to backend, please try again later");
+	};
+
+	var loginFailureHandler = function(jqXHR, textStatus, errorThrown) {
+		alert("Error logging in: \n" + jqXHR.responseText);
 	};
 
 	$.ajax("api/login.php",
@@ -22,11 +26,11 @@ function login(user, password) {
 								success: function(data, textStatus, jqXHR) {
 										alert(jqXHR.responseText);//TODO
 									},
-								error: failureHandler,
+								error: loginFailureHandler,
 								cache: false
 							});
 					},
-				error: failureHandler,
+				error: getSeedFailureHandler,
 				cache: false
 			});
 
