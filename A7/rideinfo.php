@@ -1,3 +1,5 @@
+<?php require_once("inc/redirect_unauthenticated.php"); ?>
+
 <!DOCTYPE HTML>
 <html lang=en>
 <head>
