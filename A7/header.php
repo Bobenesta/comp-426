@@ -41,8 +41,8 @@ if ($userIdLoggedIn != 0) {
 			<div class="form-text-entry"><div class="form-text-box-label">Password:</div>
 			<input name="password" id="login-password" class="form-text-box" type="password" maxlength="512"></div>
 
-			<input type="checkbox" name="remember-pass">Remember Password
-			<br>
+			<!--<input type="checkbox" name="remember-pass">Remember Password
+			<br>-->
 			<div class="center"><button type="submit">Login</button></div>
 		</form>
 	</div>
