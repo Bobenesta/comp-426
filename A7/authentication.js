@@ -24,7 +24,7 @@ function login(user, password) {
 									passwordHash: passwordHash
 								},
 								success: function(data, textStatus, jqXHR) {
-										$(location).attr('href', "homepage.php");
+										$(location).attr('href', "landing.php");
 									},
 								error: loginFailureHandler,
 								cache: false

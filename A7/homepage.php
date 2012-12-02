@@ -1,8 +1,10 @@
+<?php require_once("inc/redirect_authenticated.php"); ?>
+
 <!DOCTYPE HTML>
 <html lang=en>
 <head>
 	<meta charset=utf-8>
-	<title>First assignment comp 426 - carpooling web application</title>
+	<title>UNCarpooling</title>
 
 	<link rel="stylesheet" href="style.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
