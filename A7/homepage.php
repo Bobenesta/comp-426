@@ -8,38 +8,12 @@
 </head>
 
 <body>
-<!--TODO: Pull all this out to a layout common file for php include();-->
-	<header>
-		<img id="logo" src="images/uncarpooling_logo.jpg" alt="uncarpooling_logo"/>
-		<h1>UNCarpooling</h1>
-		<img id="unc_logo" src="images/unc_logo.jpg" alt="unc_logo"/>
-		<p id="header-subtitle">New cars, new friends, new concept...</p><br>
-
-		<div id="user-bar">
-		<!-- TODO: dynamic based on whether user is logged in or not-->
-			<a href="#" onclick="if (document.getElementById('login-box').style.visibility == 'hidden'){document.getElementById('login-box').style.visibility = 'visible';}else {document.getElementById('login-box').style.visibility = 'hidden';}"
-				>Login</a>
-		</div>
-	</header>
-
-	<div id="login-box" style="visibility: hidden;"> <!--Inline style required for JS to work the first time-->
-		<form name="login" method="POST" action="?">
-			<div class="form-text-entry"><div class="form-text-box-label">Username:</div>
-			<input name="username" id="login-username" class="form-text-box" maxlength="50"></div>
-			<div class="form-text-entry"><div class="form-text-box-label">Password:</div>
-			<input name="password" id="login-password" class="form-text-box" type="password" maxlength="512"></div>
-
-			<input type="checkbox" name="remember-pass">Remember Password
-			<br>
-			<div class="center"><button type="submit">Login</button></div>
-		</form>
-	</div>
+	<?php require("header.php"); ?>
 
 	<div id="push-footer-down">
 
 	<!-- Override the background/border as it is replaced with two boxes instead -->
 	<div id="content" style="border: 0px; background-color: white;">
-	<!--TODO: Well, this part isnt common-->
 		<div id="main-left" class="content-box">
 			<h1>Welcome!<br>!<br>!<br>!<br>!<br>!<br>!<br></h1>
 		</div>

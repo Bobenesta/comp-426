@@ -40,4 +40,20 @@ function generateSalt() {
 	return $salt;
 }
 
+function getUserNameLoggedIn() {
+	if ($userIdLoggedIn != 0) {
+		$mysqli = getDBConnection();
+		$result = $mysqli->query("SELECT userName FROM users WHERE id = '" .
+					$userIdLoggedIn . "'");
+		if ($result) {
+			if ($result->num_rows == 0)
+				return 0;
+
+			$row = $result->fetch_assoc();
+			return $row['userName'];
+		}
+	}
+	return null;
+}
+
 ?>
