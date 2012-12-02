@@ -1,3 +1,6 @@
+	<script type="text/javascript" src="authentication.js"></script>
+	<script type="text/javascript" src="sha256.js"></script>
+
 	<header>
 		<img id="logo" src="images/uncarpooling_logo.jpg" alt="uncarpooling_logo"/>
 		<h1>UNCarpooling</h1>
@@ -11,7 +14,7 @@ if ($userIdLoggedIn != 0) {
 		<div id="user-bar">
 			Hello <?php echo(getUserNameLoggedIn()); ?>!&nbsp;&nbsp;&nbsp;
 			<a href="">Preferences</a>&nbsp;&nbsp;&nbsp;
-			<a href="">Logout</a>
+			<a onclick="logout();">Logout</a>
 		</div>
 	</header>
 
@@ -32,7 +35,7 @@ if ($userIdLoggedIn != 0) {
 	</header>
 
 	<div id="login-box" style="visibility: hidden;"> <!--Inline style required for JS to work the first time-->
-		<form name="login" method="POST" action="?">
+		<form name="login-form" method="POST" action="?">
 			<div class="form-text-entry"><div class="form-text-box-label">Username:</div>
 			<input name="username" id="login-username" class="form-text-box" maxlength="50"></div>
 			<div class="form-text-entry"><div class="form-text-box-label">Password:</div>
@@ -43,6 +46,12 @@ if ($userIdLoggedIn != 0) {
 			<div class="center"><button type="submit">Login</button></div>
 		</form>
 	</div>
+
+	<script type="text/javascript">
+		$("#login-form").submit(function(event) {
+			login($("#login-username").val(), $("#login-password").val());
+		});
+	</script>
 <?php
 }
 ?>
