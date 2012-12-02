@@ -1,6 +1,6 @@
 <?php
-require_once("inc/Request.php");
-require_once("inc/require_authentication.php");
+require_once("../inc/Request.php");
+require_once("../inc/require_authentication.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO'])) {

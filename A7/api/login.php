@@ -1,5 +1,5 @@
 <?php
-require_once("inc/authentication.php");
+require_once("../inc/authentication.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     !is_null($_POST['userName']) && !is_null($_POST['passwordHash'])) {
