@@ -14,7 +14,7 @@ if ($userIdLoggedIn != 0) {
 		<div id="user-bar">
 			Hello <?php echo(getUserNameLoggedIn()); ?>!&nbsp;&nbsp;&nbsp;
 			<a href="">Preferences</a>&nbsp;&nbsp;&nbsp;
-			<a onclick="logout();">Logout</a>
+			<a href="" onclick="logout();">Logout</a>
 		</div>
 	</header>
 
