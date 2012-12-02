@@ -1,6 +1,7 @@
 <?php
 require_once("Address.php");
 require_once("mysql_settings.php");
+require_once("date.php");
 
 class Request {
 	private $id;
@@ -43,33 +44,11 @@ class Request {
 		return null;
 	}
 
-	private static function validateConvertDateFromWireToMySQL($date) {
-		$tmp = explode("/",$date);
-		if (count($tmp) != 3)
-			return null;
-
-		if(!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
-			return null;
-
-		return $tmp[2] . "-" . $tmp[0] . "-" . $tmp[1];
-	}
-
-	private static function validateConvertDateFromMySQLToWire($date) {
-		$tmp = explode("-",$date);
-		if (count($tmp) != 3)
-			return null;
-
-		if(!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
-			return null;
-
-		return $tmp[1] . "/" . $tmp[2] . "/" . $tmp[0];
-	}
-
 	// Assumes $userId is a valid User ID and $addressFrom/$addressTo are valid Address objects
 	public static function create($addressFrom, $addressTo, $userId, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
-		$mysqlDate = Request::validateConvertDateFromWireToMySQL($date);
+		$mysqlDate = validateConvertDateFromWireToMySQL($date);
 		if (is_null($mysqlDate))
 			return null;
 
@@ -95,7 +74,7 @@ class Request {
 
 		$mysqlDate = null;
 		if (!is_null($date)) {
-			$mysqlDate = Request::validateConvertDateFromWireToMySQL($date);
+			$mysqlDate = validateConvertDateFromWireToMySQL($date);
 			if (is_null($mysqlDate))
 				return null;
 		}
@@ -158,7 +137,7 @@ class Request {
 					continue;
 
 				// This can be cached when $date was originally not null
-				$date = Request::validateConvertDateFromMySQLToWire($row['date']);
+				$date = validateConvertDateFromMySQLToWire($row['date']);
 				if (is_null($date))
 					continue;
 
@@ -195,7 +174,7 @@ class Request {
 	public function update($addressFrom, $addressTo, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
-		$mysqlDate = Request::validateConvertDateFromWireToMySQL($date);
+		$mysqlDate = validateConvertDateFromWireToMySQL($date);
 		if (is_null($mysqlDate))
 			return false;
 
