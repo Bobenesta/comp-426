@@ -24,7 +24,7 @@ function login(user, password) {
 									},
 								error: failureHandler,
 								cache: false
-							}
+							});
 					},
 				error: failureHandler,
 				cache: false
