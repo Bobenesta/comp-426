@@ -17,7 +17,7 @@
 
 	<!-- Override the background/border as it is replaced with two boxes instead -->
 	<div id="content" style="border: 0px; background-color: white;">
-		<h1>Welcome!<br>!<br>!<br>!<br>!<br>!<br>!<br></h1>
+		<h1>Welcome!</h1>
 	</div>
 	</div>
 
