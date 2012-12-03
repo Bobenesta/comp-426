@@ -30,7 +30,7 @@ Address.prototype.getShortName = function() {
  * whereas we really only care about what we need to display (the Address.getShortName() data).
  */
 var Result = function(resultId, fromAddress, toAddress, date, userId) {
-	this.resultId = resultId;
+	this.id = resultId;
 	this.fromAddress = fromAddress;
 	this.toAddress = toAddress;
 	this.date = date;
@@ -165,12 +165,13 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 				type: 'GET',
 				data: data_pairs,
 				success: function(data, textStatus, jqXHR) {
-console.log(jqXHR);
-						for(var i = 0; i < resultSet.results.length; i++) {
-							// TODO: This is going to have to be async
-							var user = User.getUserById(resultSet.results[i].userId);
-							tableElement.append($("<tr><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].fromAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" +
-									resultSet.results[i].toAddress + "</a></td><td><a href='" + infoURL + "?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].date + "</a></td><td id=" +
+						for(var i = 0; i < data.length; i++) {
+							var result = Object.create(Result, data[i]);
+							result.addressFrom = Object.create(Address, result.addressFrom);
+							result.addressTo = Object.create(Address, result.addressTo);
+							var user = User.getUserById(result.userId);
+							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + result.id + "'>" + result.addressFrom.getShortName() + "</a></td><td><a href='rideinfo.php?id=" + result.id + "'>" +
+									result.toAddress.getShortName() + "</a></td><td><a href='" + infoURL + "?id=" + result.id + "'>" + result.date + "</a></td><td id=" +
 									user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
 						}
 					},
