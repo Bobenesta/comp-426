@@ -1,6 +1,6 @@
 // requires: userinfo.js
 
-/* Address (bool isUNC, string addressLine, string cityStateLine, int raidus)
+/* Address (bool isUNC, string addressLine, string city, string state, int raidus)
  *
  * Address as sent to the server for search requests
  */
@@ -69,7 +69,8 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	else
 		result.startAddress = new Address(false,
 			containingDiv.find("#start-address-textbox").val(),
-			containingDiv.find("#start-citystate-textbox").val(),
+			containingDiv.find("#start-city-textbox").val(),
+			containingDiv.find("#start-state-textbox").val(),
 			parseInt(containingDiv.find("#start-within").val()));
 
 	if (containingDiv.find("#dest-type").val() == "unc")
@@ -78,7 +79,8 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	else
 		result.endAddress = new Address(false,
 			containingDiv.find("#dest-address-textbox").val(),
-			containingDiv.find("#dest-citystate-textbox").val(),
+			containingDiv.find("#dest-city-textbox").val(),
+			containingDiv.find("#dest-state-textbox").val(),
 			parseInt(containingDiv.find("#dest-within").val()));
 
 	result.date = containingDiv.find("#datebox").val();
@@ -101,7 +103,8 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	} else {
 		containingDiv.find("#start-type").val("other");
 		containingDiv.find("#start-address-textbox").val(this.startAddress.addressLine);
-		containingDiv.find("#start-citystate-textbox").val(this.startAddress.cityStateLine);
+		containingDiv.find("#start-city-textbox").val(this.startAddress.city);
+		containingDiv.find("#start-state-textbox").val(this.startAddress.state);
 	}
 	containingDiv.find("#start-within").val(this.startAddress.radius);
 
@@ -110,7 +113,8 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	} else {
 		containingDiv.find("#dest-type").val("other");
 		containingDiv.find("#dest-address-textbox").val(this.endAddress.addressLine);
-		containingDiv.find("#dest-citystate-textbox").val(this.endAddress.cityStateLine);
+		containingDiv.find("#dest-city-textbox").val(this.endAddress.city);
+		containingDiv.find("#dest-state-textbox").val(this.endAddress.state);
 	}
 	containingDiv.find("#dest-within").val(this.endAddress.radius);
 
@@ -122,8 +126,8 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 		containingDiv.find("#time-selector").val("afternoon");
 	}
 
-	autoDisableAddressCityStateText(containingDiv.find("#start-type"), containingDiv.find("#start-address-textbox"), containingDiv.find("#start-citystate-textbox"));
-	autoDisableAddressCityStateText(containingDiv.find("#dest-type"), containingDiv.find("#dest-address-textbox"), containingDiv.find("#dest-citystate-textbox"));
+	autoDisableAddressCityStateText(containingDiv.find("#start-type"), containingDiv.find("#start-address-textbox"), containingDiv.find("#start-city-textbox"), containingDiv.find("#start-state-textbox"));
+	autoDisableAddressCityStateText(containingDiv.find("#dest-type"), containingDiv.find("#dest-address-textbox"), containingDiv.find("#dest-city-textbox"), containingDiv.find("#dest-state-textbox"));
 }
 
 /* placeResultSetInTable(TableElement tableElement, String aipURL, String infoURL)
@@ -183,9 +187,9 @@ console.log(jqXHR);
  */
 SearchQuery.prototype.getShortName = function() {
 	if (this.endAddress.isUNC == false)
-		return "To " + this.endAddress.cityStateLine + " on " + this.date;
+		return "To " + this.endAddress.city + " on " + this.date;
 	else
-		return "From " + this.startAddress.cityStateLine + " on " + this.date;
+		return "From " + this.startAddress.city + " on " + this.date;
 }
 
 /* userBoxHandler(int userId)
@@ -225,19 +229,22 @@ SearchQuery.fillSelectorWithMyRequests = function(selectorElement) {
 	}
 }
 
-/* autoDisableAddressCityStateText(Element selector, Element addressTextBox, Element cityStateTextBox)
+/* autoDisableAddressCityStateText(Element selector, Element addressTextBox, Element cityTextBox, Element stateTextBox)
  *
  * Disables/enables addressTextBox and cityStateTextBox based on the unc/other value of selector
  */
-autoDisableAddressCityStateText = function(selector, addressTextBox, cityStateTextBox) {
+autoDisableAddressCityStateText = function(selector, addressTextBox, cityTextBox, stateTextBox) {
 	if (selector.val() == "unc") {
 		addressTextBox.val("");
 		addressTextBox.attr("disabled", "disabled");
-		cityStateTextBox.val("");
-		cityStateTextBox.attr("disabled", "disabled");
+		cityTextBox.val("");
+		cityTextBox.attr("disabled", "disabled");
+		stateTextBox.val("");
+		stateTextBox.attr("disabled", "disabled");
 	} else {
 		addressTextBox.removeAttr("disabled");
-		cityStateTextBox.removeAttr("disabled");
+		cityTextBox.removeAttr("disabled");
+		stateTextBox.removeAttr("disabled");
 	}
 }
 
@@ -249,19 +256,21 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 	if (selectorElement.val() == "-") {
 		formDiv.find("#start-type").val("unc");
 		formDiv.find("#start-address-textbox").val("");
-		formDiv.find("#start-citystate-textbox").val("");
+		formDiv.find("#start-city-textbox").val("");
+		formDiv.find("#start-state-textbox").val("");
 		formDiv.find("#start-within").val(10);
 
 		formDiv.find("#dest-type").val("unc");
 		formDiv.find("#dest-address-textbox").val("");
-		formDiv.find("#dest-citystate-textbox").val("");
+		formDiv.find("#dest-city-textbox").val("");
+		formDiv.find("#dest-state-textbox").val("");
 		formDiv.find("#dest-within").val(10);
 
 		formDiv.find("#datebox").val("");
 		formDiv.find("#time-selector").val("morning");
 
-		autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-citystate-textbox"));
-		autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-citystate-textbox"));
+		autoDisableAddressCityStateText(formDiv.find("#start-type"), formDiv.find("#start-address-textbox"), formDiv.find("#start-city-textbox"), formDiv.find("#start-state-textbox"));
+		autoDisableAddressCityStateText(formDiv.find("#dest-type"), formDiv.find("#dest-address-textbox"), formDiv.find("#dest-city-textbox"), formDiv.find("#dest-state-textbox"));
 	} else {
 		var query = SearchQuery.myQueries[parseInt(selectorElement.val(), 10)];
 		query.placeSearchQueryInSearchFields(formDiv);
@@ -269,10 +278,10 @@ SearchQuery.updateForms = function(selectorElement, formDiv) {
 }
 
 SearchQuery.myQueries = new Array();
-SearchQuery.myQueries.push(new SearchQuery(new Address(true, "", "", 10), new Address(false, "Duke", "Durham, NC", 10), "09/26/2012", true));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Charlotte, NC", 10), new Address(true, "", "", 10), "09/26/2012", false));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Hillsbourogh, NC", 10), new Address(true, "", "", 20), "09/26/2012", true));
-SearchQuery.myQueries.push(new SearchQuery(new Address(false, "NCSU", "Raleigh, NC", 20), new Address(true, "", "", 10), "09/29/2012", true));
+SearchQuery.myQueries.push(new SearchQuery(new Address(true, "", "", "", 10), new Address(false, "Duke", "Durham", "NC", 10), "09/26/2012", true));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Charlotte", "NC", 10), new Address(true, "", "", "", 10), "09/26/2012", false));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "N/A", "Hillsbourogh", "NC", 10), new Address(true, "", "", "", 20), "09/26/2012", true));
+SearchQuery.myQueries.push(new SearchQuery(new Address(false, "NCSU", "Raleigh", "NC", 20), new Address(true, "", "", "", 10), "09/29/2012", true));
 
 /*//Basic sanity testing
 var address = new Address(true, "", "", 0);

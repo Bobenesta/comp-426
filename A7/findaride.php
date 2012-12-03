@@ -19,17 +19,17 @@
 			});
 
 			$('#dest-type').change(function() {
-				autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-citystate-textbox'));
+				autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-city-textbox'), $('#dest-state-textbox'));
 			});
-			autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-citystate-textbox'));
+			autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-city-textbox'), $('#dest-state-textbox'));
 
 			$('#start-type').change(function() {
-				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
+				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-city-textbox'), $('#start-state-textbox'));
 			});
-			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
+			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-city-textbox'), $('#start-state-textbox'));
 
 			$('#findaride-form').submit(function() {
-				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).placeResultSetInTable($('#findaride-table'), "api/ride.php");
+				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).placeResultSetInTable($('#findaride-table'), "api/ride.php", "rideinfo.php");
 				return false; // We handle everything in Javascript, don't actually submit
 			});
 		});
@@ -52,7 +52,8 @@
 					<input name="address" id="start-address-textbox" class="form-text-box" maxlength="50"></div>
 
 					<div class="form-text-entry"><div class="form-text-box-label">City, State:</div>
-					<input name="citystate" id="start-citystate-textbox" class="form-text-box" maxlength="50"></div>
+					<input name="citystate" id="start-city-textbox" class="form-text-box" maxlength="40">
+					<input name="citystate" id="start-state-textbox" class="form-text-box" maxlength="10"></div>
 
 					Start within: <select id="start-within"><option value="10">10 Miles</option><option value="20">20 Miles</option><option value="50">50 Miles</option></select>
 				</div>
@@ -63,7 +64,8 @@
 					<input name="address" id="dest-address-textbox" class="form-text-box" maxlength="50"></div>
 
 					<div class="form-text-entry"><div class="form-text-box-label">City, State:</div>
-					<input name="citystate" id="dest-citystate-textbox" class="form-text-box" maxlength="50"></div>
+					<input name="citystate" id="dest-city-textbox" class="form-text-box" maxlength="40">
+					<input name="citystate" id="dest-state-textbox" class="form-text-box" maxlength="10"></div>
 
 					End within: <select id="dest-within"><option value="10">10 Miles</option><option value="20">20 Miles</option><option value="50">50 Miles</option></select>
 				</div>
