@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 
 		header("Content-type: application/json");
-		$result = Ride::getEncodedRequestsBySearch($addressFrom, $addressTo,
+		$result = Ride::getEncodedRidesBySearch($addressFrom, $addressTo,
 							$_GET['date'], $_GET['isMorning']);
 
 		if (is_null($result))
