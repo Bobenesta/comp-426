@@ -2,6 +2,9 @@
 function validateConvertDateFromWireToMySQL($date) {
 	$tmp = explode("/",$date);
 	if (count($tmp) != 3)
+                $tmp = explode("-",$date);
+
+	if (count($tmp) != 3)
 		return null;
 
 	if(!is_numeric($tmp[0]) || !is_numeric($tmp[1]) || !is_numeric($tmp[2]))
