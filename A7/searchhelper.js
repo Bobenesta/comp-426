@@ -4,64 +4,12 @@
  *
  * Address as sent to the server for search requests
  */
-var Address = function(isUNC, addressLine, cityStateLine, radius) {
- 	this.isUNC = isUNC;
- 	this.addressLine = addressLine;
- 	this.cityStateLine = cityStateLine;
- 	this.radius = radius;
-}
-
-/* deserialize (string serializedAddress)
- *
- * Create an address from its serialized form
- *
- * Format is: 1/0 for isUNC, NNN (length of addressLine), addressLine,
- * NNN (length of cityStateLine), cityStateLine, raidus
- */
-Address.deserialize = function(serialized) {
-	var result = new Address();
-
-	if (serialized[0] == "1")
-		result.isUNC = true;
-	else if (serialized[0] == "0")
-		result.isUNC = false;
-	else
-		return;
-
-	if (!result.isUNC) {
-		var addressLineLength = parseInt(serialized.substring(1, 4), 10);
-		result.addressLine = serialized.substring(4, 4 + addressLineLength);
-		var cityStateLengthStart = 4 + addressLineLength;
-
-		var cityStateLineLength = parseInt(serialized.substring(cityStateLengthStart, cityStateLengthStart + 3), 10);
-		result.cityStateLine = serialized.substring(cityStateLengthStart + 3, cityStateLengthStart + 3 + cityStateLineLength);
-		var radiusStart = cityStateLengthStart + 3 + cityStateLineLength;
-	} else
-		var radiusStart = 1;
-
-	result.radius = parseInt(serialized.substring(radiusStart), 10);
-
-	return result;
-}
-
-/* serialize()
- *
- * Get a serialized version of the address suitable for sending to the server
- * for processing as a part of a SearchQuery.
- *
- * Format is: 1/0 for isUNC, NNN (length of addressLine), addressLine,
- * NNN (length of cityStateLine), cityStateLine, raidus
- */
-Address.prototype.serialize = function() {
-	if (this.addressLine.length >= 1000 || this.cityStateLine >= 1000)
-		return "-1";
-	if (this.isUNC)
-		return "1" + this.radius;
-	else
-		return "0" +
-			pad(this.addressLine.length, 3) + this.addressLine +
-			pad(this.cityStateLine.length, 3) + this.cityStateLine +
-			this.radius;
+var Address = function(isUNC, addressLine, city, state, radius) {
+	this.isUNC = isUNC;
+	this.addressLine = addressLine;
+	this.city = city;
+	this.state = state;
+	this.radius = radius;
 }
 
 /* getShortName()
@@ -72,7 +20,7 @@ Address.prototype.getShortName = function() {
 	if (this.isUNC)
 		return "UNC";
 	else
-		return this.cityStateLine;
+		return this.city + ", " + this.state;
 }
 
 /* Result(int resultId, string fromAddress, string toAddress, string date, int userId)
@@ -89,33 +37,6 @@ var Result = function(resultId, fromAddress, toAddress, date, userId) {
 	this.userId = userId;
 }
 
-/* deserialize (string serializedResult)
- *
- * Create a Result from its serialized form
- *
- * Format is: NNNNNNNNNN (resultId), NNNNNNNNNN (userId),
- * NNN (length of fromAddress), fromAddress, NNN (length of toAddress), toAddress,
- * NNN (length of date), date
- */
-Result.deserialize = function(serialized) {
-	var retVal = new Result();
-
-	retVal.resultId = parseInt(serialized.substring(0, 10), 10);
-	retVal.userId = parseInt(serialized.substring(10, 20), 10);
-
-	var fromAddressLength = parseInt(serialized.substring(20, 23), 10);
-	retVal.fromAddress = serialized.substring(23, 23 + fromAddressLength);
-
-	var toAddressLength = parseInt(serialized.substring(23 + fromAddressLength, 26 + fromAddressLength), 10);
-	var dateLengthStart = 26 + fromAddressLength + toAddressLength;
-	retVal.toAddress = serialized.substring(26 + fromAddressLength, dateLengthStart);
-
-	var dateLength = serialized.substring(dateLengthStart, dateLengthStart + 3);
-	retVal.date = serialized.substring(dateLengthStart + 3, dateLengthStart + 3 + dateLength);
-
-	return retVal;
-}
-
 /* ResultSet(Result[] results)
  *
  * Stores a set of results
@@ -123,24 +44,6 @@ Result.deserialize = function(serialized) {
  */
 var ResultSet = function(results) {
 	this.results = results;
-}
-
-/* deserialize (string serializedResultSet)
- *
- * Create a ResultSet from its serialized form
- *
- * Format is: NNN (size of result), result, NNN (size of result), result, 
- *            NNN (size of result), result, ...
- */
-ResultSet.deserialize = function(serialized) {
-	var result = new ResultSet(new Array());
-	var nextResultStart = 0;
-	while (nextResultStart < serialized.length) {
-		var nextResultLength = parseInt(serialized.substring(nextResultStart, nextResultStart + 3), 10);
-		result.results.push(Result.deserialize(serialized.substring(nextResultStart + 3, nextResultStart + 3 + nextResultLength)));
-		nextResultStart = nextResultStart + 3 + nextResultLength;
-	}
-	return result;
 }
 
 /* SearchQuery (Address startAddress, Address endAddress, string date, bool isMorning)
@@ -152,67 +55,6 @@ var SearchQuery = function(startAddress, endAddress, date, isMorning) {
  	this.endAddress = endAddress;
  	this.date = date;
  	this.isMorning = isMorning;
-}
-
-/* deserialize (string serializedSearchQuery)
- *
- * Create a SearchQuery from its serialized form
- *
- * Format is: NNNN (length of serialized startAddress), startAddress,
- * NNNN (length of serialized endAddress), endAddress, NNN (length of date),
- * date, 1/0 for isMorning
- */
-SearchQuery.deserialize = function(serialized) {
-	if (serialized[0] == "-")
-		return null;
-
-	var result = new SearchQuery();
-
-	var startAddressLength = parseInt(serialized.substring(0, 4), 10);
-	result.startAddress = Address.deserialize(serialized.substring(4, 4 + startAddressLength));
-	var endAddressLengthStart = 4 + startAddressLength;
-
-	var endAddressLength = parseInt(serialized.substring(endAddressLengthStart, endAddressLengthStart + 4), 10);
-	result.endAddress = Address.deserialize(serialized.substring(endAddressLengthStart + 4, endAddressLengthStart + 4 + endAddressLength));
-	var dateLengthStart = endAddressLengthStart + 4 + endAddressLength;
-
-	var dateLength = parseInt(serialized.substring(dateLengthStart, dateLengthStart + 3), 10);
-	result.date = serialized.substring(dateLengthStart + 3, dateLengthStart + 3 + dateLength);
-
-	if (serialized[dateLengthStart + 3 + dateLength] == 1)
-		result.isMorning = true;
-	else
-		result.isMorning = false;
-
-	return result;
-}
-
-/* serialize()
- *
- * Get a serialized version of the SearchQuery suitable for sending to the server
- * for processing.
- *
- * Format is: NNNN (length of serialized startAddress), startAddress,
- * NNNN (length of serialized endAddress), endAddress, NNN (length of date),
- * date, 1/0 for isMorning
- */
-SearchQuery.prototype.serialize = function() {
-	var startAddressSerialized = this.startAddress.serialize();
-	var endAddressSerialized = this.endAddress.serialize();
-	if (this.date.length >= 1000 || startAddressSerialized.length >= 10000 ||
-		endAddressSerialized.length >= 10000) {
-		return "-1";
-	} else if (this.isMorning) {
-		return pad(startAddressSerialized.length, 4) + startAddressSerialized +
-			pad(endAddressSerialized.length, 4) + endAddressSerialized +
-			pad(this.date.length, 3) + this.date +
-			"1";
-	} else {
-		return pad(startAddressSerialized.length, 4) + startAddressSerialized +
-			pad(endAddressSerialized.length, 4) + endAddressSerialized +
-			pad(this.date.length, 3) + this.date +
-			"0";
-	}
 }
 
 /* getSearchQueryFromSearchFields(DivElement containingDiv)
@@ -284,33 +126,55 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	autoDisableAddressCityStateText(containingDiv.find("#dest-type"), containingDiv.find("#dest-address-textbox"), containingDiv.find("#dest-citystate-textbox"));
 }
 
-/* placeResultSetInTable(TableElement tableElement)
+/* placeResultSetInTable(TableElement tableElement, String aipURL, String infoURL)
  *
  * gets a result set which matches this SearchQuery and places it in the given table
- * (TODO: Request results from server instead of doing anything static here)
+ *
+ * apiURL is the api AJAX URL, infoURL is the URL for a more info link
  */
-SearchQuery.prototype.placeResultSetInTable = function(tableElement) {
+SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, infoURL) {
 	// Clear the table
 	tableElement.empty();
 	// Re-add headers
 	var headers = $("<tr><th>From</th><th>To</th><th>When</th><th>User</th></tr>");
 	tableElement.append(headers);
 
-	// TODO Request result set async from server
-	var resultSetFromUNC = ResultSet.deserialize("05100000000010000005915003UNC009Charlotte01007/07/2012" + "04900000000020000001000003UNC004Duke01009/26/2012");
-	var resultSetToUNC = ResultSet.deserialize("05100000000030000005915009Charlotte003UNC01007/12/2012" + "04900000000040000001000004Duke003UNC01009/30/2012");
+	var data_pairs = {}
 
-	var resultSet = resultSetToUNC;
-	if (this.startAddress.isUNC)
-		resultSet = resultSetFromUNC;
+	data_pairs['addressTo-isUNC'] = this.startAddress.isUNC;
+	data_pairs['addressTo-addressLine'] = this.startAddress.addressLine;
+	data_pairs['addressTo-city'] = this.startAddress.city;
+	data_pairs['addressTo-state'] = this.startAddress.state;
+	data_pairs['addressTo-radius'] = this.startAddress.radius;
 
-	for(var i = 0; i < resultSet.results.length; i++) {
-		// TODO: This is going to have to be async
-		var user = User.getUserById(resultSet.results[i].userId);
-		tableElement.append($("<tr><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].fromAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" +
-				resultSet.results[i].toAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].date + "</a></td><td id=" +
-				user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
-	}
+	data_pairs['addressFrom-isUNC'] = this.endAddress.isUNC;
+	data_pairs['addressFrom-addressLine'] = this.endAddress.addressLine;
+	data_pairs['addressFrom-city'] = this.endAddress.city;
+	data_pairs['addressFrom-state'] = this.endAddress.state;
+	data_pairs['addressFrom-radius'] = this.endAddress.radius;
+
+	data_pairs["date"] = this.date;
+	data_pairs["isMorning"] = this.isMorning;
+
+	$.ajax(apiURL,
+			{
+				type: 'GET',
+				data: data_pairs
+				success: function(data, textStatus, jqXHR) {
+console.log(jqXHR);
+						for(var i = 0; i < resultSet.results.length; i++) {
+							// TODO: This is going to have to be async
+							var user = User.getUserById(resultSet.results[i].userId);
+							tableElement.append($("<tr><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].fromAddress + "</a></td><td><a href='rideinfo.php?id=" + resultSet.results[i].resultId + "'>" +
+									resultSet.results[i].toAddress + "</a></td><td><a href='" + infoURL + "?id=" + resultSet.results[i].resultId + "'>" + resultSet.results[i].date + "</a></td><td id=" +
+									user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
+						}
+					},
+				error: function(data, textStatus, jqXHR) {
+						alert("Error updating search results, please try again later.");
+					},
+				cache: false
+			});
 }
 
 /* getShortName()

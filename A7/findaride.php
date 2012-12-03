@@ -12,9 +12,6 @@
 	<script type="text/javascript" src="searchhelper.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var emptySearchQuery = new SearchQuery(new Address(), new Address(), "07/07/2012", false);
-			emptySearchQuery.placeResultSetInTable($('#findaride-table'));
-
 			var requestsSelector = $('#myRequests');
 			SearchQuery.fillSelectorWithMyRequests(requestsSelector);
 			requestsSelector.change(function() {
@@ -32,7 +29,7 @@
 			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-citystate-textbox'));
 
 			$('#findaride-form').submit(function() {
-				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).placeResultSetInTable($('#findaride-table'));
+				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).placeResultSetInTable($('#findaride-table'), "api/ride.php");
 				return false; // We handle everything in Javascript, don't actually submit
 			});
 		});
