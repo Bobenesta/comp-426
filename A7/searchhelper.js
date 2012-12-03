@@ -159,7 +159,7 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 	$.ajax(apiURL,
 			{
 				type: 'GET',
-				data: data_pairs
+				data: data_pairs,
 				success: function(data, textStatus, jqXHR) {
 console.log(jqXHR);
 						for(var i = 0; i < resultSet.results.length; i++) {
