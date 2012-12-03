@@ -64,7 +64,7 @@ var SearchQuery = function(startAddress, endAddress, date, isMorning) {
 SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	var result = new SearchQuery();
 	if (containingDiv.find("#start-type").val() == "unc")
-		result.startAddress = new Address(true, "", "",
+		result.startAddress = new Address(true, "", "", "",
 			parseInt(containingDiv.find("#start-within").val()));
 	else
 		result.startAddress = new Address(false,
@@ -74,7 +74,7 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 			parseInt(containingDiv.find("#start-within").val()));
 
 	if (containingDiv.find("#dest-type").val() == "unc")
-		result.endAddress = new Address(true, "", "",
+		result.endAddress = new Address(true, "", "", "",
 			parseInt(containingDiv.find("#dest-within").val()));
 	else
 		result.endAddress = new Address(false,
