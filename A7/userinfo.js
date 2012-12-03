@@ -91,6 +91,8 @@ User.all[5915] = new User(5915, "Matt", 4.5, user5915Reviews);
 
 User.all[1000] = new User(1000, "Jack", 0, {});
 
+User.all[1] = new User(1, "Matt", 0, {});
+
 user1001Reviews = new Array();
 user1001Reviews.push(new Review(5, 5915, "fun"));
 User.all[1001] = new User(1001, "Benoit", 5, user1001Reviews);
