@@ -166,9 +166,9 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 				data: data_pairs,
 				success: function(data, textStatus, jqXHR) {
 						for(var i = 0; i < data.length; i++) {
-							var result = Object.create(Result, data[i]);
-							result.addressFrom = Object.create(Address, result.addressFrom);
-							result.addressTo = Object.create(Address, result.addressTo);
+							var result = Object.create(Result.prototype, data[i]);
+							result.addressFrom = Object.create(Address.prototype, result.addressFrom);
+							result.addressTo = Object.create(Address.prototype, result.addressTo);
 							var user = User.getUserById(result.userId);
 							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + result.id + "'>" + result.addressFrom.getShortName() + "</a></td><td><a href='rideinfo.php?id=" + result.id + "'>" +
 									result.toAddress.getShortName() + "</a></td><td><a href='" + infoURL + "?id=" + result.id + "'>" + result.date + "</a></td><td id=" +
