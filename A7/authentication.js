@@ -24,7 +24,7 @@ function login(user, password) {
 									passwordHash: passwordHash
 								},
 								success: function(data, textStatus, jqXHR) {
-										$(location).attr('href', "landing.php");
+										window.location.href = landing.php;
 									},
 								error: loginFailureHandler,
 								cache: false
@@ -45,7 +45,7 @@ function logout() {
 			{
 				type: 'GET',
 				success: function(data, textStatus, jqXHR) {
-						$(location).attr('href', "homepage.php");
+						window.location.href = "homepage.php";
 					},
 				error: function(jqXHR, textStatus, errorThrown) {
 						alert("Error connecting to backend, please try again later");
