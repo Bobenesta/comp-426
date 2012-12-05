@@ -49,8 +49,6 @@
 					<div class="form-text-entry"><div class="form-text-box-label">City, State:</div>
 					<input name="citystate" id="start-city-textbox" class="form-text-box" maxlength="40">
 					<input name="citystate" id="start-state-textbox" class="form-text-box" maxlength="10"></div>
-
-					Start within: <select id="start-within"><option value="10">10 Miles</option><option value="20">20 Miles</option><option value="50">50 Miles</option></select>
 				</div>
 				<div id="findaride-search-standard-dest">
 					End at:&nbsp;&nbsp;&nbsp;<select id="dest-type"><option value="unc">UNC</option><option value="other">Manual Entry</option></select>
@@ -61,8 +59,6 @@
 					<div class="form-text-entry"><div class="form-text-box-label">City, State:</div>
 					<input name="citystate" id="dest-city-textbox" class="form-text-box" maxlength="40">
 					<input name="citystate" id="dest-state-textbox" class="form-text-box" maxlength="10"></div>
-
-					End within: <select id="dest-within"><option value="10">10 Miles</option><option value="20">20 Miles</option><option value="50">50 Miles</option></select>
 				</div>
 				<div id="findaride-search-standard-datetime">
 					<div class="form-text-entry"><div class="form-text-box-label">Date:</div>
