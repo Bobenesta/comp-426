@@ -63,25 +63,32 @@ var SearchQuery = function(startAddress, endAddress, date, isMorning) {
  */
 SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 	var result = new SearchQuery();
+
+	var startWithin = null;
+	var startWithinElement = containingDiv.find("#start-within");
+	if (startWithinElement != null)
+		startWithin = parseInt(startWithinElement.val());
 	if (containingDiv.find("#start-type").val() == "unc")
-		result.startAddress = new Address(true, "", "", "",
-			parseInt(containingDiv.find("#start-within").val()));
+		result.startAddress = new Address(true, "", "", "", startWithin);
 	else
 		result.startAddress = new Address(false,
 			containingDiv.find("#start-address-textbox").val(),
 			containingDiv.find("#start-city-textbox").val(),
 			containingDiv.find("#start-state-textbox").val(),
-			parseInt(containingDiv.find("#start-within").val()));
+			startWithin);
 
+	var destWithin = null;
+	var destWithinElement = containingDiv.find("#dest-within");
+	if (destWithinElement != null)
+		destWithin = parseInt(destWithinElement.val());
 	if (containingDiv.find("#dest-type").val() == "unc")
-		result.endAddress = new Address(true, "", "", "",
-			parseInt(containingDiv.find("#dest-within").val()));
+		result.endAddress = new Address(true, "", "", "", destWithin);
 	else
 		result.endAddress = new Address(false,
 			containingDiv.find("#dest-address-textbox").val(),
 			containingDiv.find("#dest-city-textbox").val(),
 			containingDiv.find("#dest-state-textbox").val(),
-			parseInt(containingDiv.find("#dest-within").val()));
+			destWithin);
 
 	result.date = containingDiv.find("#datebox").val();
 
@@ -198,13 +205,11 @@ SearchQuery.prototype.createNew = function(apiURL, redirectURL) {
 	data_pairs['addressTo-addressLine'] = this.startAddress.addressLine;
 	data_pairs['addressTo-city'] = this.startAddress.city;
 	data_pairs['addressTo-state'] = this.startAddress.state;
-	data_pairs['addressTo-radius'] = this.startAddress.radius;
 
 	data_pairs['addressFrom-isUNC'] = this.endAddress.isUNC;
 	data_pairs['addressFrom-addressLine'] = this.endAddress.addressLine;
 	data_pairs['addressFrom-city'] = this.endAddress.city;
 	data_pairs['addressFrom-state'] = this.endAddress.state;
-	data_pairs['addressFrom-radius'] = this.endAddress.radius;
 
 	data_pairs["date"] = this.date;
 	data_pairs["isMorning"] = this.isMorning;
