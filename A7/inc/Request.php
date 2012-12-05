@@ -20,6 +20,17 @@ class Request {
 		$this->isMorning = $isMorning;
 	}
 
+    public function getFrom(){
+    	return $addressFrom;
+    }
+	
+	public function getTo(){
+		return $addressFrom;
+	}
+	
+	public function getDate(){
+		return $date;
+	}
 	public static function getById($id) {
 		$mysqli = getDBConnection();
 		$result = $mysqli->query("SELECT * FROM requests WHERE id = '" . $id . "'");
