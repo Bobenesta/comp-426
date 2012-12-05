@@ -13,5 +13,14 @@ $name= "";
 
 			$name= $row['userName'];
 		}
-echo($name);
+echo($name."'s profile");
+
+
+echo($name+"'s request");
+$result = $mysqli->query("SELECT * FROM requests WHERE id = '" . $id . "'");
+while($row = $result->fetch_array())
+  {
+  echo $row['date'];
+  echo "<br />";
+  }
 ?>
