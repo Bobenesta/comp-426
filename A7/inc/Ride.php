@@ -77,7 +77,7 @@ class Ride {
 		return null;
 	}
 
-	public static function getEncodedRidesBySearch($addressFrom, $addressTo, $date, $isMorning) {
+	public static function getEncodedRidesBySearch($addressFrom, $addressFromRadius, $addressTo, $addressToRadius, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
 		$mysqlDate = null;

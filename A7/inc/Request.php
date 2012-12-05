@@ -69,7 +69,7 @@ class Request {
 		return null;
 	}
 
-	public static function getEncodedRequestsBySearch($addressFrom, $addressTo, $date, $isMorning) {
+	public static function getEncodedRequestsBySearch($addressFrom, $addressFromRadius, $addressTo, $addressToRadius, $date, $isMorning) {
 		$mysqli = getDBConnection();
 
 		$mysqlDate = null;

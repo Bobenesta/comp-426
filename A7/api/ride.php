@@ -27,6 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			exit();
 		}
 
+		if (($hasAddressFrom && !is_numeric($_GET['addressFrom-radius'])) ||
+			($hasAddressTo && !is_numeric($_GET['addressTo-radius']))) {
+			header("HTTP/1.1 400 Bad Request");
+			print("Request parameter was invalid.");
+			exit();
+		}
+
 		$addressFrom = null;
 		if ($hasAddressFrom) {
 			$addressFrom = Address::getOrCreate($_GET['addressFrom-isUNC'], $_GET['addressFrom-addressLine'],
@@ -50,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 
 		header("Content-type: application/json");
-		$result = Ride::getEncodedRidesBySearch($addressFrom, $addressTo,
+		$result = Ride::getEncodedRidesBySearch($addressFrom, $hasAddressFrom ? intval($_GET['addressFrom-radius']) : null,
+							$addressTo, $hasAddressTo ? intval($_GET['addressTo-radius']) : null,
 							$_GET['date'], $_GET['isMorning']);
 
 		if (is_null($result))
