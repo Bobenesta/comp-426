@@ -153,8 +153,8 @@ class Request {
 	public function getJSON() {
 		$representation = array();
 		$representation['id'] = $this->id;
-		$representation['addressFrom'] = $this->addressFrom->getJSON();
-		$representation['addressTo'] = $this->addressTo->getJSON();
+		$representation['fromAddress'] = $this->addressFrom->getJSON();
+		$representation['toAddress'] = $this->addressTo->getJSON();
 		$representation['userId'] = $this->userId;
 		$representation['date'] = $this->date;
 		$representation['isMorning'] = $this->isMorning;
