@@ -22,8 +22,7 @@ function authenticate($userName, $passwordHash) {
 		// Though not explicity stated, $passwordHash should be
 		// hex(sha256(sha256(password + "gEp3XuY9r7ajWxSIG7mW04PHlL9JxqXhhVs") + $_SESSION['loginSalt'])
 		// eg password1 becomes sha256(0x8e4365b5d8a26e4f22eab048daf77e0c30134745ce50c700f866fb537143c1fd + $_SESSION['loginSalt'])
-print(bin2hex($row['passwordHash']) . $_SESSION['loginSalt'] . "\n");
-print(hash("sha256", bin2hex($row['passwordHash']) . $_SESSION['loginSalt']) . "\n");
+
 		if (hash("sha256", bin2hex($row['passwordHash']) . $_SESSION['loginSalt']) == $passwordHash) {
 			$userIdLoggedIn = intval($row['id']);
 			$_SESSION['userIdAuthenticated'] = $userIdLoggedIn;
