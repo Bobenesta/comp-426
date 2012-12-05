@@ -16,11 +16,22 @@ $name= "";
 echo($name."'s profile");
 
 
-echo($name+"'s request");
-$result = $mysqli->query("SELECT * FROM requests WHERE uesrId = '" . $id . "'");
-while($row = $result->fetch_array())
-  {
+
   echo $mysqli->query("SELECT addressLine FROM addresses WHERE id = '" . $id . "'")." ".$row['date'];
-  echo "<br />";
-  }
+
+  
+  
+  
+  $query = "SELECT * FROM requests WHERE uesrId = '" . $id . "'";
+
+if ($result = $mysqli->query($query)) {
+
+    /* fetch object array */
+    while ($row = $result->fetch_assoc()) {
+        echo $row['date'];
+    }
+
+    /* free result set */
+    $result->close();
+}
 ?>
