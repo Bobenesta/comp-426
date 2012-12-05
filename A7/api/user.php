@@ -16,12 +16,15 @@ $name= "";
 echo($name."'s profile");
 
 
-  
+ echo("<tr><td>From</td><td>To</td><td>date</td></tr>");
 if ($result = $mysqli->query("SELECT * FROM requests WHERE uesrId = '" . $id . "'")) {
 echo $result->num_rows;
     /* fetch object array */
     while ($row = $result->fetch_assoc()) {
-        echo $row['date'];
+    	$from= $mysqli->query("SELECT addressLine FROM addresses WHERE id = '" . $row['addressFrom'] . "'");
+		$to= $mysqli->query("SELECT addressLine FROM addresses WHERE id = '" . $row['addressTo'] . "'");
+		$date= $row['date'];
+        echo("<tr><td>".$from."</td><td>".$to."</td><td>".$date."</td></tr>");
     }
 
     /* free result set */
