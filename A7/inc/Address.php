@@ -1,8 +1,7 @@
 <?php
 require_once("mysql_settings.php");
-print("1\n");
 require_once("class.googleHelper.php");
-print("2\n");
+
 class Address {
 	private $id;
 	private $isUNC;
@@ -64,11 +63,11 @@ class Address {
 						$mysqli->real_escape_string($state) . "'");
 			if ($result) {
 				$id = 0;
-				if ($result->num_rows == 0) {print("3\n");
+				if ($result->num_rows == 0) {
 					$location = googleHelper.getCoordinates("USA, " . $state . ", " . $city . ", " . $addressLine);
 					if ($location == null) {print("No location! " . "USA, " . $state . ", " . $city . ", " . $addressLine);
 						return null;
-}print("4\n");
+}
 
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
 								"city, state, latitude, longitude) VALUES ('0', '" .
