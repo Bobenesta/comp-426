@@ -167,7 +167,7 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 				success: function(data, textStatus, jqXHR) {
 						for(var i = 0; i < data.length; i++) {
 							var user = User.getUserById(data[i].userId);
-							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + Address.prototype.getShortName.call(data[i].addressFrom) + "</a></td><td><a href='rideinfo.php?id=" + data[i].id + "'>" +
+							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + Address.prototype.getShortName.call(data[i].fromAddress) + "</a></td><td><a href='rideinfo.php?id=" + data[i].id + "'>" +
 									Address.prototype.getShortName.call(data[i].toAddress) + "</a></td><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + data[i].date + "</a></td><td id=" +
 									user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
 						}
