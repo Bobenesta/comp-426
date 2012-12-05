@@ -7,15 +7,13 @@ class Address {
 	private $addressLine;
 	private $city;
 	private $state;
-	private $radius;
 
-	private function __construct($id, $isUNC, $addressLine, $city, $state, $radius) {
+	private function __construct($id, $isUNC, $addressLine, $city, $state) {
 		$this->id = $id;
 		$this->isUNC = $isUNC;
 		$this->addressLine = $addressLine;
 		$this->city = $city;
 		$this->state = $state;
-		$this->radius = $radius;
 	}
 
 	public static function getById($id) {
@@ -28,26 +26,24 @@ class Address {
 			$row = $result->fetch_assoc();
 
 			return new Address($id, $row['isUNC'], $row['addressLine'],
-					$row['city'], $row['state'], intval($row['radius']));
+					$row['city'], $row['state']);
 		}
 		return null;
 	}
 
-	public static function getOrCreate($isUNC, $addressLine, $city, $state, $radius) {
+	public static function getOrCreate($isUNC, $addressLine, $city, $state) {
 		$mysqli = getDBConnection();
 
-		if (!is_numeric($radius) || ($isUNC == "false" && ($addressLine == "" || $city == "" || $state == "")))
+		if ($isUNC == "false" && ($addressLine == "" || $city == "" || $state == ""))
 			return null;
 
 		if ($isUNC == "true") {
-			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '1' AND " .
-						"radius = '" . $radius . "'");
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '1'");
 			if ($result) {
 				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
-								"city, state, radius) VALUES ('1', '', '', '', '" .
-								$radius . "')");
+								"city, state) VALUES ('1', '', '', '')");
 
 					if (!$result)
 						return null;
@@ -57,11 +53,10 @@ class Address {
 					$row = $result->fetch_assoc();
 					$id = $row['id'];
 				}
-				return new Address($id, true, "", "", "", $radius);
+				return new Address($id, true, "", "", "");
 			}
 		} else if ($isUNC == "false") {
-			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '0' AND " .
-						"radius = '" . $radius. "' AND addressLine = '" . 
+			$result = $mysqli->query("SELECT id FROM addresses WHERE isUNC = '0' AND addressLine = '" . 
 						$mysqli->real_escape_string($addressLine) . "' AND city = '" .
 						$mysqli->real_escape_string($city) . "' AND state = '" .
 						$mysqli->real_escape_string($state) . "'");
@@ -69,11 +64,10 @@ class Address {
 				$id = 0;
 				if ($result->num_rows == 0) {
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
-								"city, state, radius) VALUES ('0', '" .
+								"city, state) VALUES ('0', '" .
 								$mysqli->real_escape_string($addressLine) . "', '" .
 								$mysqli->real_escape_string($city) . "', '" .
-								$mysqli->real_escape_string($state) . "', '" .
-								$radius . "')");
+								$mysqli->real_escape_string($state) . "')");
 
 					if (!$result)
 						return null;
@@ -83,7 +77,7 @@ class Address {
 					$row = $result->fetch_assoc();
 					$id = $row['id'];
 				}
-				return new Address($id, false, $addressLine, $city, $state, $radius);
+				return new Address($id, false, $addressLine, $city, $state);
 			}
 		}
 		return null;
@@ -96,7 +90,6 @@ class Address {
 		$representation['addressLine'] = $this->addressLine;
 		$representation['city'] = $this->city;
 		$representation['state'] = $this->state;
-		$representation['radius'] = $this->radius;
 		return $representation;
 	}
 

@@ -6,22 +6,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO'])) {
 		$hasAddressFrom = false;
 		if (!is_null($_GET['addressFrom-isUNC']) || !is_null($_GET['addressFrom-addressLine']) ||
-		    !is_null($_GET['addressFrom-city']) || !is_null($_GET['addressFrom-state']) ||
-		    !is_null($_GET['addressFrom-radius']))
+		    !is_null($_GET['addressFrom-city']) || !is_null($_GET['addressFrom-state']))
 			$hasAddressFrom = true;
 
 		$hasAddressTo = false;
 		if (!is_null($_GET['addressTo-isUNC']) || !is_null($_GET['addressTo-addressLine']) ||
-		    !is_null($_GET['addressTo-city']) || !is_null($_GET['addressTo-state']) ||
-		    !is_null($_GET['addressTo-radius']))
+		    !is_null($_GET['addressTo-city']) || !is_null($_GET['addressTo-state']))
 			$hasAddressTo = true;
 
 		if (($hasAddressFrom && (is_null($_GET['addressFrom-isUNC']) || is_null($_GET['addressFrom-addressLine']) ||
-		    is_null($_GET['addressFrom-city']) || is_null($_GET['addressFrom-state']) ||
-		    is_null($_GET['addressFrom-radius']))) ||
+		    is_null($_GET['addressFrom-city']) || is_null($_GET['addressFrom-state']))) ||
 		    ($hasAddressTo && (is_null($_GET['addressTo-isUNC']) || is_null($_GET['addressTo-addressLine']) ||
-		    is_null($_GET['addressTo-city']) || is_null($_GET['addressTo-state']) ||
-		    is_null($_GET['addressTo-radius'])))) {
+		    is_null($_GET['addressTo-city']) || is_null($_GET['addressTo-state'])))) {
 			header("HTTP/1.1 400 Bad Request");
 			print("Request parameter was missing.");
 			exit();
@@ -29,9 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 		$addressFrom = null;
 		if ($hasAddressFrom) {
-			$addressFrom = Address::getOrCreate($_GET['addressFrom-isUNC'],
-							$_GET['addressFrom-addressLine'], $_GET['addressFrom-city'],
-							$_GET['addressFrom-state'], $_GET['addressFrom-radius']);
+			$addressFrom = Address::getOrCreate($_GET['addressFrom-isUNC'], $_GET['addressFrom-addressLine'],
+							$_GET['addressFrom-city'], $_GET['addressFrom-state']);
 			if (is_null($addressFrom)) {
 				header("HTTP/1.1 400 Bad Request");
 				print("Request parameter was invalid.");
@@ -41,9 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 		$addressTo = null;
 		if ($hasAddressTo) {
-			$addressTo = Address::getOrCreate($_GET['addressTo-isUNC'],
-							$_GET['addressTo-addressLine'], $_GET['addressTo-city'],
-							$_GET['addressTo-state'], $_GET['addressTo-radius']);
+			$addressTo = Address::getOrCreate($_GET['addressTo-isUNC'], $_GET['addressTo-addressLine'],
+							$_GET['addressTo-city'], $_GET['addressTo-state']);
 			if (is_null($addressTo)) {
 				header("HTTP/1.1 400 Bad Request");
 				print("Request parameter was invalid.");
@@ -118,28 +112,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if (is_null($_POST['addressFrom-isUNC']) || is_null($_POST['addressFrom-addressLine']) ||
 	    is_null($_POST['addressFrom-city']) || is_null($_POST['addressFrom-state']) ||
-	    is_null($_POST['addressFrom-radius']) ||
 	    is_null($_POST['addressTo-isUNC']) || is_null($_POST['addressTo-addressLine']) ||
 	    is_null($_POST['addressTo-city']) || is_null($_POST['addressTo-state']) ||
-	    is_null($_POST['addressTo-radius']) ||
 	    is_null($_POST['date']) || is_null($_POST['isMorning'])) {
 		header("HTTP/1.1 400 Bad Request");
 		print("Request parameter was missing.");
 		exit();
 	}
 
-	$addressFrom = Address::getOrCreate($_POST['addressFrom-isUNC'],
-					$_POST['addressFrom-addressLine'], $_POST['addressFrom-city'],
-					$_POST['addressFrom-state'], $_POST['addressFrom-radius']);
+	$addressFrom = Address::getOrCreate($_POST['addressFrom-isUNC'], $_POST['addressFrom-addressLine'],
+					$_POST['addressFrom-city'], $_POST['addressFrom-state']);
 	if (is_null($addressFrom)) {
 		header("HTTP/1.1 400 Bad Request");
 		print("Request parameter was invalid.");
 		exit();
 	}
 
-	$addressTo = Address::getOrCreate($_POST['addressTo-isUNC'],
-					$_POST['addressTo-addressLine'], $_POST['addressTo-city'],
-					$_POST['addressTo-state'], $_POST['addressTo-radius']);
+	$addressTo = Address::getOrCreate($_POST['addressTo-isUNC'], $_POST['addressTo-addressLine'],
+					$_POST['addressTo-city'], $_POST['addressTo-state']);
 
 	if (is_null($addressTo)) {
 		header("HTTP/1.1 400 Bad Request");
