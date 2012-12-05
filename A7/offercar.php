@@ -71,8 +71,8 @@
 					Time:&nbsp;&nbsp;&nbsp;&nbsp;<select id="time-selector"><option value="morning">Morning</option><option value="afternoon">Afternoon</option></select>
 				</div>
 			</div>
-				<textarea id="cardesc">Enter any additional information people should know here...</textarea>
-				<input type="text" id="carcapacity">
+				<textarea id="cardesc">Enter any additional information people should know here...</textarea><br>
+				Car capacity: <input type="text" id="carcapacity">
 			<br>
 			<div id="findaride-search-submit" class="center">
 				<button type="submit">Offer your car!</button>

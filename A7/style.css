@@ -186,6 +186,10 @@ nav a:hover {
 	max-width: 25%;
 }
 
+#cardesc {
+	width: 100%;
+}
+
 #all-without-map {
 	display: inline-block;
 	margin: 10px 10px 10px 10px;
