@@ -2,9 +2,7 @@
 require_once("../inc/require_authentication.php");
 
 $id= $_GET['profileId'];
-echo(getById($id)+"'s profile");
-
-public static function getById($id) {
+$name= "";
 		$mysqli = getDBConnection();
 		$result = $mysqli->query("SELECT * FROM users WHERE id = '" . $id . "'");
 		if ($result) {
@@ -13,10 +11,7 @@ public static function getById($id) {
 
 			$row = $result->fetch_assoc();
 
-			return $row['userName']);
+			$name= $row['userName'];
 		}
-		return null;
-	}
-
-
+echo($name);
 ?>
