@@ -64,7 +64,10 @@ class Address {
 			if ($result) {
 				$id = 0;
 				if ($result->num_rows == 0) {
+print("0\n");
+print("USA, " . $state . ", " . $city . ", " . $addressLine);
 					$location = googleHelper.getCoordinates("USA, " . $state . ", " . $city . ", " . $addressLine);
+print("99\n");
 					if ($location == null)
 						return null;
 
