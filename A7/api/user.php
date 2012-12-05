@@ -16,16 +16,9 @@ $name= "";
 echo($name."'s profile");
 
 
-
-  echo $mysqli->query("SELECT addressLine FROM addresses WHERE id = '" . $id . "'")." ".$row['date'];
-
   
-  
-  
-  $query = "SELECT * FROM requests WHERE uesrId = '" . $id . "'";
-
-if ($result = $mysqli->query($query)) {
-
+if ($result = $mysqli->query("SELECT * FROM requests WHERE uesrId = '" . $id . "'")) {
+echo $result->num_rows;
     /* fetch object array */
     while ($row = $result->fetch_assoc()) {
         echo $row['date'];
