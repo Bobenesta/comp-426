@@ -21,7 +21,7 @@ if ($userIdLoggedIn != 0) {
 	<div id="push-footer-down">
 	<nav>
 		<div><a href="findaride.php">Find a Ride</a></div><br>
-		<div><a href="#">Offer Your Car</a></div><br>
+		<div><a href="offercar.php">Offer Your Car</a></div><br>
 		<div><a href="#">See Requests</a></div><br>
 		<div><a href="#">About Us</a></div>
 	</nav>
