@@ -141,7 +141,7 @@ class Request {
 				if (is_null($date))
 					continue;
 
-				$request = new Request($id, $addressFrom, $addressTo,
+				$request = new Request(intval($row['id']), $addressFrom, $addressTo,
 							intval($row['userId']), $date,
 							$row['isMorning'] == 1);
 				$resultsRepresentation[] = $request->getJSON();

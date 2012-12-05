@@ -149,7 +149,7 @@ class Ride {
 				if (is_null($date))
 					continue;
 
-				$ride = new Ride($id, $addressFrom, $addressTo,
+				$ride = new Ride(intval($row['id']), $addressFrom, $addressTo,
 							intval($row['userId']), $date,
 							$row['isMorning'] == 1, $row['carDesc'],
 							$row['carCapacity']);
