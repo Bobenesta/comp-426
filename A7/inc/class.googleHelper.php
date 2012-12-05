@@ -72,7 +72,7 @@ print("1\n");
 			$address = str_replace(' ','+',$address);
 		 	$url = 'http://maps.google.com/maps/geo?q=' . $address . '&output=xml';
 print("2\n");
-		 	$data = $this->getURL($url);
+		 	$data = googleHelper::getURL($url);
 print("3\n");
 			if ($data){
 				$xml = new SimpleXMLElement($data);
