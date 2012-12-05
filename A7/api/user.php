@@ -1,6 +1,6 @@
 <?php
 require_once("../inc/require_authentication.php");
-require_once("../inc/Request.php");
+require_once("Address.php");
 
 $id= $_GET['profileId'];
 $name= "";
@@ -33,11 +33,24 @@ echo($name."'s profile");
 // }
 
 
-echo($name."'s requests");
-$request= getById($id);
- echo("<br><br><table><tr><td> From </td><td> To </td><td> Date </td></tr>");
- echo("<tr><td> ".$request->addressFrom." </td><td> ".$request->addressTo." </td><td> ".$request->date."</td></tr>");
- echo("</table>")
+// echo($name."'s requests");
+// $request= getById($id);
+ // echo("<br><br><table><tr><td> From </td><td> To </td><td> Date </td></tr>");
+ // echo("<tr><td> ".$request->addressFrom." </td><td> ".$request->addressTo." </td><td> ".$request->date."</td></tr>");
+ // echo("</table>")
+		$result = $mysqli->query("SELECT * FROM requests WHERE id = '" . $id . "'");
+		if ($result) {
+			if ($result->num_rows == 0)
+				return null;
+
+			$row = $result->fetch_assoc();
+
+			$addressTo = Address::getById($row['addressTo']);
+			$addressFrom = Address::getById($row['addressFrom']);
+            $date=$row['date'];
+			echo($addressTo.$addressFrom.$date);
+		}
+
 
 // echo($name."'s rating");
 // 
