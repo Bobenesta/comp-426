@@ -6,18 +6,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (is_null($_SERVER['PATH_INFO'])) {
 		$hasAddressFrom = false;
 		if (!is_null($_GET['addressFrom-isUNC']) || !is_null($_GET['addressFrom-addressLine']) ||
-		    !is_null($_GET['addressFrom-city']) || !is_null($_GET['addressFrom-state']))
+		    !is_null($_GET['addressFrom-city']) || !is_null($_GET['addressFrom-state']) ||
+		    !is_null($_GET['addressFrom-radius']))
 			$hasAddressFrom = true;
 
 		$hasAddressTo = false;
 		if (!is_null($_GET['addressTo-isUNC']) || !is_null($_GET['addressTo-addressLine']) ||
-		    !is_null($_GET['addressTo-city']) || !is_null($_GET['addressTo-state']))
+		    !is_null($_GET['addressTo-city']) || !is_null($_GET['addressTo-state']) ||
+		    !is_null($_GET['addressTo-radius']))
 			$hasAddressTo = true;
 
 		if (($hasAddressFrom && (is_null($_GET['addressFrom-isUNC']) || is_null($_GET['addressFrom-addressLine']) ||
-		    is_null($_GET['addressFrom-city']) || is_null($_GET['addressFrom-state']))) ||
+		    is_null($_GET['addressFrom-city']) || is_null($_GET['addressFrom-state']) ||
+		    is_null($_GET['addressFrom-radius']))) ||
 		    ($hasAddressTo && (is_null($_GET['addressTo-isUNC']) || is_null($_GET['addressTo-addressLine']) ||
-		    is_null($_GET['addressTo-city']) || is_null($_GET['addressTo-state'])))) {
+		    is_null($_GET['addressTo-city']) || is_null($_GET['addressTo-state']) ||
+		    is_null($_GET['addressTo-radius'])))) {
 			header("HTTP/1.1 400 Bad Request");
 			print("Request parameter was missing.");
 			exit();
