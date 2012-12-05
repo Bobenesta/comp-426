@@ -65,8 +65,9 @@ class Address {
 				$id = 0;
 				if ($result->num_rows == 0) {
 					$location = googleHelper.getCoordinates("USA, " . $state . ", " . $city . ", " . $addressLine);
-					if ($location == null)
+					if ($location == null) {print("No location! " . "USA, " . $state . ", " . $city . ", " . $addressLine);
 						return null;
+}
 
 					$result = $mysqli->query("INSERT INTO addresses (isUNC, addressLine, " .
 								"city, state, latitude, longitude) VALUES ('0', '" .
