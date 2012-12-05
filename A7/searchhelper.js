@@ -87,11 +87,11 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 
 	var carDescField = containingDiv.find("#cardesc");
 	if (carDescField != null)
-		this.carDesc = carDescField.val();
+		result.carDesc = carDescField.val();
 
 	var carCapacityField = containingDiv.find("#carcapacity");
 	if (carCapacityField != null)
-		this.carCapacity = carCapacityField.val();
+		result.carCapacity = carCapacityField.val();
 
 	if (containingDiv.find("#time-selector").val() == "morning")
 		result.isMorning = true;
