@@ -85,6 +85,14 @@ SearchQuery.getSearchQueryFromSearchFields = function(containingDiv) {
 
 	result.date = containingDiv.find("#datebox").val();
 
+	var carDescField = containingDiv.find("#cardesc");
+	if (carDescField != null)
+		this.carDesc = carDescField.val();
+
+	var carCapacityField = containingDiv.find("#carcapacity");
+	if (carCapacityField != null)
+		this.carCapacity = carCapacityField.val();
+
 	if (containingDiv.find("#time-selector").val() == "morning")
 		result.isMorning = true;
 	else
@@ -200,6 +208,11 @@ SearchQuery.prototype.createNew = function(apiURL, redirectURL) {
 
 	data_pairs["date"] = this.date;
 	data_pairs["isMorning"] = this.isMorning;
+
+	if (this.carDesc != undefined)
+		data_pairs["carDesc"] = this.carDesc;
+	if (this.carCapacity != undefined)
+		data_pairs["carCapacity"] = this.carCapacity;
 
 	$.ajax(apiURL,
 			{
