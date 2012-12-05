@@ -130,7 +130,7 @@ SearchQuery.prototype.placeSearchQueryInSearchFields = function(containingDiv) {
 	autoDisableAddressCityStateText(containingDiv.find("#dest-type"), containingDiv.find("#dest-address-textbox"), containingDiv.find("#dest-city-textbox"), containingDiv.find("#dest-state-textbox"));
 }
 
-/* placeResultSetInTable(TableElement tableElement, String aipURL, String infoURL)
+/* placeResultSetInTable(TableElement tableElement, String apiURL, String infoURL)
  *
  * gets a result set which matches this SearchQuery and places it in the given table
  *
@@ -174,6 +174,42 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 					},
 				error: function(data, textStatus, jqXHR) {
 						alert("Error updating search results, please try again later.");
+					},
+				cache: false
+			});
+}
+
+/* createNew(String apiURL, String redirectURL)
+ *
+ * Creates a new object using the apiURL and then redirects to redirectURL?id=new_id
+ */
+SearchQuery.prototype.createNew = function(apiURL, redirectURL) {
+	var data_pairs = {}
+
+	data_pairs['addressTo-isUNC'] = this.startAddress.isUNC;
+	data_pairs['addressTo-addressLine'] = this.startAddress.addressLine;
+	data_pairs['addressTo-city'] = this.startAddress.city;
+	data_pairs['addressTo-state'] = this.startAddress.state;
+	data_pairs['addressTo-radius'] = this.startAddress.radius;
+
+	data_pairs['addressFrom-isUNC'] = this.endAddress.isUNC;
+	data_pairs['addressFrom-addressLine'] = this.endAddress.addressLine;
+	data_pairs['addressFrom-city'] = this.endAddress.city;
+	data_pairs['addressFrom-state'] = this.endAddress.state;
+	data_pairs['addressFrom-radius'] = this.endAddress.radius;
+
+	data_pairs["date"] = this.date;
+	data_pairs["isMorning"] = this.isMorning;
+
+	$.ajax(apiURL,
+			{
+				type: 'POST',
+				data: data_pairs,
+				success: function(data, textStatus, jqXHR) {
+						window.location.href = redirectURL + "?id=" + data.id;
+					},
+				error: function(data, textStatus, jqXHR) {
+						alert("Error contacting server, please try again later.");
 					},
 				cache: false
 			});

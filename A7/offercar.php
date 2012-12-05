@@ -8,7 +8,27 @@
 
 	<link rel="stylesheet" href="style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<!-- TODO Need jquery and others? -->
+	<!-- We use search queries to handle the objects we have here too, it should probably have a better name -->
+	<script type="text/javascript" src="userinfo.js"></script>
+	<script type="text/javascript" src="searchhelper.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#dest-type').change(function() {
+				autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-city-textbox'), $('#dest-state-textbox'));
+			});
+			autoDisableAddressCityStateText($('#dest-type'), $('#dest-address-textbox'), $('#dest-city-textbox'), $('#dest-state-textbox'));
+
+			$('#start-type').change(function() {
+				autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-city-textbox'), $('#start-state-textbox'));
+			});
+			autoDisableAddressCityStateText($('#start-type'), $('#start-address-textbox'), $('#start-city-textbox'), $('#start-state-textbox'));
+
+			$('#findaride-form').submit(function() {
+				SearchQuery.getSearchQueryFromSearchFields($('#findaride-search')).createNew("api/ride.php", "rideinfo.php");
+				return false; // We handle everything in Javascript, don't actually submit
+			});
+		});
+	</script>
 </head>
 
 <body>
