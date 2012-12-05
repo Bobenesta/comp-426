@@ -17,10 +17,10 @@ echo($name."'s profile");
 
 
 echo($name+"'s request");
-$result = $mysqli->query("SELECT * FROM requests WHERE id = '" . $id . "'");
+$result = $mysqli->query("SELECT * FROM requests WHERE uesrId = '" . $id . "'");
 while($row = $result->fetch_array())
   {
-  echo $row['date'];
+  echo $mysqli->query("SELECT addressLine FROM addresses WHERE id = '" . $id . "'")." ".$row['date'];
   echo "<br />";
   }
 ?>
