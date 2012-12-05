@@ -1,4 +1,5 @@
 <?php
+print("0\n");
 require_once("../inc/Ride.php");
 require_once("../inc/require_authentication.php");
 
