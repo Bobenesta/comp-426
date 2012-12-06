@@ -17,7 +17,7 @@ var Address = function(isUNC, addressLine, city, state, radius) {
  * gets a useful name for this address (eg UNC or City, State)
  */
 Address.prototype.getShortName = function() {
-	if (this.isUNC)
+	if (this.isUNC == 0)
 		return "UNC";
 	else
 		return this.city + ", " + this.state;
