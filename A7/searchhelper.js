@@ -183,7 +183,7 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 						for(var i = 0; i < data.length; i++) {
 							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + Address.prototype.getShortName.call(data[i].fromAddress) + "</a></td><td><a href='rideinfo.php?id=" + data[i].id + "'>" +
 									Address.prototype.getShortName.call(data[i].toAddress) + "</a></td><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + data[i].date + "</a></td><td id=>" +
-									"<a href='#user-box' onclick='userBoxHandler(" + data[i].user.name + ", " + data[i].user.rating + ");'>" + data[i].user.name + "</a></td></tr>"));
+									"<a href='#user-box' onclick='userBoxHandler('" + data[i].user.name + "', " + data[i].user.rating + ");'>" + data[i].user.name + "</a></td></tr>"));
 						}
 					},
 				error: function(data, textStatus, jqXHR) {
