@@ -35,7 +35,7 @@
 		USA<br/>
 		<button id="displayMapButton">Display on map</button>
 		<br/>
-		<div id="map" class="hide">
+		<div id="contactUsMap" class="hide">
 		<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=sitterson+hall+unc&amp;aq=&amp;sll=35.930848,-79.031288&amp;sspn=0.596021,1.571045&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Sitterson+Hall,+Chapel+Hill,+North+Carolina+27514&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=sitterson+hall+unc&amp;aq=&amp;sll=35.930848,-79.031288&amp;sspn=0.596021,1.571045&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Sitterson+Hall,+Chapel+Hill,+North+Carolina+27514&amp;z=14&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a></small>
 		</div>
 	</address>
