@@ -4,6 +4,16 @@ require_once("../inc/Request.php");
 require_once("../inc/Ride.php");
 
 class Profile{
+	private $name;
+	private $requests;
+	private $rides;
+	
+	private function __construct($name, $requests, $rides) {
+		$this->name = $name;
+		$this->requests = $requests;
+		$this->rides = $rides;
+	}
+	
 public function getNameById($id){
         $name= "";
 		$mysqli = getDBConnection();
@@ -20,14 +30,48 @@ public function getNameById($id){
 		return null;
 }
 
-public function getRequestById($id){
-return Request::getById($id);
+public function getRequestByUserId($userid){
+	$mysqli = getDBConnection();
+	$result = $mysqli->query("SELECT * FROM requests WHERE userId = '" . $id . "'");
+	
+	if ($row = $result->fetch_assoc()) {
+		return Request::getById($row['userid']);
+    }
+
 }
 
-public function getOfferById($id){
-return Ride::getById($id);
+public function getOfferByUserId($userid){
+	$mysqli = getDBConnection();
+	$result = $mysqli->query("SELECT * FROM rides WHERE userId = '" . $id . "'");
+	
+	if ($row = $result->fetch_assoc()) {
+		return Ride::getById($row['userId']);
+    }
 }
 
+public static function create($id){
+	$name= getNameById($id);
+	if(is_null($name)){
+		return null;
+	}
+	$request= getRequestByUserId($id);
+	if(is_null($request)){
+		return null;
+	}
+	$ride= getOfferByUserId($id);
+	if(is_null($ride)){
+		return null;
+	}
+	return new Profile($name, $request, $ride);
+}
+
+public static function getJSON(){
+	$ret= array();
+		$ret['name'] = $this->name;
+		$ret['requests'] = $this->requests->getJSON();
+		$ret['rides'] = $this->rides->getJSON();
+		return $ret;
+}
 }
 
 // 
