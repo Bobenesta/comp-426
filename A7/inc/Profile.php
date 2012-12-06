@@ -51,7 +51,7 @@ print_r($row);
 		if(is_null($name)){
 			return null;
 		}
-		$rating= Profile::getRatingByUserId($id);
+		$rating= Profile::getRatingById($id);
 		if(is_null($rating))
 			return new Profile($name, 0);
 		else
