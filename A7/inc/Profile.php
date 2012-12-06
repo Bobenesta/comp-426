@@ -47,11 +47,11 @@ print_r($row);
 
 
 	public static function getById($id){
-		$name= getNameById($id);
+		$name= Profile::getNameById($id);
 		if(is_null($name)){
 			return null;
 		}
-		$rating= getRatingByUserId($id);
+		$rating= Profile::getRatingByUserId($id);
 		if(is_null($rating))
 			return new Profile($name, 0);
 		else
