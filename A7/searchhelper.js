@@ -181,10 +181,9 @@ SearchQuery.prototype.placeResultSetInTable = function(tableElement, apiURL, inf
 				data: data_pairs,
 				success: function(data, textStatus, jqXHR) {
 						for(var i = 0; i < data.length; i++) {
-							var user = User.getUserById(data[i].userId);
 							tableElement.append($("<tr><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + Address.prototype.getShortName.call(data[i].fromAddress) + "</a></td><td><a href='rideinfo.php?id=" + data[i].id + "'>" +
-									Address.prototype.getShortName.call(data[i].toAddress) + "</a></td><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + data[i].date + "</a></td><td id=" +
-									user.userId + "><a href='#user-box' onclick='userBoxHandler(" + user.userId + ");'>" + user.displayName + "</a></td></tr>"));
+									Address.prototype.getShortName.call(data[i].toAddress) + "</a></td><td><a href='" + infoURL + "?id=" + data[i].id + "'>" + data[i].date + "</a></td><td id=>" +
+									"<a href='#user-box' onclick='userBoxHandler(" + data[i].user.name + ", " + data[i].user.rating + ");'>" + data[i].user.name + "</a></td></tr>"));
 						}
 					},
 				error: function(data, textStatus, jqXHR) {
@@ -244,23 +243,23 @@ SearchQuery.prototype.getShortName = function() {
 		return "From " + this.startAddress.city + " on " + this.date;
 }
 
-/* userBoxHandler(int userId)
+/* userBoxHandler(string userName, float rating)
  *
  * shows/hides the user box and fills it with the given userId
  */
-var userBoxHandler = function(userId) {
+var userBoxHandler = function(userName, rating) {
 	var userBox = $("#user-box");
-	var user = User.getUserById(userId);
+	//var user = User.getUserById(userId);
 
-	$("#user-box-name").html(user.averageRaiting + "/5");
-	if (user.reviews.length > 0)
+	$("#user-box-name").html(rating + "/5");
+	/*if (user.reviews.length > 0)
 		$("#user-box-rating-1").html(user.reviews[0].rating + ": " + user.reviews[0].shortComment);
 	else
 		$("#user-box-rating-1").html("");
 	if (user.reviews.length > 1)
 		$("#user-box-rating-2").html(user.reviews[1].rating + ": " + user.reviews[1].shortComment);
 	else
-		$("#user-box-rating-2").html("");
+		$("#user-box-rating-2").html("");*/
 
 	if (userBox.css("visibility") == 'hidden') {
 		userBox.css("visibility", "visible");
