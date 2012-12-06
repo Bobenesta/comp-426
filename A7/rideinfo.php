@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="request.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-    Request.display(2);});
+		Request.display(<?php if (!is_null($_GET['id'])) print($_GET['id']) else exit(0); ?>);});
 	</script>
 </head>
 </head>
@@ -36,9 +36,9 @@
 					<br>
 					Estimated travel cost: <span id="rideinfo-cost"></span>
 					<br>
-					Car capacity/description: <span id="rideinfo-car-type"></span>
+					Car capacity: <span id="rideinfo-car-capacity"></span>
 					<br>
-					<span id="rideinfo-space-left"></span>
+					Other information: <span id="rideinfo-car-desc"></span>
 				</div>
 				<div id="validate-my-spot">
 					<form name="my-information" method="POST" action="#">
