@@ -104,7 +104,7 @@ class Ride {
 		}
 
 		$isFirst = true;
-		$query = "SELECT * FROM rides ";
+		$query = "SELECT rides.id, rides.userId, rides.addressFrom, rides.addressTo, rides.date, rides.isMorning, rides.carDesc, rides.carCapacity FROM rides ";
 		if (!is_null($addressFrom)) {
 			$query = $query . "JOIN addresses AS fromAddress ON rides.addressFrom = fromAddress.id ";
 			$query = $query . "JOIN addresses AS fromTarget ON " . $addressFrom->getId() . " = fromTarget.id ";
