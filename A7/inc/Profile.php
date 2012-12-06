@@ -4,10 +4,12 @@ require_once("../inc/Request.php");
 require_once("../inc/Ride.php");
 
 class Profile{
+	private $id;
 	private $name;
 	private $rating;
 	
-	private function __construct($name, $rating) {
+	private function __construct($id, $name, $rating) {
+		$this->id = $id;
 		$this->name = $name;
 		$this->rating = $rating;
 	}
@@ -51,9 +53,9 @@ class Profile{
 		}
 		$rating= Profile::getRatingById($id);
 		if(is_null($rating))
-			return new Profile($name, 0);
+			return new Profile($id, $name, 0);
 		else
-			return new Profile($name, $rating);
+			return new Profile($id, $name, $rating);
 	}
 
 	public function getJSON(){
@@ -61,6 +63,10 @@ class Profile{
 		$ret['name'] = $this->name;
 		$ret['rating'] = $this->rating;
 		return $ret;
+	}
+
+	public function getId() {
+		return $this->id;
 	}
 }
 

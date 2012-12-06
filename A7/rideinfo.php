@@ -35,7 +35,7 @@
 					<br>
 					<div id="rideinfo-driver-info">
 						Name of the driver: <span id="rideinfo-name"></span>
-						<a href="#">See full profile</a>(rated ...)
+						(rated <span id="rideinfo-rating"></span>/5)
 					</div>
 					Car capacity: <span id="rideinfo-car-capacity"></span>
 					<br>

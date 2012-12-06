@@ -4,7 +4,7 @@ require_once("../inc/Profile.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$profileId= $_GET['profileId'];
-	if(is_null($profileId)){
+	if(is_null($profileId) || !is_numeric($profileId)){
 		header("HTTP/1.1 400 Bad Request");
 		print("Request parameter was invalid.");
 		exit();

@@ -1,5 +1,6 @@
 <?php
 require_once("Address.php");
+require_once("Profile.php");
 require_once("mysql_settings.php");
 require_once("date.php");
 
@@ -7,17 +8,17 @@ class Ride {
 	private $id;
 	private $addressFrom;
 	private $addressTo;
-	private $userId;
+	private $user;
 	private $date;
 	private $isMorning;
 	private $carDesc;
 	private $carCapacity;
 
-	private function __construct($id, $addressFrom, $addressTo, $userId, $date, $isMorning, $carDesc, $carCapacity) {
+	private function __construct($id, $addressFrom, $addressTo, $user, $date, $isMorning, $carDesc, $carCapacity) {
 		$this->id = $id;
 		$this->addressFrom = $addressFrom;
 		$this->addressTo = $addressTo;
-		$this->userId = $userId;
+		$this->user = $user;
 		$this->date = $date;
 		$this->isMorning = $isMorning;
 		$this->carDesc = $carDesc;
@@ -41,8 +42,12 @@ class Ride {
 			if (is_null($addressFrom))
 				return null;
 
+			$user = Profile::getById(intval($row['userId']));
+			if (is_null($user))
+				return null;
+
 			return new Ride($id, $addressFrom, $addressTo,
-					intval($row['userId']), $row['date'],
+					$user, $row['date'],
 					$row['isMorning'] == 1, $row['carDesc']
 					, $row['carCapacity']);
 		}
@@ -61,6 +66,10 @@ class Ride {
 			return null;
 		$mysqlIsMorning = $isMorning == "true" ? 1 : 0;
 
+		$user = Profile::getById($userId);
+		if (is_null($user))
+			return null;
+
 		$result = $mysqli->query("INSERT INTO rides (addressFrom, addressTo, userId, ".
 					"date, isMorning, carDesc, carCapacity) VALUES ('" .
 					$addressFrom->getId() . "', '" . $addressTo->getId() . "', '" .
@@ -71,7 +80,7 @@ class Ride {
 		if ($result) {
 			$id = $mysqli->insert_id;
 			return new Ride($id, $addressFrom, $addressTo,
-					$userId, $date, $isMorning == "true",
+					$user, $date, $isMorning == "true",
 					$carDesc, $carCapacity);
 		}
 		return null;
@@ -159,8 +168,12 @@ class Ride {
 				if (is_null($date))
 					continue;
 
+				$user = Profile::getById(intval($row['userId']));
+				if (is_null($user))
+					continue;
+
 				$ride = new Ride(intval($row['id']), $addressFrom, $addressTo,
-							intval($row['userId']), $date,
+							$user, $date,
 							$row['isMorning'] == 1, $row['carDesc'],
 							$row['carCapacity']);
 				$resultsRepresentation[] = $ride->getJSON();
@@ -174,7 +187,7 @@ class Ride {
 		$representation['id'] = $this->id;
 		$representation['fromAddress'] = $this->addressFrom->getJSON();
 		$representation['toAddress'] = $this->addressTo->getJSON();
-		$representation['userId'] = $this->userId;
+		$representation['user'] = $this->user->getJSON();
 		$representation['date'] = $this->date;
 		$representation['isMorning'] = $this->isMorning;
 		$representation['carDesc'] = $this->carDesc;
@@ -183,7 +196,7 @@ class Ride {
 	}
 
 	public function getUserId() {
-		return $this->userId;
+		return $this->user->getId();
 	}
 
 	public function delete(){
