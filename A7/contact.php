@@ -1,5 +1,3 @@
-<?php require_once("inc/redirect_authenticated.php"); ?>
-
 <!DOCTYPE html>
 <html>
 <head>
