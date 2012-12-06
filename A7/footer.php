@@ -1,7 +1,7 @@
 	</div>
 
 	<footer class="center">
-		<a href="contact.html">Contact Us</a>&nbsp;&nbsp;&nbsp;
+		<a href="contact.php">Contact Us</a>&nbsp;&nbsp;&nbsp;
 		<a href="?">TOS</a>
 	</footer>
 
