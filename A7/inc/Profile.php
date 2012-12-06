@@ -37,10 +37,8 @@ class Profile{
 				return null;
 
 			$row = $result->fetch_assoc();
-//TODO
-print_r($row);
-			$rating= $row['rating'];
-			return $rating;
+
+			return $row['AVG(rating)'];
 		}
 		return null;
 	}
