@@ -12,7 +12,11 @@
 	<script type="text/javascript" src="request.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		Request.display(<?php if (!is_null($_GET['id'])) print($_GET['id']) else exit(0); ?>);});
+		Request.display(<?php if (!is_null($_GET['id']))
+						print($_GET['id']);
+					else
+						exit(0);
+				?>);});
 	</script>
 </head>
 </head>
