@@ -12,8 +12,8 @@ class Profile{
 		$this->rating = $rating;
 	}
 	
-public function getNameById($id){
-        $name= "";
+	private static function getNameById($id){
+		$name= "";
 		$mysqli = getDBConnection();
 		$result = $mysqli->query("SELECT * FROM users WHERE id = '" . $id . "'");
 		if ($result) {
@@ -26,43 +26,44 @@ public function getNameById($id){
 			return $name;
 		}
 		return null;
-}
+	}
 
-public function getRating($id){
-	$name= "";
+	private static function getRatingById($id){
+		$rating= "";
 		$mysqli = getDBConnection();
-		$result = $mysqli->query("SELECT * FROM rating WHERE userId = '" . $id . "'");
+		$result = $mysqli->query("SELECT AVG(rating) FROM ratings WHERE userId = '" . $id . "'");
 		if ($result) {
 			if ($result->num_rows == 0)
 				return null;
 
 			$row = $result->fetch_assoc();
-
-			$name= $row['rating'];
-			return $name;
+//TODO
+print_r($row);
+			$rating= $row['rating'];
+			return $rating;
 		}
 		return null;
-}
-
-
-public static function create($id){
-	$name= getNameById($id);
-	if(is_null($name)){
-		return null;
 	}
-	$rating= getRatingByUserId($id);
-	if(is_null($rating)){
-		return null;
-	}
-	return new Profile($name, $rating);
-}
 
-public static function getJSON(){
-	$ret= array();
+
+	public static function getById($id){
+		$name= getNameById($id);
+		if(is_null($name)){
+			return null;
+		}
+		$rating= getRatingByUserId($id);
+		if(is_null($rating))
+			return new Profile($name, 0);
+		else
+			return new Profile($name, $rating);
+	}
+
+	public function getJSON(){
+		$ret= array();
 		$ret['name'] = $this->name;
 		$ret['rating'] = $this->rating;
 		return $ret;
-}
+	}
 }
 
 ?>

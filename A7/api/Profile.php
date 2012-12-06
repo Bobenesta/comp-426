@@ -5,13 +5,18 @@ require_once("../inc/Profile.php");
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$profileId= $_GET['profileId'];
 	if(is_null($profileId)){
-				header("HTTP/1.1 400 Bad Request");
-				print("Request parameter was invalid.");
-				exit();
+		header("HTTP/1.1 400 Bad Request");
+		print("Request parameter was invalid.");
+		exit();
 	}
 	else{
+		$profile= Profile::getById($profileId);
+		if ($profile == null) {
+			header("HTTP/1.1 404 Not Found");
+			print("The ride was not found");
+			exit();
+		}
 		header("Content-type: application/json");
-		$profile= Profile::create($profileId);
 		print(json_encode($profile->getJSON()));
 		exit();
 	}
