@@ -37,26 +37,9 @@
 						Name of the driver: <span id="rideinfo-name"></span>
 						<a href="#">See full profile</a>(rated ...)
 					</div>
-					Estimated travel time: <span id="rideinfo-time"></span>
-					<br>
-					Estimated travel cost: <span id="rideinfo-cost"></span>
-					<br>
 					Car capacity: <span id="rideinfo-car-capacity"></span>
 					<br>
 					Other information: <span id="rideinfo-car-desc"></span>
-				</div>
-				<div id="validate-my-spot">
-					<form name="my-information" method="POST" action="#">
-						<div id="let-a-message">
-							<textarea rows="4" cols="50">Enter your message here...</textarea> 
-						</div>
-						<div id="show-my-phone">
-							<input type="checkbox" name="visible-phone" value="phone">Show my phone # to...
-						</div>
-						<div id="request-spot-submit" class="center">
-							<button type="submit">Request a spot</button>
-						</div>
-					</form>
 				</div>
 			</div>
 			<div id="map"></div>
