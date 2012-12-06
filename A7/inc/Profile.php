@@ -47,6 +47,7 @@ public function getOfferByUserId($userid){
 	if ($row = $result->fetch_assoc()) {
 		return Ride::getById($row['userId']);
     }
+	
 }
 
 public static function create($id){
