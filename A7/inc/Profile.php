@@ -31,7 +31,7 @@ class Profile{
 	private static function getRatingById($id){
 		$rating= "";
 		$mysqli = getDBConnection();
-		$result = $mysqli->query("SELECT AVG(rating) FROM ratings WHERE userId = '" . $id . "'");
+		$result = $mysqli->query("SELECT AVG(rating) FROM ratings WHERE userTo = '" . $id . "'");
 		if ($result) {
 			if ($result->num_rows == 0)
 				return null;
