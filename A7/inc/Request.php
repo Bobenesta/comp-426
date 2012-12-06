@@ -98,32 +98,42 @@ class Request {
 		}
 
 		$isFirst = true;
-		$query = "SELECT * FROM requests WHERE ";
+		$query = "SELECT * FROM requests "; 
+		if (!is_null($addressFrom)) {
+			$query = $query . "JOIN addresses AS fromAddress ON requests.addressFrom = fromAddress.id ";
+			$query = $query . "JOIN addresses AS fromTarget ON " . $addressFrom->getId() . " = fromTarget.id ";
+		}
+		if (!is_null($addressTo)) {
+			$query = $query . "JOIN addresses AS toAddress ON requests.addressTo = toAddress.id ";
+			$query = $query . "JOIN addresses AS toTarget ON " . $addressTo->getId() . " = toTarget.id ";
+		}
+		$query = $query . "WHERE ";
 		if (!is_null($addressFrom)) {
 			if ($isFirst)
 				$isFirst = false;
-			$query = $query . "addressFrom = '" . $addressFrom->getId() . "' ";
+			$query = $query . "ABS(fromAddress.latitude - fromTarget.latitude) < " . ($addressFromRadius / 69) . " ";
 		}
 		if (!is_null($addressTo)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
 				$query = $query . "AND ";
-			$query = $query . "addressTo = '" . $addressTo->getId() . "' ";
+			$query = $query . "ABS(toAddress.longitude - toTarget.longitude)*COS(RADIANS(toTarget.latitude)) < " .
+					($addressToRadius / 69) . " ";
 		}
 		if (!is_null($mysqlDate)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
 				$query = $query . "AND ";
-			$query = $query . "date = '" . $mysqlDate . "' ";
+			$query = $query . "requests.date = '" . $mysqlDate . "' ";
 		}
 		if (!is_null($mysqlIsMorning)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
 				$query = $query . "AND ";
-			$query = $query . "isMorning = '" . $mysqlIsMorning . "' ";
+			$query = $query . "requests.isMorning = '" . $mysqlIsMorning . "' ";
 		}
 		$query = $query . "LIMIT 25";
 

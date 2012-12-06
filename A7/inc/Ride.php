@@ -97,16 +97,26 @@ class Ride {
 		$isFirst = true;
 		$query = "SELECT * FROM rides WHERE ";
 		if (!is_null($addressFrom)) {
+			$query = $query . "JOIN addresses AS fromAddress ON rides.addressFrom = fromAddress.id ";
+			$query = $query . "JOIN addresses AS fromTarget ON " . $addressFrom->getId() . " = fromTarget.id ";
+		}
+		if (!is_null($addressTo)) {
+			$query = $query . "JOIN addresses AS toAddress ON rides.addressTo = toAddress.id ";
+			$query = $query . "JOIN addresses AS toTarget ON " . $addressTo->getId() . " = toTarget.id ";
+		}
+		$query = $query . "WHERE ";
+		if (!is_null($addressFrom)) {
 			if ($isFirst)
 				$isFirst = false;
-			$query = $query . "addressFrom = '" . $addressFrom->getId() . "' ";
+			$query = $query . "ABS(fromAddress.latitude - fromTarget.latitude) < " . ($addressFromRadius / 69) . " ";
 		}
 		if (!is_null($addressTo)) {
 			if ($isFirst)
 				$isFirst = false;
 			else
 				$query = $query . "AND ";
-			$query = $query . "addressTo = '" . $addressTo->getId() . "' ";
+			$query = $query . "ABS(toAddress.longitude - toTarget.longitude)*COS(RADIANS(toTarget.latitude)) < " .
+					($addressToRadius / 69) . " ";
 		}
 		if (!is_null($mysqlDate)) {
 			if ($isFirst)
