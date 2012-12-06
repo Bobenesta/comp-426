@@ -85,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			exit();
 		}
 	}
-} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+} 
+ else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$request = null;
 	if (!is_null($_SERVER['PATH_INFO'])) {
 		if (!is_numeric(substr($_SERVER['PATH_INFO'], 1))) {
